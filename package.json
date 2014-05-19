@@ -1,7 +1,8 @@
 {
-  "name": "Explore Tasman",
+  "name": "explore_tasman",
   "version": "0.0.1",
   "description": "Explore Tasman using postgres on Heroku",
+  "main": "web.js",
   "engines": {
     "node": "0.10.26"
   },

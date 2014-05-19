@@ -1,31 +1,25 @@
 var express = require('express')
-  , app = express.createServer(express.logger())
-  , pg = require('pg').native
-  , connectionString = process.env.DATABASE_URL
-  , start = new Date()
-  , port = process.env.PORT
-  , client;
+// , bodyParser = require('body-parser')
+, app = express()
+// , pg = require('pg').native
+// , connectionString = process.env.DATABASE_URL
+// , start = new Date()
+// , port = process.env.PORT
+// , client;
 
-client = new pg.Client(connectionString);
-client.connect();
+// make express handle JSON and other requests
+app.use(express.bodyParser());
+// serve up files from this directory 
+app.use(express.static(__dirname));
+// if not able to serve up a static file try and handle as REST invocation
+app.use(app.router);
 
-app.get('/', function(req, res) {
-  var date = new Date();
 
-  client.query('INSERT INTO visits(date) VALUES($1)', [date]);
-
-  query = client.query('SELECT COUNT(date) AS count FROM visits WHERE date = $1', [date]);
-  query.on('row', function(result) {
-    console.log(result);
-
-    if (!result) {
-      return res.send('No data found');
-    } else {
-      res.send('Visits today: ' + result.count);
-    }
-  });
+app.post('/location', function(req, res) {
+  res.send("Hello World")
 });
 
-app.listen(port, function() {
-  console.log('Listening on:', port);
+// use PORT set as an environment variable
+var server = app.listen(process.env.PORT, function() {
+    console.log('Listening on port %d', server.address().port);
 });
