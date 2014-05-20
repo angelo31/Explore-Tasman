@@ -8,7 +8,7 @@
 
 <body>
 
-  <div data-role="page" id = "foo">
+  <div data-role="page" id = "first">
     <div role="main" class="ui-content">
 
       <p id="demo">Click the button to get your position:</p>
@@ -16,8 +16,9 @@
 
       <div id="mapholder"></div>
       <div id="result" class="functions"></div>
-
       <p id = "text"></p>
+      <button id="saveButton">Save coordinates</button>
+
       <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
       <script type="text/javascript" src = "cordova-1.7.0.js"></script>
 
@@ -28,8 +29,7 @@
 
         getLocation();
 
-        function getLocation()
-        {
+        function getLocation() {
           if (navigator.geolocation)
           {
             navigator.geolocation.getCurrentPosition(showPosition,showError);
@@ -37,8 +37,7 @@
           else{x.innerHTML="Geolocation is not supported by this browser.";}
         }
 
-        function showPosition(position)
-        {
+        function showPosition(position) {
           lat=position.coords.latitude;
           lon=position.coords.longitude;
           latlon=new google.maps.LatLng(lat, lon)
@@ -57,13 +56,23 @@
 
           //gah.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
           $("#text").html("<p>Latitude: " + lat + "<br>Longitude: " + lon + "</p>")
+          $("#saveButton").bind("click", function(event, ui) { 
+             // var str = $("#text").val()
+             alert("saving " + lat + " and " + lon)
+             var url = "http://intense-harbor-6396.herokuapp.com/location"
+             var newCoords = { "lat" : lat, "lon" : lon };
+
+            $.post(url,newCoords, function(data) {
+                  alert("Added coordinates " + data.lat + " " + data.lon);
+                }, 'json');
+           });
         }
 
+        // var button = '<input type="button" id = "saveButton" value = "Save Coordinates">';
+        // $("ui-content").append(button)
 
-        function showError(error)
-        {
-          switch(error.code) 
-          {
+        function showError(error) {
+          switch(error.code) {
             case error.PERMISSION_DENIED:
             x.innerHTML="User denied the request for Geolocation."
             break;
@@ -78,63 +87,10 @@
             break;
           }
         }
-      })
+      });
+    
 
 </script>
-<!--
-<script>
-var x=document.getElementById("demo");
-var gah =document.getElementById("text");
-
-function getLocation()
-{
-  if (navigator.geolocation)
-  {
-    navigator.geolocation.getCurrentPosition(showPosition,showError);
-  }
-  else{x.innerHTML="Geolocation is not supported by this browser.";}
-}
-
-function showPosition(position)
-{
-  lat=position.coords.latitude;
-  lon=position.coords.longitude;
-  latlon=new google.maps.LatLng(lat, lon)
-  mapholder=document.getElementById('mapholder')
-  mapholder.style.height='250px';
-  mapholder.style.width='250px';
-
-  var myOptions={
-    center:latlon,zoom:14,
-    mapTypeId:google.maps.MapTypeId.ROADMAP,
-    mapTypeControl:false,
-    navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
-  };
-  var map=new google.maps.Map(document.getElementById("mapholder"),myOptions);
-  var marker=new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
-  gah.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
-}
-
-
-function showError(error)
-{
-  switch(error.code) 
-  {
-    case error.PERMISSION_DENIED:
-    x.innerHTML="User denied the request for Geolocation."
-    break;
-    case error.POSITION_UNAVAILABLE:
-    x.innerHTML="Location information is unavailable."
-    break;
-    case error.TIMEOUT:
-    x.innerHTML="The request to get user location timed out."
-    break;
-    case error.UNKNOWN_ERROR:
-    x.innerHTML="An unknown error occurred."
-    break;
-  }
-}
-</script>-->
 </div>
 
 </body>
