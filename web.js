@@ -1,15 +1,23 @@
 var express = require('express')
 // , bodyParser = require('body-parser')
+// ,app = express.createServer(express.logger())
 , app = express()
 , pg = require('pg').native
 , connectionString = process.env.DATABASE_URL
-// , start = new Date()
 , port = process.env.PORT || 3000
 , client;
 
+// make express handle JSON and other requests
+app.use(express.bodyParser());
+// // serve up files from this directory 
+app.use(express.static(__dirname));
+// // if not able to serve up a static file try and handle as REST invocation
+app.use(app.router);
+
 // attempt to connect to database
-// client = new pg.Client(connectionString); 
-// client.connect();
+client = new pg.Client(connectionString);
+client.connect();
+
 
 var coords = [
 { lat: -42.5667, lon: 32.767 }, 
@@ -20,13 +28,6 @@ var coords = [
 { lat: 0, lon: 0 }, 
 { lat: -40.930, lon: 173.050 }
 ]
-
-// make express handle JSON and other requests
-app.use(express.bodyParser());
-// serve up files from this directory 
-app.use(express.static(__dirname));
-// if not able to serve up a static file try and handle as REST invocation
-app.use(app.router);
 
 
 app.get("/location", function (req, res) {
