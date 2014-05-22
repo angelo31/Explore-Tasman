@@ -68,7 +68,7 @@
            });
         }
 
-        function showNewPosition(position, lat, lon) {
+        function showNewPosition(lat, lon) {
           lat=lat;
           lon=lon;
           latlon=new google.maps.LatLng(lat, lon)
@@ -83,8 +83,7 @@
             navigationControlOptions:{style:google.maps.NavigationControlStyle.SMALL}
           };
           var map=new google.maps.Map(document.getElementById("result"),myOptions);
-          var marker=new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
-          
+
         }
 
         function showError(error) {
@@ -112,7 +111,7 @@ $("#loadButton").bind("click", function(event, ui) {
 
     $.get(url, function(data) {
       alert("got coordinates " + data.lat + " " + data.lon);
-    showNewPosition(position, data.lat, data.lon)
+    showNewPosition(data.lat, data.lon)
     }, 'json');
   });
 
