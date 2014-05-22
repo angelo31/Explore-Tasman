@@ -47,6 +47,8 @@ app.post('/location', function(req, res) {
 	};
 
 	coords.push(newCoords);
+  client.query('INSERT INTO tasman_table(text) VALUES($1)', [coords]);
+
   // should send back the location at this point
   console.log("Added!");
   //newCoords.pos = coords.length-1;
