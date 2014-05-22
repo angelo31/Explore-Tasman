@@ -5,8 +5,7 @@ var pg = require('pg').native
 
 client = new pg.Client(connectionString);
 client.connect();
-query = client.query('CREATE TABLE visits (date date)');
-
+query = client.query('CREATE TABLE tasman_table (text someText)');
 
 
 /* 

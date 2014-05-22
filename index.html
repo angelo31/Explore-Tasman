@@ -58,14 +58,14 @@
           //gah.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
           $("#text").html("<p>Latitude: " + lat + "<br>Longitude: " + lon + "</p>")
           $("#saveButton").bind("click", function(event, ui) { 
-             alert("saving " + lat + " and " + lon)
-             var url = "http://intense-harbor-6396.herokuapp.com/location"
-             var newCoords = { "lat" : lat, "lon" : lon };
+           alert("saving " + lat + " and " + lon)
+           var url = "http://intense-harbor-6396.herokuapp.com/location"
+           var newCoords = { "lat" : lat, "lon" : lon };
 
-             $.post(url,newCoords, function(data) {
-              alert("Added coordinates " + data.lat + " " + data.lon);
-            }, 'json');
-           });
+           $.post(url,newCoords, function(data) {
+            alert("Added coordinates " + data.lat + " " + data.lon);
+          }, 'json');
+         });
         }
 
         function showNewPosition(lat, lon) {
@@ -106,33 +106,31 @@
 
 // load some coordinates
 $("#loadButton").bind("click", function(event, ui) { 
-    alert("loading some new coordinates")
-    var url = "http://intense-harbor-6396.herokuapp.com/location/random";
+  alert("loading some new coordinates")
+  var url = "http://intense-harbor-6396.herokuapp.com/location/random";
 
-    $.get(url, function(data) {
-      alert("got coordinates " + data.lat + " " + data.lon);
-    }, 'json');
-    showNewPosition(data.lat, data.lon)
-  });
+  $.get(url, function(data) {
+    alert("got coordinates " + data.lat + " " + data.lon);
+  }, 'json');
+  showNewPosition(data.lat, data.lon)
+});
 
+$("#stats").bind("click", function(event, ui) {
+  alert("Getting you the stats!")
+  var url = "http://intense-harbor-6396.herokuapp.com/get/stats";
+  $.get(url, function(data) {
+    alert("Got stats...")
+    $("#statsText").html(data)
+  })
+})
 
 </script>
+
+<button id="stats">get stats</button>
+<p id = "statsText"></p>
+
+
 </div>
-
-<form id="file_upload_form" method="post" enctype="multipart/form-data" action="upload.php">
-<input name="file" id="file" size="27" type="file" /><br />
-<input type="submit" name="action" value="Upload" /><br />
-<iframe id="upload_target" name="upload_target" src="" style="width:0;height:0;border:0px solid #fff;"></iframe>
-</form>
-
-<script type="text/javascript">
-function init() {
-  document.getElementById('file_upload_form').onsubmit=function() {
-    document.getElementById('file_upload_form').target = 'upload_target'; //'upload_target' is the name of the iframe
-  }
-}
-window.onload=init;
-</script>
 
 </body>
 </html>

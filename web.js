@@ -57,6 +57,7 @@ app.post('/location', function(req, res) {
 app.get('/location/random', function(req, res) {
 	var id = Math.floor(Math.random() * coords.length);
 	var q = coords[id];
+	console.log("Sent!");
 	res.send(q);
 });
 
@@ -81,4 +82,21 @@ app.get("/gallery", function(req, res) {
 
 app.listen(port, function () {
 	console.log('Listening on:', port);
+});
+
+
+app.get('/get/stats', function(req, res) {
+
+  // client.query('INSERT INTO visits(date) VALUES($1)', [date]);
+
+  query = client.query('SELECT * FROM tasman_table');
+  query.on('row', function(result) {
+    console.log(result);
+
+    if (!result) {
+      return res.send('No data found');
+    } else {
+      res.send('data from database: ' + result);
+    }
+  });
 });
