@@ -84,18 +84,7 @@
           };
           var map=new google.maps.Map(document.getElementById("result"),myOptions);
           var marker=new google.maps.Marker({position:latlon,map:map,title:"You are here!"});
-
-          //gah.innerHTML = "Latitude: " + lat + "<br>Longitude: " + lon;
-          $("#text").html("<p>Latitude: " + lat + "<br>Longitude: " + lon + "</p>")
-          $("#saveButton").bind("click", function(event, ui) { 
-             alert("saving " + lat + " and " + lon)
-             var url = "http://intense-harbor-6396.herokuapp.com/location";
-             var newCoords = { "lat" : lat, "lon" : lon };
-
-             $.post(url,newCoords, function(data) {
-              alert("Added coordinates " + data.lat + " " + data.lon);
-            }, 'json');
-           });
+          
         }
 
         function showError(error) {
@@ -122,7 +111,6 @@ $("#loadButton").bind("click", function(event, ui) {
     var url = "http://intense-harbor-6396.herokuapp.com/location/random";
 
     $.get(url, function(data) {
-    // var newCoords = { "lat" : data.lat, "lon" : data.lon };
       alert("got coordinates " + data.lat + " " + data.lon);
     showNewPosition(position, data.lat, data.lon)
     }, 'json');
