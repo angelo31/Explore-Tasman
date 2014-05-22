@@ -4,8 +4,12 @@ var express = require('express')
 , pg = require('pg').native
 , connectionString = process.env.DATABASE_URL
 // , start = new Date()
-// , port = process.env.PORT
+, port = process.env.PORT || 3000
 , client;
+
+// attempt to connect to database
+// client = new pg.Client(connectionString); 
+// client.connect();
 
 var coords = [
 { lat: -42.5667, lon: 32.767 }, 
@@ -48,13 +52,12 @@ app.post('/location', function(req, res) {
   //newCoords.pos = coords.length-1;
   res.json(true);
   res.send(newCoords);
-
 });
 
 app.get('/location/random', function(req, res) {
-  var id = Math.floor(Math.random() * coords.length);
-  var q = coords[id];
-  res.send(q);
+	var id = Math.floor(Math.random() * coords.length);
+	var q = coords[id];
+	res.send(q);
 });
 
 
@@ -63,13 +66,19 @@ app.get('/user:id', function(req, res) {
 	res.send("Hello World")
 });
 
-//get photos and post in gallery
+//get photos and save in database...
 app.post("/gallery", function(req, res) {
 
 
 });
 
+//get photos and show in gallery...
+app.get("/gallery", function(req, res) {
 
-var server = app.listen(3000, function () {
-	console.log('Listening on port %d', server.address().port);
+
+});
+
+
+app.listen(port, function () {
+	console.log('Listening on:', port);
 });
