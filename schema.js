@@ -7,6 +7,7 @@ client = new pg.Client(connectionString);
 client.connect();
 query = client.query('CREATE TABLE tasman_table (imgName text, img bytea)');
 
+
 /* 
 
 CREATE TABLE tasman_table (
