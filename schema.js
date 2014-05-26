@@ -5,8 +5,7 @@ var pg = require('pg').native
 
 client = new pg.Client(connectionString);
 client.connect();
-query = client.query('CREATE TABLE tasman_table (someText text)');
-
+query = client.query('CREATE TABLE tasman_table (imgName text, img bytea)');
 
 /* 
 
@@ -27,4 +26,7 @@ var src = 'data:image/bmp;base64,' + btoa(myData);
 INSERT into tasman_table(bytea data )...
 */
 
-query.on('end', function(result) { client.end(); });
+query.on('end', function(result) { 
+	console.log(JSON.stringify(result))
+	client.end();
+});
