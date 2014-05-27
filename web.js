@@ -5,8 +5,8 @@ var express = require('express')
 , pg = require('pg').native
 , connectionString = process.env.DATABASE_URL
 , port = process.env.PORT || 3000
-, client
-, fs = require('fs');
+, fs = require('fs')
+, client;
 
 // make express handle JSON and other requests
 app.use(express.bodyParser());
@@ -16,8 +16,8 @@ app.use(express.static(__dirname));
 app.use(app.router);
 
 // attempt to connect to database
-// client = new pg.Client(connectionString);
-// client.connect();
+client = new pg.Client(connectionString);
+client.connect();
 
 
 var coords = [
@@ -49,7 +49,7 @@ app.get('/', function(req, res) {
 app.post('/upload', function(req, res) {
 	fs.readFile(req.files.image.path, function (err, data) {
 		console.log("data", data)
-		data = '\\x' + data;
+		var newData = '\\x' + data;
 		// console.log("hex data", data)
 
 
@@ -82,6 +82,13 @@ app.post('/upload', function(req, res) {
 		  	res.redirect("/uploads/fullsize/" + imageName);
 
 		  });*/
+
+	client.query("insert into tasman_table (imgName, img) values ($1, $2)", 
+		[imageName, newData],
+		function(err, writeResult) {
+			console.log("err", err, "pg writeResult", writeResult)
+		});
+
 
 	res.end();
 		}
