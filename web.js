@@ -16,8 +16,8 @@ app.use(express.static(__dirname));
 app.use(app.router);
 
 // attempt to connect to database
-client = new pg.Client(connectionString);
-client.connect();
+//client = new pg.Client(connectionString);
+//client.connect();
 
 
 var coords = [
