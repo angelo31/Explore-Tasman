@@ -37,7 +37,7 @@ var form = "<!DOCTYPE HTML><html><body>" +
 "</body></html>";
 
 /// Include ImageMagick
-// var im = require('imagemagick');
+var im = require('imagemagick');
 
 app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
@@ -51,7 +51,6 @@ app.post('/upload', function(req, res) {
 		// console.log("data", data)
 		var newData = '\\x' + data;
 		// console.log("hex data", data)
-
 
 		var imageName = req.files.image.name
 
@@ -72,17 +71,17 @@ app.post('/upload', function(req, res) {
 		  fs.writeFile(newPath, data, function (err) {
 
 		  	/// write file to uploads/thumbs folder
-		  	/*im.resize({
+		  	im.resize({
 		  		srcPath: newPath,
 		  		dstPath: thumbPath,
 		  		width:   200
 		  	}, function(err, stdout, stderr){
 		  		if (err) throw err;
 		  		console.log('resized image to fit within 200x200px');
-		  	});*/
+		  	});
 
 		  	// console.log((JSON.stringify(req.files)))
-		  	res.redirect("/uploads/fullsize/" + imageName);
+		  	res.redirect("/uploads/thumbs/" + imageName);
 			// res.redirect("/");
 
 		  });
