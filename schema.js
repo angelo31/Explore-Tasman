@@ -17,7 +17,6 @@ CREATE TABLE tasman_table (
 	img bytea not null,
 )
 
-
 convert image to base64 before sending to server?
 var image = atob(img)
 
