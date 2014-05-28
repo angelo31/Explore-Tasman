@@ -48,7 +48,7 @@ app.get('/', function(req, res) {
 /// Post files
 app.post('/upload', function(req, res) {
 	fs.readFile(req.files.image.path, function (err, data) {
-		console.log("data", data)
+		// console.log("data", data)
 		var newData = '\\x' + data;
 		// console.log("hex data", data)
 
@@ -66,7 +66,7 @@ app.post('/upload', function(req, res) {
 			var newPath = __dirname + "/uploads/fullsize/" + imageName;
 			var thumbPath = __dirname + "/uploads/thumbs/" + imageName;
 		  /// write file to uploads/fullsize folder
-		  /*fs.writeFile(newPath, data, function (err) {
+		  fs.writeFile(newPath, data, function (err) {
 
 		  	/// write file to uploads/thumbs folder
 		  	im.resize({
@@ -81,8 +81,8 @@ app.post('/upload', function(req, res) {
 		  	// console.log((JSON.stringify(req.files)))
 		  	res.redirect("/uploads/fullsize/" + imageName);
 
-		  });*/
-
+		  });
+/*
 	client.query("INSERT INTO tasman_table (imgName, img) VALUES ($1, $2)", 
 		[imageName, newData],
 		function(err, writeResult) {
@@ -99,11 +99,11 @@ app.post('/upload', function(req, res) {
 		else {
 			res.send("awesome")
 		}
-	})
+	})*/
 
 	res.end();
-		}
-	});
+}
+});
 });
 
 /// Show files
