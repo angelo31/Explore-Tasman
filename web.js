@@ -107,7 +107,7 @@ app.post('/upload', function(req, res) {
 });
 
 /// Show files
-/*
+
 app.get('/uploads/fullsize/:file', function (req, res){
 	file = req.params.file;
 	var img = fs.readFile( __dirname + "/uploads/fullsize/" + file);
@@ -122,7 +122,7 @@ app.get('/uploads/thumbs/:file', function (req, res){
 	res.writeHead(200, {'Content-Type': 'image/jpg' });
 	res.end(img, 'binary');
 });
-*/
+
 
 /*
 app.get("/location", function (req, res) {
