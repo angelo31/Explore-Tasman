@@ -1,122 +1,111 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-
 <head>
-  <title>Take or select photo(s) and upload</title>
-  <script type="text/javascript">
-  function fileSelected() {
+	<meta name="viewport" content="width=320 user-scalable=no" />
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>ColorThief Demo</title>
+	
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="quantize.js"></script>
+	<script type="text/javascript" charset="utf-8" src="color-thief.js"></script>
 
-    var count = document.getElementById('fileToUpload').files.length;
+	<style>
+	#yourimage {
+		width: 25%;	
+		height: 25%;	
+	}
+	
+	#swatches {
+		width: 100%;
+		height: 50px;	
+	}
 
-    document.getElementById('details').innerHTML = "";
-
-    for (var index = 0; index < count; index++)
-
-    {
-
-      var file = document.getElementById('fileToUpload').files[index];
-
-      var fileSize = 0;
-
-      if (file.size > 1024 * 1024)
-
-        fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
-
-      else fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
-
-      document.getElementById('details').innerHTML += 'Name: ' + file.name + '<br>Size: ' + fileSize + '<br>Type: ' + file.type;
-
-      document.getElementById('details').innerHTML += '<p>';
-
-    }
-
-  }
-
-  function uploadFile() {
-
-    var fd = new FormData();
-
-    var count = document.getElementById('fileToUpload').files.length;
-
-    for (var index = 0; index < count; index++)
-
-    {
-
-      var file = document.getElementById('fileToUpload').files[index];
-
-      fd.append(file.name, file);
-
-    }
-
-    var xhr = new XMLHttpRequest();
-
-    xhr.upload.addEventListener("progress", uploadProgress, false);
-
-    xhr.addEventListener("load", uploadComplete, false);
-
-    xhr.addEventListener("error", uploadFailed, false);
-
-    xhr.addEventListener("abort", uploadCanceled, false);
-
-    xhr.open("POST", "savetofile.aspx");
-
-    xhr.send(fd);
-
-  }
-
-  function uploadProgress(evt) {
-
-    if (evt.lengthComputable) {
-
-      var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-
-      document.getElementById('progress').innerHTML = percentComplete.toString() + '%';
-
-    } else {
-
-      document.getElementById('progress').innerHTML = 'unable to compute';
-
-    }
-
-  }
-
-  function uploadComplete(evt) {
-
-    /* This event is raised when the server send back a response */
-
-    alert(evt.target.responseText);
-
-  }
-
-  function uploadFailed(evt) {
-
-    alert("There was an error attempting to upload the file.");
-
-  }
-
-  function uploadCanceled(evt) {
-
-    alert("The upload has been canceled by the user or the browser dropped the connection.");
-
-  }
-  </script>
+	.swatch {
+		width:18%;
+		height: 50px;
+		border-style:solid;
+		border-width:thin;	
+		float: left;
+		margin-right: 3px;	
+	}
+	</style>
 </head>
 
 <body>
-  <form id="form1" enctype="multipart/form-data" method="post" action="/upload">
-    <div>
-      <label for="fileToUpload">Take or select photo(s)</label>
-      <br />
-      <!-- <input type="file" name="fileToUpload" id="fileToUpload" onchange="fileSelected();" accept="image/*" capture="camera" /> -->
-      <input type='file' name='image' id="fileToUpload" onchange="fileSelected()"/>
-    </div>
-    <div id="details"></div>
-    <div>
-      <!-- <input type="button" onclick="uploadFile()" value="Upload" /> -->
-      <input type="submit"/>
-    </div>
-    <div id="progress"></div>
-  </form>
-</body>
 
+	<form method="post" enctype="multipart/form-data" action="/upload">
+		<input type="file" capture="camera" accept="image/*" id="takePictureField" name='image'/>
+		<input type="submit"/>
+	</form>
+
+	<img id="yourimage">
+
+<!-- 	<div id="swatches">
+		<div id="swatch0" class="swatch"></div>
+		<div id="swatch1" class="swatch"></div>
+		<div id="swatch2" class="swatch"></div>
+		<div id="swatch3" class="swatch"></div>
+		<div id="swatch4" class="swatch"></div>
+	</div> -->
+
+	<!-- <input id="displayImage" type = "submit"/> -->
+	<img></img>
+
+	<script>
+	var desiredWidth;
+
+	$(document).ready(function() {
+		console.log('onReady');
+		$("#takePictureField").on("change",gotPic);
+		// $("#yourimage").load(getSwatches);
+		desiredWidth = window.innerWidth;
+
+		if(!("url" in window) && ("webkitURL" in window)) {
+			window.URL = window.webkitURL;   
+		}
+	});
+
+	function getSwatches(){
+		var colorArr = createPalette($("#yourimage"), 5);
+		for (var i = 0; i < Math.min(5, colorArr.length); i++) {
+			$("#swatch"+i).css("background-color","rgb("+colorArr[i][0]+","+colorArr[i][1]+","+colorArr[i][2]+")");
+			console.log($("#swatch"+i).css("background-color"));
+		}
+	}
+	
+    //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
+    function gotPic(event) {
+    	if(event.target.files.length == 1 && 
+    		event.target.files[0].type.indexOf("image/") == 0) {
+
+    		var blob = event.target.files[0]
+    		$("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
+    	}
+
+    	var reader = new window.FileReader();
+    	reader.readAsDataURL(blob);
+    	var base64data;
+    	var js;
+    	reader.onloadend = function() {
+    		base64data = reader.result;
+    		js = JSON.stringify(base64data)
+    		// console.log(base64data);
+
+    // var image = new Image();
+    // image.src = base64data;
+    // document.body.appendChild(image);
+    var encodedData = window.btoa(blob); // encode a string
+
+    var decodedData = window.atob(encodedData); // decode the string
+    // console.log("encoded", encodedData);
+    // console.log("decode", decodedData);
+    // console.log(encodedData,  decodedData);
+
+    // var url = "http://intense-harbor-6396.herokuapp.com";
+    // $.post(url, )
+    }
+
+}
+</script>    
+</body>
 </html>

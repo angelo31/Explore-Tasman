@@ -4,6 +4,7 @@ var express = require('express')
 , app = express()
 , pg = require('pg').native
 , fs = require('fs')
+// , connectionString = process.env.DATABASE_URL || "http://intense-harbor-6396.herokuapp.com"
 , connectionString = process.env.DATABASE_URL
 , port = process.env.PORT || 3000
 , client;
@@ -18,7 +19,6 @@ app.use(app.router);
 // attempt to connect to database
 client = new pg.Client(connectionString);
 // client.connect();
-
 
 var coords = [
 { lat: -42.5667, lon: 32.767 }, 
@@ -65,6 +65,9 @@ app.post('/upload', function(req, res) {
 		else {
 			var newPath = __dirname + "/uploads/fullsize/" + imageName;
 			var thumbPath = __dirname + "/uploads/thumbs/" + imageName;
+
+			// var newPath = "http://intense-harbor-6396.herokuapp.com/uploads/fullsize/" + imageName;
+			// var thumbPath = "http://intense-harbor-6396.herokuapp.com/uploads/thumbs/" + imageName;
 		  /// write file to uploads/fullsize folder
 		  fs.writeFile(newPath, data, function (err) {
 
@@ -80,6 +83,7 @@ app.post('/upload', function(req, res) {
 
 		  	// console.log((JSON.stringify(req.files)))
 		  	res.redirect("/uploads/fullsize/" + imageName);
+			// res.redirect("/");
 
 		  });
 /*
@@ -110,7 +114,7 @@ app.post('/upload', function(req, res) {
 
 app.get('/uploads/fullsize/:file', function (req, res){
 	file = req.params.file;
-	var img = fs.readFile( __dirname + "/uploads/fullsize/" + file);
+	var img = fs.readFile( __dirname + "uploads/fullsize/" + file);
 	res.writeHead(200, {'Content-Type': 'image/jpg' });
 	res.end(img, 'binary');
 });
