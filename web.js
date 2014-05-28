@@ -81,7 +81,7 @@ app.post('/upload', function(req, res) {
 		  	});
 
 		  	// console.log((JSON.stringify(req.files)))
-		  	res.redirect("/uploads/thumbs/" + imageName);
+		  	res.redirect("/uploads/fullsize/" + imageName);
 			// res.redirect("/");
 
 		  });
