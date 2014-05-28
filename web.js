@@ -37,7 +37,7 @@ var form = "<!DOCTYPE HTML><html><body>" +
 "</body></html>";
 
 /// Include ImageMagick
-var im = require('imagemagick');
+// var im = require('imagemagick');
 
 app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
