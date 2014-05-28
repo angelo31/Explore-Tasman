@@ -17,7 +17,7 @@ app.use(app.router);
 
 // attempt to connect to database
 client = new pg.Client(connectionString);
-client.connect();
+// client.connect();
 
 
 var coords = [
@@ -69,14 +69,14 @@ app.post('/upload', function(req, res) {
 		  fs.writeFile(newPath, data, function (err) {
 
 		  	/// write file to uploads/thumbs folder
-		  	im.resize({
+		  	/*im.resize({
 		  		srcPath: newPath,
 		  		dstPath: thumbPath,
 		  		width:   200
 		  	}, function(err, stdout, stderr){
 		  		if (err) throw err;
 		  		console.log('resized image to fit within 200x200px');
-		  	});
+		  	});*/
 
 		  	// console.log((JSON.stringify(req.files)))
 		  	res.redirect("/uploads/fullsize/" + imageName);
@@ -101,7 +101,7 @@ app.post('/upload', function(req, res) {
 		}
 	})*/
 
-	res.end();
+	// res.end();
 }
 });
 });
