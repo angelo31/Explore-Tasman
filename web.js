@@ -3,9 +3,9 @@ var express = require('express')
 // ,app = express.createServer(express.logger())
 , app = express()
 , pg = require('pg').native
+, fs = require('fs')
 , connectionString = process.env.DATABASE_URL
 , port = process.env.PORT || 3000
-, fs = require('fs')
 , client;
 
 // make express handle JSON and other requests
@@ -16,8 +16,8 @@ app.use(express.static(__dirname));
 app.use(app.router);
 
 // attempt to connect to database
-//client = new pg.Client(connectionString);
-//client.connect();
+client = new pg.Client(connectionString);
+client.connect();
 
 
 var coords = [
@@ -83,12 +83,23 @@ app.post('/upload', function(req, res) {
 
 		  });*/
 
-	client.query("insert into tasman_table (imgName, img) values ($1, $2)", 
+	client.query("INSERT INTO tasman_table (imgName, img) VALUES ($1, $2)", 
 		[imageName, newData],
 		function(err, writeResult) {
 			console.log("err", err, "pg writeResult", writeResult)
 		});
 
+	query.on("row", function(result) {
+		console.log(result);
+
+		if (!result) {
+			return res.send("no data found!");
+		}
+
+		else {
+			res.send("awesome")
+		}
+	})
 
 	res.end();
 		}
