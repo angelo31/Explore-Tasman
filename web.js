@@ -37,7 +37,7 @@ var form = "<!DOCTYPE HTML><html><body>" +
 "</body></html>";
 
 /// Include ImageMagick
-// var im = require('imagemagick');
+var im = require('imagemagick');
 
 app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
@@ -48,8 +48,8 @@ app.get('/', function(req, res) {
 /// Post files
 app.post('/upload', function(req, res) {
 	fs.readFile(req.files.image.path, function (err, data) {
-		// console.log("data", data)
-		var newData = '\\x' + data;
+		console.log("data", data)
+		// var newData = '\\x' + data;
 		// console.log("hex data", data)
 
 
@@ -72,28 +72,31 @@ app.post('/upload', function(req, res) {
 		  fs.writeFile(newPath, data, function (err) {
 
 		  	/// write file to uploads/thumbs folder
-		  	/*im.resize({
+		  	im.resize({
 		  		srcPath: newPath,
 		  		dstPath: thumbPath,
 		  		width:   200
 		  	}, function(err, stdout, stderr){
 		  		if (err) throw err;
 		  		console.log('resized image to fit within 200x200px');
-		  	});*/
+		  	});
 
 		  	// console.log((JSON.stringify(req.files)))
-		  	res.redirect("/uploads/fullsize/" + imageName);
+		  	// res.redirect("/uploads/fullsize/" + imageName);
+
 			// res.redirect("/");
+			// res.end();
 
-		  });
-/*
-	client.query("INSERT INTO tasman_table (imgName, img) VALUES ($1, $2)", 
-		[imageName, newData],
-		function(err, writeResult) {
-			console.log("err", err, "pg writeResult", writeResult)
-		});
+		  // });
+		  	// res.redirect("/uploads/thumbs/" + imageName);
 
-	query.on("row", function(result) {
+		  	client.query("INSERT INTO tasman_table (imgName, img) VALUES ($1, $2)", 
+		  		[imageName, data],
+		  		function(err, writeResult) {
+		  			console.log("err", err, "pg writeResult", writeResult)
+		  		});
+
+	/*query.on("row", function(result) {
 		console.log(result);
 
 		if (!result) {
@@ -105,10 +108,43 @@ app.post('/upload', function(req, res) {
 		}
 	})*/
 
-	// res.end();
-}
+})
+	res.end();
+		}
+	});
 });
-});
+
+app.get("/get", function(req, res, next) {
+	client.query('select img from tasman_table limit 1',
+		function(err, readResult) {
+			console.log("err", err, "pg readResult", readResult);
+			fs.writeFile('')
+		})
+})
+
+app.post('/upload/photos', function (req, res) {
+
+	var serverPath = 'images/' + req.files.userPhoto.name;
+
+	console.log(__dirname + " /public/" + serverPath)
+
+	fs.rename ( 
+		req.files.userPhoto.path,
+		__dirname + '/public/' + serverPath,
+		function (error) {
+			if(error) {
+				res.send( {
+					error: "Something went wrong!"
+				})
+				return;
+			}
+
+			res.send({
+				path: serverPath
+			});
+		}
+		);
+})
 
 /// Show files
 

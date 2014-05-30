@@ -8,8 +8,6 @@
 	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="quantize.js"></script>
 	<script type="text/javascript" charset="utf-8" src="color-thief.js"></script>
-	<script type="text/javascript" charset="utf-8" src="jquery.form.js"></script>
-
 
 	<style>
 	#yourimage {
@@ -35,8 +33,7 @@
 
 <body>
 
-	<form id = "uploadForm" method="post" enctype="multipart/form-data" action="/upload">
-	<!-- <form id = "uploadForm" method="post" enctype="multipart/form-data"> -->
+	<form method="post" enctype="multipart/form-data" action="/upload">
 		<input type="file" capture="camera" accept="image/*" id="takePictureField" name='image'/>
 		<input type="submit"/>
 	</form>
@@ -82,7 +79,7 @@
     		event.target.files[0].type.indexOf("image/") == 0) {
 
     		var blob = event.target.files[0]
-    		// $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
+    		$("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
     	}
 
     	var reader = new window.FileReader();
@@ -106,7 +103,7 @@
 
     // var url = "http://intense-harbor-6396.herokuapp.com";
     // $.post(url, )
-}
+    }
 
 }
 </script>    
