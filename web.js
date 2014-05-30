@@ -43,10 +43,11 @@ app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
 	// res.end(form);
 	// res.sendFile("index.html")
+	res.send("No.")
 })
 
 /// Post files
-app.post('/upload', function(req, res) {
+app.post('/upload', function (req, res) {
 	fs.readFile(req.files.image.path, function (err, data) {
 		console.log("data", data)
 		// var newData = '\\x' + data;
@@ -116,7 +117,7 @@ app.post('/upload', function(req, res) {
 	});
 });
 
-app.get("/get", function(req, res, next) {
+app.get("/get", function (req, res, next) {
 	client.query('select img from tasman_table limit 1',
 		function(err, readResult) {
 			console.log("err", err, "pg readResult", readResult);
