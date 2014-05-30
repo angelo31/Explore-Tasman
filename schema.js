@@ -5,7 +5,7 @@ var pg = require('pg').native
 
 client = new pg.Client(connectionString);
 client.connect();
-query = client.query('CREATE TABLE tasman_table (imgName text, img bytea)');
+query = client.query('CREATE TABLE tasman_table (imgName text, image bytea)');
 
 
 /* 

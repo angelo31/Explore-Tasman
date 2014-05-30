@@ -97,7 +97,6 @@ app.post('/upload', function (req, res) {
 		  			console.log("err", err, "pg writeResult", writeResult)
 		  		});
 
-		  	console.log("save successful!")
 
 	/*query.on("row", function(result) {
 		console.log(result);
