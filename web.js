@@ -90,12 +90,12 @@ app.post('/upload', function (req, res) {
 
 		  // });
 		  	// res.redirect("/uploads/thumbs/" + imageName);
-
-		  	client.query("INSERT INTO tasman_table (imgName, img) VALUES ($1, $2)", 
+/*
+		  	client.query("INSERT INTO tasman_table (imgName, image) VALUES ($1, $2)", 
 		  		[imageName, data],
 		  		function(err, writeResult) {
 		  			console.log("err", err, "pg writeResult", writeResult)
-		  		});
+		  		});*/
 
 
 	/*query.on("row", function(result) {
@@ -110,8 +110,8 @@ app.post('/upload', function (req, res) {
 		}
 	})*/
 
-})
 		  res.redirect("/uploads/thumbs/" + imageName);
+})
 		}
 	});
 });
