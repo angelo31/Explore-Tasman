@@ -53,7 +53,6 @@ app.post('/upload', function (req, res) {
 		// var newData = '\\x' + data;
 		// console.log("hex data", data)
 
-
 		var imageName = req.files.image.name
 
 		/// If there's an error
