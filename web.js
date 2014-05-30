@@ -96,6 +96,8 @@ app.post('/upload', function(req, res) {
 		  			console.log("err", err, "pg writeResult", writeResult)
 		  		});
 
+		  	console.log("save successful!")
+
 	/*query.on("row", function(result) {
 		console.log(result);
 
@@ -109,7 +111,7 @@ app.post('/upload', function(req, res) {
 	})*/
 
 })
-	res.end();
+		  res.redirect("/uploads/thumbs/" + imageName);
 		}
 	});
 });
