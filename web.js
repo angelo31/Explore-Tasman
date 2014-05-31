@@ -84,7 +84,7 @@ app.post('/upload', function(req, res) {
 		  	res.redirect("/uploads/fullsize/" + imageName);
 			// res.redirect("/");
 
-		  });
+		});
 /*
 	client.query("INSERT INTO tasman_table (imgName, img) VALUES ($1, $2)", 
 		[imageName, newData],
