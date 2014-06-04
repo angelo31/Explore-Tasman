@@ -7,7 +7,10 @@ var express = require('express')
 // , connectionString = process.env.DATABASE_URL || "http://intense-harbor-6396.herokuapp.com"
 , connectionString = process.env.DATABASE_URL
 , port = process.env.PORT || 3000
-, client;
+// , client
+, knox = require('knox')
+, crypto = require("crypto")
+;
 
 // make express handle JSON and other requests
 app.use(express.bodyParser());
@@ -16,19 +19,30 @@ app.use(express.static(__dirname));
 // // if not able to serve up a static file try and handle as REST invocation
 app.use(app.router);
 
+var AWS = require('aws-sdk');
+AWS.config.loadFromPath('aws.json');
+var s3_bucket = new AWS.S3( { params: {Bucket: 'exploretasman'} } );
+
+// Set your region for future requests.
+AWS.config.region = 'us-west-2';
+
+// AWS stuff
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
+
+var amazon_url = "http://s3.amazonaws.com/" + S3_BUCKET;
+
+var knox_params = {
+		key: "AKIAJJUYC4EAIF7D2XDQ"
+	,	secret: "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"
+	,	bucket: "us-west-2"
+};
+
 // attempt to connect to database
-client = new pg.Client(connectionString);
+// client = new pg.Client(connectionString);
 // client.connect();
 
-var coords = [
-{ lat: -42.5667, lon: 32.767 }, 
-{ lat: 35.76556, lon: 75.5675 }, 
-{ lat: -35.65756, lon: 20.656 }, 
-{ lat: 67.356756, lon: 45.896 }, 
-{ lat: -50.567, lon:185.3450 }, 
-{ lat: 0, lon: 0 }, 
-{ lat: -40.930, lon: 173.050 }
-]
 
 var form = "<!DOCTYPE HTML><html><body>" +
 "<form method='post' action='/upload' enctype='multipart/form-data'>" +
@@ -42,19 +56,19 @@ var im = require('imagemagick');
 app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
 	// res.end(form);
-	// res.sendFile("index.html")
-	res.send("No.")
+	res.sendFile("index.html")
+	// res.send("No.")
 })
 
 /// Post files
 app.post('/upload', function (req, res) {
 	fs.readFile(req.files.image.path, function (err, data) {
-		console.log("data", data)
+		// console.log("data", data)
 		// var newData = '\\x' + data;
-		// console.log("hex data", data)
 
 		var imageName = req.files.image.name
 
+/*
 		/// If there's an error
 		if(!imageName){
 			console.log("There was an error")
@@ -86,33 +100,84 @@ app.post('/upload', function (req, res) {
 
 			// res.redirect("/");
 			// res.end();
+		  });
 
-		  // });
-		  	// res.redirect("/uploads/thumbs/" + imageName);
+		  	res.redirect("/uploads/thumbs/" + imageName);
 /*
 		  	client.query("INSERT INTO tasman_table (imgName, image) VALUES ($1, $2)", 
 		  		[imageName, data],
 		  		function(err, writeResult) {
 		  			console.log("err", err, "pg writeResult", writeResult)
 		  		});*/
+		// }
 
-
-	/*query.on("row", function(result) {
-		console.log(result);
-
-		if (!result) {
-			return res.send("no data found!");
+var client = knox.createClient(knox_params);
+var file = req.files.image;
+/*
+client.putFile(file.path, 'images/' + imageName, { "Content-Type": file.type, 'x-amz-acl': 'public-read'},
+	function(err, result) {
+		if(err) {
+			return;
 		}
-
 		else {
-			res.send("awesome")
+			if (200 == result.statusCode) {
+				console.log("Uploaded to my bucket!");
+			}
+			else { 
+				console.log("Failed to upload to bucket :( "); 
+			}
 		}
 	})*/
 
-		  res.redirect("/uploads/thumbs/" + imageName);
-})
-		}
+var obj = {foo: "bar"};
+var string = JSON.stringify(obj);
+
+var th = client.put("/images/test.json" , {
+	"Content-Length": string.length,
+	"Content-Type": file.type
+});
+
+th.on("response", function (res) {
+	if (200 == res.statusCode) {
+		console.log("saved to %s", th.url)
+	}
+});
+// res.end(string) //shows whatever on screen
+
+POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
+            "conditions": [
+            {"bucket": "exploretasman"},
+            ["starts-with", "$key", ""],
+            {"acl": "public-read"},                           
+            ["starts-with", "$Content-Type", ""],
+            ["content-length-range", 0, 524288000]
+            ]
+          };
+
+    var secret = "tmLD3P8IwfUbsXq7v871evbZyjeh15vEnvMYlFGg";
+    var policy = JSON.stringify(POLICY_JSON);
+    // var policyBase64 = Base64.encode(policy);
+
+    var bota = require("btoa")
+    var policyBase64 = bota(policy);
+
+    // policy = eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0= 
+
+    // signature = 373d4d4a847056a79c9f80a86a6875ee6bb89f08
+
+    console.log (policyBase64)
+
+    // var signature = b64_hmac_sha1(secret, policyBase64);
+    // b64_hmac_sha1(secret, policyBase64);
+    // console.log( signature);
+
+	var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
+	console.log("Signature:");
+	console.log(signature); // sGRBx76tlCjZ8xTTPZS7wT/q+oQ=
+
+res.redirect('/');
 	});
+
 });
 
 app.get("/get", function (req, res, next) {
@@ -148,7 +213,6 @@ app.post('/upload/photos', function (req, res) {
 })
 
 /// Show files
-
 app.get('/uploads/fullsize/:file', function (req, res){
 	file = req.params.file;
 	var img = fs.readFile( __dirname + "uploads/fullsize/" + file);
