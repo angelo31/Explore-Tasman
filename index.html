@@ -116,9 +116,6 @@
     // console.log("encoded", encodedData);
     // console.log("decode", decodedData);
     // console.log(encodedData,  decodedData);
-
-    // var url = "http://intense-harbor-6396.herokuapp.com";
-    // $.post(url, )
 }
 
 }
@@ -130,14 +127,14 @@ function uploadFile() {
     var file = document.getElementById('file').files[0];
     var fd = new FormData();
 
-    var key = "events/" + (new Date).getTime() + '-' + file.name;
+    var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
 
     fd.append('key', key);
     fd.append('acl', 'public-read'); 
     fd.append('Content-Type', file.type);      
     fd.append('AWSAccessKeyId', 'AKIAJJUYC4EAIF7D2XDQ');
-    fd.append('policy', 'eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0=')
-    fd.append('signature','sGRBx76tlCjZ8xTTPZS7wT/q+oQ=');
+    fd.append('policy', policyBase64)
+    fd.append('signature',"sGRBx76tlCjZ8xTTPZS7wT/q+oQ=");
 
     fd.append("file",file);
 
@@ -167,7 +164,7 @@ function uploadProgress(evt) {
 
   function uploadComplete(evt) {
     /* This event is raised when the server send back a response */
-    alert("Done - " + evt.target.responseText );
+    alert("Upload complete!" + evt.target.responseText );
   }
 
   function uploadFailed(evt) {
@@ -193,17 +190,15 @@ function uploadProgress(evt) {
     var secret = "tmLD3P8IwfUbsXq7v871evbZyjeh15vEnvMYlFGg";
     var policy = JSON.stringify(POLICY_JSON);
     // var policyBase64 = Base64.encode(policy);
-    // var policyBase64 = window.btoa(policy);
+    var policyBase64 = window.btoa(policy);
 
-    var policyBase64 = "eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0=" 
+    // var policyBase64 = "eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0=" 
 
     // var signature = "373d4d4a847056a79c9f80a86a6875ee6bb89f08"
 
     // console.log ( policyBase64 )
 
-    // var signature = b64_hmac_sha1(secret, policyBase64);
-    // b64_hmac_sha1(secret, policyBase64);
-    // console.log( signature);
+	// var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
 
 
 </script>

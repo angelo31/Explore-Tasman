@@ -173,15 +173,15 @@ POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 
     // signature = 373d4d4a847056a79c9f80a86a6875ee6bb89f08
 
-    console.log (policyBase64)
+    // console.log (policyBase64)
 
     // var signature = b64_hmac_sha1(secret, policyBase64);
     // b64_hmac_sha1(secret, policyBase64);
     // console.log( signature);
 
 	var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
-	console.log("Signature:");
-	console.log(signature); // sGRBx76tlCjZ8xTTPZS7wT/q+oQ=
+	// console.log("Signature:");
+	// console.log(signature); // sGRBx76tlCjZ8xTTPZS7wT/q+oQ=
 
 res.redirect('/');
 	});
