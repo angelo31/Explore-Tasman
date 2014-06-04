@@ -64,7 +64,12 @@ app.get('/', function(req, res) {
 app.post('/upload', function (req, res) {
 	fs.readFile(req.files.image.path, function (err, data) {
 		// console.log("data", data)
+<<<<<<< HEAD
 		// var newData = '\\x' + data;
+=======
+		var newData = '\\x' + data;
+		// console.log("hex data", data)
+>>>>>>> 739786c6a6abe004bcbe6ee404125f45d98991a2
 
 		var imageName = req.files.image.name
 
@@ -98,9 +103,19 @@ app.post('/upload', function (req, res) {
 		  	// console.log((JSON.stringify(req.files)))
 		  	// res.redirect("/uploads/fullsize/" + imageName);
 
+<<<<<<< HEAD
 			// res.redirect("/");
 			// res.end();
 		  });
+=======
+		});
+/*
+	client.query("INSERT INTO tasman_table (imgName, img) VALUES ($1, $2)", 
+		[imageName, newData],
+		function(err, writeResult) {
+			console.log("err", err, "pg writeResult", writeResult)
+		});
+>>>>>>> 739786c6a6abe004bcbe6ee404125f45d98991a2
 
 		  	res.redirect("/uploads/thumbs/" + imageName);
 /*
