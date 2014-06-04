@@ -44,7 +44,7 @@
 	<form id="form1" enctype="multipart/form-data" method="post">
 		<div class="row">
 			<label for="file">Select a File to Upload</label><br />
-			<input type="file" name="file" id="file"/>
+			<input type="file" name="file" id="file" capture="camera" accept="image/*" />
 		</div>
 		<div id="fileName"></div>
 		<div id="fileSize"></div>
@@ -195,12 +195,9 @@ function uploadProgress(evt) {
     // var policyBase64 = "eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0=" 
 
     // var signature = "373d4d4a847056a79c9f80a86a6875ee6bb89f08"
-
     // console.log ( policyBase64 )
 
 	// var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
-
-
 </script>
 
 </body>

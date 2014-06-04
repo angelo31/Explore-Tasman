@@ -51,7 +51,7 @@ var form = "<!DOCTYPE HTML><html><body>" +
 "</body></html>";
 
 /// Include ImageMagick
-var im = require('imagemagick');
+// var im = require('imagemagick');
 
 app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
@@ -66,9 +66,7 @@ app.post('/upload', function (req, res) {
 		// console.log("data", data)
 		// var newData = '\\x' + data;
 		// console.log("hex data", data)
-
 		var imageName = req.files.image.name
-
 /*
 		/// If there's an error
 		if(!imageName){
@@ -119,8 +117,6 @@ app.post('/upload', function (req, res) {
 		  		});*/
 		// }
 
-var client = knox.createClient(knox_params);
-var file = req.files.image;
 /*
 client.putFile(file.path, 'images/' + imageName, { "Content-Type": file.type, 'x-amz-acl': 'public-read'},
 	function(err, result) {
@@ -136,7 +132,9 @@ client.putFile(file.path, 'images/' + imageName, { "Content-Type": file.type, 'x
 			}
 		}
 	})*/
-
+/*
+var client = knox.createClient(knox_params);
+var file = req.files.image;
 var obj = {foo: "bar"};
 var string = JSON.stringify(obj);
 
@@ -149,7 +147,7 @@ th.on("response", function (res) {
 	if (200 == res.statusCode) {
 		console.log("saved to %s", th.url)
 	}
-});
+});*/
 // res.end(string) //shows whatever on screen
 
 POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
@@ -164,20 +162,13 @@ POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 
     var secret = "tmLD3P8IwfUbsXq7v871evbZyjeh15vEnvMYlFGg";
     var policy = JSON.stringify(POLICY_JSON);
-    // var policyBase64 = Base64.encode(policy);
 
-    var bota = require("btoa")
-    var policyBase64 = bota(policy);
+    var btoa = require("btoa")
+    var policyBase64 = btoa(policy);
 
     // policy = eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0= 
 
-    // signature = 373d4d4a847056a79c9f80a86a6875ee6bb89f08
-
     // console.log (policyBase64)
-
-    // var signature = b64_hmac_sha1(secret, policyBase64);
-    // b64_hmac_sha1(secret, policyBase64);
-    // console.log( signature);
 
 	var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
 	// console.log("Signature:");
