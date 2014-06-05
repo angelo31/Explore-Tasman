@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <!--        <meta name = "apple-mobile-web-app-cappble" content="yes"/>-->
+
+    <title>index file</title>
+    <!--        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">-->
+    <meta charset="utf-8">
+
+    <!--PLACE Favicon icon over here-->
+    <link rel = "shortcut icon" href = "">
+
+    <title>Mobile Webapp layout</title>
+
+    <!-- Jquery and Jquery mobile -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js">
+    </script>
+
+
+    <style type ="text/css">
+
+    html, body {
+
+        height: 960px;
+        width:640px;
+        margin: 0px;
+        padding: 0px;
+
+    }
+
+    #map-canvas{
+
+        height:860px;
+        width:100%;
+        margin-left:auto;
+        margin-right:auto;
+        border-right-width:2px;
+        border-right:color:#ffffff;
+
+    }
+
+    .fileUpload{
+        height:56px;
+    }
+    /* input field transprent */
+    .fileUpload input.upload{
+        overflow:hidden;
+        opacity:0;
+        height:100%;
+        width:100%;
+    }
+    
+
+    </style>
+
+    <!-- Google API testing -->
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+    <!-- Getusermedia testing -->
+    <script type = "text/javascript" src="js/main.js"></script>
+
+    <script>
+
+    var map;
+    var centerLatlng= new google.maps.LatLng(-40.930, 173.050);
+
+    var MY_MAPTYPE_ID = "custom_style";
+
+    function initialize(){   
+
+        //Setting up the customize style for the map.
+        var style_Tasman = [
+        {
+            "featureType": "water",
+            "elementType": "geometry.fill",
+            "stylers": [
+            { "hue": "#00ffff" },
+            { "color": "#1b8080" }
+            ]
+        },{
+            "featureType": "road",
+            "elementType": "geometry.fill",
+            "stylers": [
+            { "color": "#F24C32" },
+            { "weight": 1 }
+            ]
+        }
+
+        ];
+        
+        //For the map basic set up    
+        var mapOptions = {
+
+          //Default to Abel Tasman National Park    
+          center: centerLatlng,
+          zoom: 13,
+		  // panControl: false,
+		  // zoomControl: false,
+       disableDefaultUI:true,
+
+       mapTypeControlOptions:{  
+          mapTypeIds:[google.maps.MapTypeId.ROADMAP,MY_MAPTYPE_ID]
+      },
+      mapTypeId: MY_MAPTYPE_ID
+  }
+
+  map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+
+          //Image marker setting
+//        var image = 'img/Tasman isaland.jpg';
+//        var mosquituo = new google.map.LatLng(-40.915703, 173.066509);
+//        var beachMarker = new google.maps.Marker({
+//            position:mosquituo,
+//            icon:image,
+//            map:map
+//        });
+
+
+
+          //Marker for google map
+          var marker = new google.maps.Marker({
+              position:centerLatlng,
+              title:"Hello World!"
+
+          });  
+          //setMap for marker appear on the map
+          marker.setMap(map);
+
+          //Custom style name for style map
+
+          var styledMapOptions ={
+              name:'Custom Style'
+          };
+
+          var customMapType = new google.maps.StyledMapType(style_Tasman,styledMapOptions);
+
+          map.mapTypes.set(MY_MAPTYPE_ID,customMapType);
+
+        } //initialize
+
+           //When the page loads, the line belows call the function to initialize() to loadup the map    
+           google.maps.event.addDomListener(window, 'load', initialize);
+
+           </script>    
+
+
+
+           <!--  Swipe function -->
+
+           <!--  Pitch function -->
+
+           <!--  Responsive CSS -->
+           <link type ="text/css" href="css/theme-responsive.css" rel="stylesheet">
+           <!--  Main CSS       -->
+           <link type ="text/css" href="css/main.css" rel="stylesheet">
+
+       </head>
+
+       <body onload="initialize()">
+
+        <div data-role="page" id ="home">
+            <div data-role="header" data-theme="b">
+                <h1>Maps</h1>
+                <a href="#" class="ui-btn-left ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
+                <a href="#" class="ui-btn-right ui-btn ui-btn-b ui-btn-inline ui-mini ui-corner-all ui-btn-icon-right ui-icon-info">info</a>
+            </div>
+
+            <div role="main" id ="map-canvas">
+            </div>
+            <div class ="button">
+                <div data-role="controlgroup">        
+                    <a href = "photo.html" class="ui-btn ui-icon-comment  ui-btn-icon-left ui-corner-all ui-btn-b">Services</a>
+                    <a href = "#" class="ui-btn ui-icon-phone ui-btn-icon-left ui-corner-all ui-btn-b">Contact</a>
+                    <a href = "#" class="ui-btn ui-icon-grid ui-btn-icon-left ui-corner-all ui-btn-b">Events</a>
+                    <a href = "#" class="ui-btn ui-icon-user ui-btn-icon-left ui-corner-all ui-btn-b">Hire</a>
+                </div>  
+            </div>
+
+            <div data-role="footer" data-theme="b" data-position="fixed">
+                <nav data-role = "navbar">
+                    <ul>
+                        <li><a href = "#" class= "ui-btn ui-icon-home ui-btn-icon-top">Home</a></li>
+
+                        <!-- <li><a href = "#" input type = "file" class= "ui-btn ui-icon-camera ui-btn-icon-top" capture = "camera" accept="image/*" id="takePictureField" >Photo</a></li> -->
+
+                        <li><a href="#myPopup" data-rel="popup" class="ui-btn ui-icon-camera ui-btn-icon-top">Upload photo</a></li>
+                        <!-- <div class = "fileUpload ui-btn ui-icon-camera ui-btn-icon-top"> -->
+                        <!-- <input type = "file" class = "upload" capture = "camera" accept="image/*" id="takePictureField"  multiple data-role="none"> -->
+
+                        <!-- <input type="file" name="file" id="file" capture="camera" accept="image/*" class = "upload" multiple data-role="none"/> -->
+
+                        <li><a href = "#" class= "ui-btn ui-icon-bars ui-btn-icon-top">Setting</a></li>  
+                    </ul>
+                </nav>
+            </div>
+            <div data-role="popup" id="myPopup">
+                <form method="post" enctype="multipart/form-data" id="new_message">
+                    <input type="file" name="file" id="file" capture="camera" accept="image/*" multiple data-role="none"/>
+                    <input type="button" onclick="uploadFile()" value = "Upload"/>
+                </form>
+            </div>
+
+        </div>
+
+
+        <!--  Let us take images -->
+        <script>
+        function uploadFile() {
+
+            var file = document.getElementById('file').files[0];
+            var fd = new FormData();
+
+    var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
+
+    fd.append('key', key);
+    fd.append('acl', 'public-read');
+    fd.append('Content-Type', file.type);
+    fd.append('AWSAccessKeyId', 'AKIAJJUYC4EAIF7D2XDQ');
+    fd.append('policy', policyBase64);
+    fd.append('signature', "sGRBx76tlCjZ8xTTPZS7wT/q+oQ=");
+
+    fd.append("file", file);
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.upload.addEventListener("progress", uploadProgress, false);
+    xhr.addEventListener("load", uploadComplete, false);
+    xhr.addEventListener("error", uploadFailed, false);
+    xhr.addEventListener("abort", uploadCanceled, false);
+
+    xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE BEFORE YOU SEND 
+
+    xhr.send(fd);
+}
+
+function uploadProgress(evt) {
+    if (evt.lengthComputable) {
+        var percentComplete = Math.round(evt.loaded * 100 / evt.total);
+        document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
+    } else {
+        document.getElementById('progressNumber').innerHTML = 'unable to compute';
+    }
+}
+
+function uploadComplete(evt) {
+    /* This event is raised when the server send back a response */
+    alert("Upload complete!" + evt.target.responseText);
+}
+
+function uploadFailed(evt) {
+    alert("There was an error attempting to upload the file." + evt);
+}
+
+function uploadCanceled(evt) {
+    alert("The upload has been canceled by the user or the browser dropped the connection.");
+}
+
+var experiation = new Date(new Date().getTime() + 1000 * 60 * 20).toISOString();
+
+POLICY_JSON = {
+    "expiration": "2020-12-01T12:00:00.000Z",
+    "conditions": [{
+        "bucket": "exploretasman"
+    }, ["starts-with", "$key", ""], {
+        "acl": "public-read"
+    }, ["starts-with", "$Content-Type", ""],
+        ["content-length-range", 0, 524288000] //max file size is 500MB?
+        ]
+    };
+
+    var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
+    var secret = window.atob(secret64);
+
+    var policy = JSON.stringify(POLICY_JSON);
+    var policyBase64 = window.btoa(policy);
+    </script> 
+
+
+</body>
+</html>

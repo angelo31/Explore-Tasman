@@ -19,16 +19,18 @@ app.use(express.static(__dirname));
 // // if not able to serve up a static file try and handle as REST invocation
 app.use(app.router);
 
+/*
 var AWS = require('aws-sdk');
 AWS.config.loadFromPath('aws.json');
 var s3_bucket = new AWS.S3( { params: {Bucket: 'exploretasman'} } );
 
 // Set your region for future requests.
 AWS.config.region = 'us-west-2';
+*/
 
 // AWS stuff
 var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 var S3_BUCKET = process.env.S3_BUCKET;
 
 var amazon_url = "http://s3.amazonaws.com/" + S3_BUCKET;
@@ -39,17 +41,17 @@ var knox_params = {
 	,	bucket: "us-west-2"
 };
 
+
 // attempt to connect to database
 // client = new pg.Client(connectionString);
 // client.connect();
-
-
+/*
 var form = "<!DOCTYPE HTML><html><body>" +
 "<form method='post' action='/upload' enctype='multipart/form-data'>" +
 "<input type='file' name='image'/>" +
 "<input type='submit' /></form>" +
 "</body></html>";
-
+*/
 /// Include ImageMagick
 // var im = require('imagemagick');
 
@@ -150,7 +152,9 @@ th.on("response", function (res) {
 });*/
 // res.end(string) //shows whatever on screen
 
-POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
+var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
+
+POLICY_JSON = { "expiration": experiation,
             "conditions": [
             {"bucket": "exploretasman"},
             ["starts-with", "$key", ""],
@@ -160,24 +164,48 @@ POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
             ]
           };
 
-    var secret = "tmLD3P8IwfUbsXq7v871evbZyjeh15vEnvMYlFGg";
+    var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
+    var secret = new Buffer(secret64, 'base64').toString('ascii');
+
     var policy = JSON.stringify(POLICY_JSON);
 
-    var btoa = require("btoa")
-    var policyBase64 = btoa(policy);
+    var policyBase64 = new Buffer(JSON.stringify(POLICY_JSON), 'utf8').toString('base64');
 
     // policy = eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0= 
 
-    // console.log (policyBase64)
-
 	var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
-	// console.log("Signature:");
-	// console.log(signature); // sGRBx76tlCjZ8xTTPZS7wT/q+oQ=
 
 res.redirect('/');
 	});
-
 });
+
+var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
+var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
+var secret = new Buffer(secret64, 'base64').toString('ascii');
+var bucket = "exploretasman";
+
+function sign(req, res, next) {
+ 
+    var fileName = req.body.fileName,
+        expiration = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
+ 
+    var policy =
+    { "expiration": expiration,
+        "conditions": [
+            {"bucket": bucket},
+            ["starts-with", "$key", ""],
+            {"acl": 'public-read'},
+            ["starts-with", "$Content-Type", ""],
+            ["content-length-range", 0, 524288000]
+        ]};
+
+    policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
+    signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
+    res.json({bucket: bucket, awsKey: awsKey, policy: policyBase64, signature: signature});
+}
+
+app.post('/signing', sign);
+
 
 app.get("/get", function (req, res, next) {
 	client.query('select img from tasman_table limit 1',
