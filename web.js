@@ -8,7 +8,7 @@ var express = require('express')
 , connectionString = process.env.DATABASE_URL
 , port = process.env.PORT || 3000
 // , client
-, knox = require('knox')
+// , knox = require('knox')
 , crypto = require("crypto")
 ;
 
@@ -18,15 +18,6 @@ app.use(express.bodyParser());
 app.use(express.static(__dirname));
 // // if not able to serve up a static file try and handle as REST invocation
 app.use(app.router);
-
-/*
-var AWS = require('aws-sdk');
-AWS.config.loadFromPath('aws.json');
-var s3_bucket = new AWS.S3( { params: {Bucket: 'exploretasman'} } );
-
-// Set your region for future requests.
-AWS.config.region = 'us-west-2';
-*/
 
 // AWS stuff
 var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
@@ -134,23 +125,6 @@ client.putFile(file.path, 'images/' + imageName, { "Content-Type": file.type, 'x
 			}
 		}
 	})*/
-/*
-var client = knox.createClient(knox_params);
-var file = req.files.image;
-var obj = {foo: "bar"};
-var string = JSON.stringify(obj);
-
-var th = client.put("/images/test.json" , {
-	"Content-Length": string.length,
-	"Content-Type": file.type
-});
-
-th.on("response", function (res) {
-	if (200 == res.statusCode) {
-		console.log("saved to %s", th.url)
-	}
-});*/
-// res.end(string) //shows whatever on screen
 
 var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
 
