@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=320 user-scalable=no" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>ColorThief Demo</title>
+    <script type="text/javascript" src="phonegap.js"></script>
 
     <!-- Jquery and Jquery mobile -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -127,16 +128,16 @@ $.ajaxSetup ({
 });
 
 $("#getButton").bind("click", function (event, ui) {
-    var url = "http://intense-harbor-6396.herokuapp.com/url";
-    // var url = "http://localhost:3000/url";
+    // var url = "http://intense-harbor-6396.herokuapp.com/url";
+    var url = "http://localhost:3000/url";
     $.get(url, function(data) {
         $("#yourimage").attr("src", data.url); //makes it able to display blob as an image....
     })
 })
 
 $("#sendButton").bind("click", function (event, ui) {
-    var url = "http://intense-harbor-6396.herokuapp.com/upload";
-    // var url = "http://localhost:3000/upload";
+    // var url = "http://intense-harbor-6396.herokuapp.com/upload";
+    var url = "http://localhost:3000/upload";
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
     // uploadFile(key); //call so can upload file to S3
@@ -151,7 +152,6 @@ $("#sendButton").bind("click", function (event, ui) {
     console.log("posting: ", inJSON)
 
     $.post(url, inJSON, function (data) {
-        // alert("posting: " + inJSON)
     }, "json");
 });
 

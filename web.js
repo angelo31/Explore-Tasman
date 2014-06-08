@@ -28,7 +28,7 @@ var amazon_url = "http://s3.amazonaws.com/" + S3_BUCKET;
 
 // attempt to connect to database
 client = new pg.Client(connectionString);
-// client.connect();
+client.connect();
 
 /// Include ImageMagick
 // var im = require('imagemagick');
@@ -132,9 +132,17 @@ var row1 = {
 	imageURL: req.body.url
 };
 
-console.log("Received info: ", row1)
+console.log("Received info: ", row1);
 
-// client.query();
+client.query("INSERT into tasman_table (userid, imgName, imagedescription, imageurl) VALUES($1, $2, $3, $4)",
+	[row1.id, row1.imageName, row1.description, row1.imageURL],
+	function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			console.log("row inserted: " + id + " " + imageURL)
+		}
+	});
 
 res.send(row1)
 // res.redirect('/');
@@ -144,6 +152,21 @@ res.send(row1)
 app.get("/url", function (req, res) {
 	var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
 	var inJSON  = {"url": imageURL};
+
+var query = client.query("SELECT url FROM tasman_table WHERE description='test d'")
+
+query.on("row", function(result) {
+	console.log(result);
+
+	if(!result) {
+		return res.send("No data found!");
+	}
+
+	else {
+		res.send("url: " + result.url);
+	}
+})
+
 	res.send(inJSON);
 })
 
@@ -151,29 +174,6 @@ var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
 var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
 var secret = new Buffer(secret64, 'base64').toString('ascii');
 var bucket = "exploretasman";
-
-function sign(req, res, next) {
- 
-    var fileName = req.body.fileName,
-        expiration = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
- 
-    var policy =
-    { "expiration": expiration,
-        "conditions": [
-            {"bucket": bucket},
-            ["starts-with", "$key", ""],
-            {"acl": 'public-read'},
-            ["starts-with", "$Content-Type", ""],
-            ["content-length-range", 0, 524288000]
-        ]};
-
-    policyBase64 = new Buffer(JSON.stringify(policy), 'utf8').toString('base64');
-    signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
-    res.json({bucket: bucket, awsKey: awsKey, policy: policyBase64, signature: signature});
-}
-
-app.post('/signing', sign);
-
 
 app.get("/get", function (req, res, next) {
 	client.query('select img from tasman_table limit 1',
