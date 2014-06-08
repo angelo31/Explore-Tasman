@@ -140,7 +140,7 @@ $("#sendButton").bind("click", function (event, ui) {
     // var url = "http://localhost:3000/upload";
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
-    // uploadFile(key); //call so can upload file to S3
+    uploadFile(key); //call so can upload file to S3
 
     var id = $("#IDText").val();
     var imageName = $("#ImageNameText").val();
