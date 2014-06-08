@@ -163,7 +163,7 @@ query.on("row", function(result) {
 	}
 
 	else {
-		res.send("url: " + result.imageurl);
+		res.send("url: " + result);
 	}
 })
 
