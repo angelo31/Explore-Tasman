@@ -132,10 +132,15 @@ var row1 = {
 	imageURL: req.body.url
 };
 
+var id = req.body.id,
+	imageName= req.body.imageName,
+	description= req.body.description,
+	imageURL= req.body.url
+
 console.log("Received info: ", row1);
 
 client.query("INSERT into tasman_table (userid, imgName, imagedescription, imageurl) VALUES($1, $2, $3, $4)",
-	[row1.id, row1.imageName, row1.description, row1.imageURL],
+	[id, imageName, description, imageURL],
 	function(err, result) {
 		if (err) {
 			console.log(err);
