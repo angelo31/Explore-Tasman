@@ -150,8 +150,8 @@ res.send(row1)
 });
 
 app.get("/url", function (req, res) {
-	var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
-	var inJSON  = {"url": imageURL};
+	// var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
+	// var inJSON  = {"url": imageURL};
 
 var query = client.query("SELECT imageurl FROM tasman_table WHERE imagedescription='test d'")
 
@@ -163,7 +163,8 @@ query.on("row", function(result) {
 	}
 
 	else {
-		res.send("url: " + result);
+		var json = {"url": result.imageURL};
+		res.send(json);
 	}
 })
 

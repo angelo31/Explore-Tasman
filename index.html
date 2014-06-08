@@ -148,9 +148,9 @@ $("#sendButton").bind("click", function (event, ui) {
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
 
     var inJSON = {"id": id, "imageName": imageName, "description": desc, "url": imgURL};
-
     console.log("posting: ", inJSON)
 
+    // sending to server
     $.post(url, inJSON, function (data) {
     }, "json");
 });
