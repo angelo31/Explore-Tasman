@@ -167,7 +167,7 @@ query.on("row", function(result) {
 	}
 })
 
-	res.send(inJSON);
+	// res.send(inJSON);
 })
 
 var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
