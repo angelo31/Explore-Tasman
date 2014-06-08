@@ -8,7 +8,7 @@ var express = require('express')
 , connectionString = process.env.DATABASE_URL
 , port = process.env.PORT || 3000
 // , client
-, knox = require('knox')
+// , knox = require('knox')
 , crypto = require("crypto")
 ;
 
@@ -45,13 +45,7 @@ var knox_params = {
 // attempt to connect to database
 // client = new pg.Client(connectionString);
 // client.connect();
-/*
-var form = "<!DOCTYPE HTML><html><body>" +
-"<form method='post' action='/upload' enctype='multipart/form-data'>" +
-"<input type='file' name='image'/>" +
-"<input type='submit' /></form>" +
-"</body></html>";
-*/
+
 /// Include ImageMagick
 // var im = require('imagemagick');
 
@@ -134,23 +128,6 @@ client.putFile(file.path, 'images/' + imageName, { "Content-Type": file.type, 'x
 			}
 		}
 	})*/
-/*
-var client = knox.createClient(knox_params);
-var file = req.files.image;
-var obj = {foo: "bar"};
-var string = JSON.stringify(obj);
-
-var th = client.put("/images/test.json" , {
-	"Content-Length": string.length,
-	"Content-Type": file.type
-});
-
-th.on("response", function (res) {
-	if (200 == res.statusCode) {
-		console.log("saved to %s", th.url)
-	}
-});*/
-// res.end(string) //shows whatever on screen
 
 var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
 

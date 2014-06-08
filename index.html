@@ -49,7 +49,7 @@
 		<!-- <div id="fileType"></div> -->
 		<div class="row">
 			<input type="button" onclick="uploadFile()" value="Upload" />
-            <!-- <input type="button" onclick="s3uploader()" value="Upload" /> -->
+            <input type="button" value="Upload" id = "testButton"/>
 
         </div>
         <div id="progressNumber"></div>
@@ -103,10 +103,6 @@
     		base64data = reader.result;
     		js = JSON.stringify(base64data)
     		// console.log(base64data);
-    		
-    // var image = new Image();
-    // image.src = base64data;
-    // document.body.appendChild(image);
     var encodedData = window.btoa(blob); // encode a string
     var decodedData = window.atob(encodedData); // decode the string
 }
@@ -116,53 +112,10 @@
 
 <script>
 
-function s3uploader() {
-    var signingURI = "130.195.4.176:3000/signing"
-
-    function upload (imageURI, fileName) {
-        var deferred = $.Deferred(),
-        file = document.getElementById('file').files[0],
-        fd = new FormData();
-        var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
+$("#testButton").bind("click", function(event, ui) {
 
 
-        var xhr = new XMLHttpRequest();
-
-        $.ajax({url: signingURI, data: {"fileName": key}, dataType: "json"})
-        .done(function (data) {
-            
-        fd.append('key', key);
-        fd.append('acl', 'public-read'); 
-        fd.append('Content-Type', file.type);      
-        fd.append('AWSAccessKeyId', data.awsKey);
-        fd.append('policy', policyBase64)
-        fd.append('signature', data.signature);
-
-        fd.append("file",file);
-
-    xhr.upload.addEventListener("progress", uploadProgress, false);
-    xhr.addEventListener("load", uploadComplete, false);
-    xhr.addEventListener("error", uploadFailed, false);
-    xhr.addEventListener("abort", uploadCanceled, false);
-
-    xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE BEFORE YOU SEND 
-
-    xhr.send(fd);
-            
-
-        })
-        .fail(function (error) {
-            console.log(JSON.stringify(error));
-        });
-
-        return deferred.promise();
-
-    }
-
-    return {
-        upload: upload
-    }
-}
+});
 
 function uploadFile() {
 
