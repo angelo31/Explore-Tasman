@@ -5,8 +5,7 @@ var pg = require('pg').native
 
 client = new pg.Client(connectionString);
 client.connect();
-query = client.query('CREATE TABLE tasman_table (imgName text, image bytea)');
-
+query = client.query('CREATE TABLE tasman_table (userid serial, imgName text, imagedescription text, imageurl text)');
 
 /* 
 
@@ -17,13 +16,6 @@ CREATE TABLE tasman_table (
 	img bytea not null,
 )
 
-convert image to base64 before sending to server?
-var image = atob(img)
-
-var src =  'data:image/bmp;base64,' + myBase64EncodedData;
-var src = 'data:image/bmp;base64,' + btoa(myData);
-
-INSERT into tasman_table(bytea data )...
 */
 
 query.on('end', function(result) { 

@@ -133,7 +133,7 @@ res.send(imageURL)
 });
 
 app.get("/url", function (req, res) {
-	// var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
+	var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
 	var inJSON  = {"url": imageURL};
 	res.send(inJSON);
 })

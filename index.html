@@ -123,8 +123,8 @@ $.ajaxSetup ({
 });
 
 $("#getButton").bind("click", function (event, ui) {
-    var url = "http://intense-harbor-6396.herokuapp.com/url";
-    // var url = "http://localhost:3000/url";
+    // var url = "http://intense-harbor-6396.herokuapp.com/url";
+    var url = "http://localhost:3000/url";
     $.get(url, function(data) {
         $("#yourimage").attr("src", data.url); //makes it able to display blob as an image....
     })
@@ -155,20 +155,16 @@ function uploadFile(key) {
     fd.append('AWSAccessKeyId', 'AKIAJJUYC4EAIF7D2XDQ');
     fd.append('policy', policyBase64)
     fd.append('signature',"sGRBx76tlCjZ8xTTPZS7wT/q+oQ=");
-
     fd.append("file",file);
 
     var xhr = new XMLHttpRequest();
-
     xhr.upload.addEventListener("progress", uploadProgress, false);
     xhr.addEventListener("load", uploadComplete, false);
     xhr.addEventListener("error", uploadFailed, false);
     xhr.addEventListener("abort", uploadCanceled, false);
 
     xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE BEFORE YOU SEND 
-
     xhr.send(fd);
-
 }
 
 function uploadProgress(evt) {
