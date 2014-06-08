@@ -153,7 +153,7 @@ app.get("/url", function (req, res) {
 	var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
 	var inJSON  = {"url": imageURL};
 
-var query = client.query("SELECT url FROM tasman_table WHERE description='test d'")
+var query = client.query("SELECT imageurl FROM tasman_table WHERE description='test d'")
 
 query.on("row", function(result) {
 	console.log(result);
@@ -163,7 +163,7 @@ query.on("row", function(result) {
 	}
 
 	else {
-		res.send("url: " + result.url);
+		res.send("url: " + result.imageurl);
 	}
 })
 
