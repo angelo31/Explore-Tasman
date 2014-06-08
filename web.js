@@ -7,7 +7,7 @@ var express = require('express')
 // , connectionString = process.env.DATABASE_URL || "http://intense-harbor-6396.herokuapp.com"
 , connectionString = process.env.DATABASE_URL
 , port = process.env.PORT || 3000
-// , client
+, client
 // , knox = require('knox')
 , crypto = require("crypto")
 ;
@@ -27,7 +27,7 @@ var S3_BUCKET = process.env.S3_BUCKET;
 var amazon_url = "http://s3.amazonaws.com/" + S3_BUCKET;
 
 // attempt to connect to database
-// client = new pg.Client(connectionString);
+client = new pg.Client(connectionString);
 // client.connect();
 
 /// Include ImageMagick
@@ -42,7 +42,7 @@ app.get('/', function(req, res) {
 
 /// Post files
 app.post('/upload', function (req, res) {
-	if(!req.body.hasOwnProperty("url")) {
+	if(!req.body.hasOwnProperty("id") || !req.body.hasOwnProperty("imageName") || !req.body.hasOwnProperty("description") || !req.body.hasOwnProperty("url")) {
 		res.statusCode = 400;
 		return res.send("Error 400: Post syntax incorrect.")
 	}
@@ -125,9 +125,18 @@ POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 
 	var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
 
-var imageURL = req.body.url;
-console.log("Received url: ", imageURL)
-res.send(imageURL)
+var row1 = {
+	id: req.body.id,
+	imageName: req.body.imageName,
+	description: req.body.description,
+	imageURL: req.body.url
+};
+
+console.log("Received info: ", row1)
+
+// client.query();
+
+res.send(row1)
 // res.redirect('/');
 	// });
 });

@@ -5,13 +5,11 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <title>ColorThief Demo</title>
 
-    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <!-- // <script type="text/javascript" charset="utf-8" src="quantize.js"></script> -->
-    <!-- // <script type="text/javascript" charset="utf-8" src="color-thief.js"></script> -->
-    <!-- // <script type="text/javascript" charset="utf-8" src="jquery.form.js"></script> -->
-
-    <!-- // <script type="text/javascript" src="js/lodash.min.js"></script> -->
-    <!-- // <script type="text/javascript" src="js/s3upload.js"></script> -->
+    <!-- Jquery and Jquery mobile -->
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js">
+    </script>
 
     <style>
     /*#yourimage {
@@ -34,19 +32,29 @@
 </head>
 
 <body>
+
+    <div role="main" class="ui-content">
     <form method="post" enctype="multipart/form-data" action="/upload">
         <input type="file" id = "files" capture="camera" accept="image/*" id="takePictureField" name='image'/>
-        <input type="submit"/>
+        <input type="submit" value="submit"/>
     </form>
 
+    <h2>Upload to s3</h2>
     <form id="form1" enctype="multipart/form-data" method="post">
         <div class="row">
+            <label for = "IDText">User ID:</label>
+            <input name = "IDText" id = "IDText" type = "text"> <br>
+
+            <label for = "ImageNameText">Image name:</label>
+            <input name = "ImageNameText" id = "ImageNameText" type = "text"> <br>
+
+            <label for = "descText">Description:</label>
+            <input name = "descText" id = "descText" type = "text"> <br>
+
             <label for="file">Select a File to Upload</label><br />
             <input type="file" name="file" id="file" capture="camera" accept="image/*" />
         </div>
-        <!-- <div id="fileName"></div> -->
-        <!-- <div id="fileSize"></div> -->
-        <!-- <div id="fileType"></div> -->
+
         <div class="row">
             <!-- <input type="button" onclick="uploadFile()" value="Upload" /> -->
             <input type="button" value="Upload" id = "sendButton"/>
@@ -55,7 +63,6 @@
         <div id="progressNumber"></div>
     <input type="button" value="get image" id = "getButton"/>
     </form>
-
 
     <img id="yourimage"/>
 
@@ -66,6 +73,8 @@
         <div id="swatch3" class="swatch"></div>
         <div id="swatch4" class="swatch"></div>
     </div> -->
+
+    </div>
 
     <script>
     var desiredWidth;
@@ -105,10 +114,6 @@
             base64data = reader.result;
             js = JSON.stringify(base64data)
             // console.log(base64data);
-            
-    // var image = new Image();
-    // image.src = base64data;
-    // document.body.appendChild(image);
     var encodedData = window.btoa(blob); // encode a string
     var decodedData = window.atob(encodedData); // decode the string
 }
@@ -117,7 +122,6 @@
 </script>
 
 <script>
-
 $.ajaxSetup ({
     cache: false
 });
@@ -132,14 +136,22 @@ $("#getButton").bind("click", function (event, ui) {
 
 $("#sendButton").bind("click", function (event, ui) {
     var url = "http://intense-harbor-6396.herokuapp.com/upload";
-    // var url = "http://localhost:3000/upload"
+    // var url = "http://localhost:3000/upload";
     var file = document.getElementById('file').files[0];
-
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
-    uploadFile(key); //call so can upload file to S3
+    // uploadFile(key); //call so can upload file to S3
+
+    var id = $("#IDText").val();
+    var imageName = $("#ImageNameText").val();
+    var desc = $("#descText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
-    var inJSON = {"url": imgURL};
+
+    var inJSON = {"id": id, "imageName": imageName, "description": desc, "url": imgURL};
+
+    console.log("posting: ", inJSON)
+
     $.post(url, inJSON, function (data) {
+        // alert("posting: " + inJSON)
     }, "json");
 });
 
