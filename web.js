@@ -42,6 +42,10 @@ app.get('/', function(req, res) {
 
 /// Post files
 app.post('/upload', function (req, res) {
+	if(!req.body.hasOwnProperty("url")) {
+		res.statusCode = 400;
+		return res.send("Error 400: Post syntax incorrect.")
+	}
 /*
 	fs.readFile(req.files.image.path, function (err, data) {
 		// console.log("data", data)
@@ -122,11 +126,17 @@ POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 	var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
 
 var imageURL = req.body.url;
-res.redirect('/');
+console.log("Received url: ", imageURL)
+res.send(imageURL)
+// res.redirect('/');
 	// });
-
-
 });
+
+app.get("/url", function (req, res) {
+	// var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
+	var inJSON  = {"url": imageURL};
+	res.send(inJSON);
+})
 
 var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
 var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";

@@ -14,10 +14,10 @@
     <!-- // <script type="text/javascript" src="js/s3upload.js"></script> -->
 
     <style>
-    #yourimage {
+    /*#yourimage {
       width: 15%;   
       height: 15%;  
-  }
+  }*/
   #swatches {
       width: 100%;
       height: 50px; 
@@ -53,9 +53,11 @@
 
         </div>
         <div id="progressNumber"></div>
+    <input type="button" value="get image" id = "getButton"/>
     </form>
 
-        <img id="yourimage"> 
+
+    <img id="yourimage"/>
 
 <!--    <div id="swatches">
         <div id="swatch0" class="swatch"></div>
@@ -115,27 +117,34 @@
 </script>
 
 <script>
-    
-    $("#sendButton").bind("click", function (event, ui) {
-        // var url = "http://intense-harbor-6396.herokuapp.com/";
-        var url = "http://localhost:3000/upload"
+
+$.ajaxSetup ({
+    cache: false
+});
+
+$("#getButton").bind("click", function (event, ui) {
+    var url = "http://intense-harbor-6396.herokuapp.com/url";
+    // var url = "http://localhost:3000/url";
+    $.get(url, function(data) {
+        $("#yourimage").attr("src", data.url); //makes it able to display blob as an image....
+    })
+})
+
+$("#sendButton").bind("click", function (event, ui) {
+    var url = "http://intense-harbor-6396.herokuapp.com/upload";
+    // var url = "http://localhost:3000/upload"
     var file = document.getElementById('file').files[0];
 
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
-        uploadFile(key);
+    uploadFile(key); //call so can upload file to S3
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
-
     var inJSON = {"url": imgURL};
-
-        $.post(url, inJSON, function (data) {
-            alert("Send data!");
-        }, "json");
-    });
+    $.post(url, inJSON, function (data) {
+    }, "json");
+});
 
 function uploadFile(key) {
-
     var fd = new FormData();
-
     var file = document.getElementById('file').files[0];
 
     // var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
