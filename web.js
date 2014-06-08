@@ -26,23 +26,10 @@ var S3_BUCKET = process.env.S3_BUCKET;
 
 var amazon_url = "http://s3.amazonaws.com/" + S3_BUCKET;
 
-var knox_params = {
-		key: "AKIAJJUYC4EAIF7D2XDQ"
-	,	secret: "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"
-	,	bucket: "us-west-2"
-};
-
-
 // attempt to connect to database
 // client = new pg.Client(connectionString);
 // client.connect();
-/*
-var form = "<!DOCTYPE HTML><html><body>" +
-"<form method='post' action='/upload' enctype='multipart/form-data'>" +
-"<input type='file' name='image'/>" +
-"<input type='submit' /></form>" +
-"</body></html>";
-*/
+
 /// Include ImageMagick
 // var im = require('imagemagick');
 
@@ -55,6 +42,7 @@ app.get('/', function(req, res) {
 
 /// Post files
 app.post('/upload', function (req, res) {
+/*
 	fs.readFile(req.files.image.path, function (err, data) {
 		// console.log("data", data)
 		// var newData = '\\x' + data;
@@ -110,25 +98,9 @@ app.post('/upload', function (req, res) {
 		  		});*/
 		// }
 
-/*
-client.putFile(file.path, 'images/' + imageName, { "Content-Type": file.type, 'x-amz-acl': 'public-read'},
-	function(err, result) {
-		if(err) {
-			return;
-		}
-		else {
-			if (200 == result.statusCode) {
-				console.log("Uploaded to my bucket!");
-			}
-			else { 
-				console.log("Failed to upload to bucket :( "); 
-			}
-		}
-	})*/
-
 var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
 
-POLICY_JSON = { "expiration": experiation,
+POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
             "conditions": [
             {"bucket": "exploretasman"},
             ["starts-with", "$key", ""],
@@ -149,8 +121,11 @@ POLICY_JSON = { "expiration": experiation,
 
 	var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
 
+var imageURL = req.body.url;
 res.redirect('/');
-	});
+	// });
+
+
 });
 
 var awsKey = "AKIAJJUYC4EAIF7D2XDQ";

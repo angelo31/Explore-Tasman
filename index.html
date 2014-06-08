@@ -48,8 +48,8 @@
 		<!-- <div id="fileSize"></div> -->
 		<!-- <div id="fileType"></div> -->
 		<div class="row">
-			<input type="button" onclick="uploadFile()" value="Upload" />
-            <!-- <input type="button" onclick="s3uploader()" value="Upload" /> -->
+			<!-- <input type="button" onclick="uploadFile()" value="Upload" /> -->
+            <input type="button" value="Upload" id = "sendButton"/>
 
         </div>
         <div id="progressNumber"></div>
@@ -115,61 +115,30 @@
 </script>
 
 <script>
-
-function s3uploader() {
-    var signingURI = "130.195.4.176:3000/signing"
-
-    function upload (imageURI, fileName) {
-        var deferred = $.Deferred(),
-        file = document.getElementById('file').files[0],
-        fd = new FormData();
-        var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
-
-
-        var xhr = new XMLHttpRequest();
-
-        $.ajax({url: signingURI, data: {"fileName": key}, dataType: "json"})
-        .done(function (data) {
-            
-        fd.append('key', key);
-        fd.append('acl', 'public-read'); 
-        fd.append('Content-Type', file.type);      
-        fd.append('AWSAccessKeyId', data.awsKey);
-        fd.append('policy', policyBase64)
-        fd.append('signature', data.signature);
-
-        fd.append("file",file);
-
-    xhr.upload.addEventListener("progress", uploadProgress, false);
-    xhr.addEventListener("load", uploadComplete, false);
-    xhr.addEventListener("error", uploadFailed, false);
-    xhr.addEventListener("abort", uploadCanceled, false);
-
-    xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE BEFORE YOU SEND 
-
-    xhr.send(fd);
-            
-
-        })
-        .fail(function (error) {
-            console.log(JSON.stringify(error));
-        });
-
-        return deferred.promise();
-
-    }
-
-    return {
-        upload: upload
-    }
-}
-
-function uploadFile() {
-
+    
+    $("#sendButton").bind("click", function (event, ui) {
+        // var url = "http://intense-harbor-6396.herokuapp.com/";
+        var url = "http://localhost:3000/upload"
     var file = document.getElementById('file').files[0];
-    var fd = new FormData();
 
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
+        uploadFile(key);
+    var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
+
+    var inJSON = {"url": imgURL};
+
+        $.post(url, inJSON, function (data) {
+            alert("Send data!");
+        }, "json");
+    });
+
+function uploadFile(key) {
+
+    var fd = new FormData();
+
+    var file = document.getElementById('file').files[0];
+
+    // var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
 
     fd.append('key', key);
     fd.append('acl', 'public-read'); 
@@ -190,6 +159,7 @@ function uploadFile() {
     xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE BEFORE YOU SEND 
 
     xhr.send(fd);
+
 }
 
 function uploadProgress(evt) {
