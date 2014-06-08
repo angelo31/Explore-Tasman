@@ -123,8 +123,8 @@ $.ajaxSetup ({
 });
 
 $("#getButton").bind("click", function (event, ui) {
-    // var url = "http://intense-harbor-6396.herokuapp.com/url";
-    var url = "http://localhost:3000/url";
+    var url = "http://intense-harbor-6396.herokuapp.com/url";
+    // var url = "http://localhost:3000/url";
     $.get(url, function(data) {
         $("#yourimage").attr("src", data.url); //makes it able to display blob as an image....
     })
