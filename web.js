@@ -168,6 +168,7 @@ query.on("row", function(result) {
 	}
 
 	else {
+		console.log(result)
 		var json = {"url": result.imageURL};
 		res.send(json);
 	}
