@@ -161,12 +161,12 @@ $("#sendButton").bind("click", function (event, ui) {
     }, "json");
 });
 
+// uploading file to s3 bucket
 function uploadFile(key) {
     var fd = new FormData();
     var file = document.getElementById('file').files[0];
 
     // var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
-
     fd.append('key', key);
     fd.append('acl', 'public-read'); 
     fd.append('Content-Type', file.type);      
@@ -208,7 +208,7 @@ function uploadCanceled(evt) {
     alert("The upload has been canceled by the user or the browser dropped the connection.");
 }
 
-var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
+// var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
 
 POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 "conditions": [
@@ -224,16 +224,13 @@ var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
 var secret = window.atob(secret64);
 
 var policy = JSON.stringify(POLICY_JSON);
-    // var policyBase64 = Base64.encode(policy);
-    var policyBase64 = window.btoa(policy);
+// var policyBase64 = Base64.encode(policy);
+var policyBase64 = window.btoa(policy);
+// var policyBase64 = "eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0=" 
 
-    // var policyBase64 = "eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0=" 
-
-    // var signature = "373d4d4a847056a79c9f80a86a6875ee6bb89f08"
-    // console.log ( policyBase64 )
-
-    // var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
-    </script>
+// var signature = "373d4d4a847056a79c9f80a86a6875ee6bb89f08"
+// var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
+</script>
 
 </body>
 </html>
