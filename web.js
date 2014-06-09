@@ -24,8 +24,6 @@ var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
 var AWS_SECRET_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 var S3_BUCKET = process.env.S3_BUCKET;
 
-var amazon_url = "http://s3.amazonaws.com/" + S3_BUCKET;
-
 // attempt to connect to database
 client = new pg.Client(connectionString);
 client.connect();
@@ -166,14 +164,12 @@ query.on("row", function(result) {
 	if(!result) {
 		return res.send("No data found!");
 	}
-
 	else {
 		console.log(result)
 		var json = {"url": result.imageURL};
 		res.send(json);
 	}
 })
-
 	// res.send(inJSON);
 })
 
@@ -266,38 +262,9 @@ app.get('/location/random', function(req, res) {
 	res.send(q);
 });
 
-
-//get user id...
-app.get('/user:id', function(req, res) {
-	res.send("Hello World")
-});
-
-//get photos and save in database...
-app.post("/gallery", function(req, res) {
-
-
-});
-
 //get photos and show in gallery...
 app.get("/gallery", function(req, res) {
-
-
-});
-
-app.get('/get/stats', function(req, res) {
-
-  // client.query('INSERT INTO visits(date) VALUES($1)', [date]);
-
-  query = client.query('SELECT * FROM tasman_table');
-  query.on('row', function(result) {
-  	console.log(result);
-
-  	if (!result) {
-  		return res.send('No data found');
-  	} else {
-  		res.send('data from database: ' + result);
-  	}
-  });
+	
 });
 */
 
