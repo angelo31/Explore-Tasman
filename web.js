@@ -25,8 +25,8 @@ var AWS_SECRET_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 var S3_BUCKET = process.env.S3_BUCKET;
 
 // attempt to connect to database
-client = new pg.Client(connectionString);
-client.connect();
+//client = new pg.Client(connectionString);
+//client.connect();
 
 /// Include ImageMagick
 // var im = require('imagemagick');
@@ -137,6 +137,7 @@ var id = req.body.id,
 
 console.log("Received info: ", row1);
 
+/*
 client.query("INSERT into tasman_table (userid, imgName, imagedescription, imageurl) VALUES($1, $2, $3, $4)",
 	[id, imageName, description, imageURL],
 	function(err, result) {
@@ -145,7 +146,7 @@ client.query("INSERT into tasman_table (userid, imgName, imagedescription, image
 		} else {
 			console.log("row inserted: " + id + " " + imageURL)
 		}
-	});
+	});*/
 
 res.send(row1)
 // res.redirect('/');
@@ -153,9 +154,9 @@ res.send(row1)
 });
 
 app.get("/url", function (req, res) {
-	// var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
-	// var inJSON  = {"url": imageURL};
-
+	var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
+	var inJSON  = {"url": imageURL};
+/*
 var query = client.query("SELECT imageurl FROM tasman_table WHERE imagedescription='test d'")
 
 query.on("row", function(result) {
@@ -169,8 +170,8 @@ query.on("row", function(result) {
 		var json = {"url": result.imageURL};
 		res.send(json);
 	}
-})
-	// res.send(inJSON);
+})*/
+	res.send(inJSON);
 })
 
 var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
