@@ -13,10 +13,10 @@
     </script>
 
     <style>
-    /*#yourimage {
-      width: 15%;   
-      height: 15%;  
-      }*/
+    #yourimage {
+      width: 50%;   
+      // height: 15%;  
+      }
       #swatches {
           width: 100%;
           height: 50px; 
@@ -136,9 +136,13 @@ $.ajaxSetup ({
 $("#getButton").bind("click", function (event, ui) {
     var url = "http://intense-harbor-6396.herokuapp.com/url";
     // var url = "http://localhost:3000/url";
-    $.get(url, function(data) {
+    /*$.get(url, function(data) {
         $("#yourimage").attr("src", data.url); //display image....
-    })
+    })*/
+
+	var src = getURL();
+$("#yourimage").attr("src", src);
+
 })
 
 $("#sendButton").bind("click", function (event, ui) {
@@ -152,6 +156,10 @@ $("#sendButton").bind("click", function (event, ui) {
     var imageName = $("#ImageNameText").val();
     var desc = $("#descText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
+
+var getURL = function() {
+	return imgURL;
+}
 
     var inJSON = {"id": id, "imageName": imageName, "description": desc, "url": imgURL};
     console.log("posting: ", inJSON)
