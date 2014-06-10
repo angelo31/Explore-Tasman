@@ -133,6 +133,7 @@ $.ajaxSetup ({
     cache: false
 });
 
+/*
 $("#getButton").bind("click", function (event, ui) {
     var url = "http://intense-harbor-6396.herokuapp.com/url";
     // var url = "http://localhost:3000/url";
@@ -140,10 +141,10 @@ $("#getButton").bind("click", function (event, ui) {
         $("#yourimage").attr("src", data.url); //display image....
     })*/
 
-	var src = getURL();
+	/*var src = getURL();
 $("#yourimage").attr("src", src);
 
-})
+})*/
 
 $("#sendButton").bind("click", function (event, ui) {
     var url = "http://intense-harbor-6396.herokuapp.com/upload";
@@ -167,6 +168,18 @@ var getURL = function() {
     // sending to server
     $.post(url, inJSON, function (data) {
     }, "json");
+
+$("#getButton").bind("click", function (event, ui) {
+    var url = "http://intense-harbor-6396.herokuapp.com/url";
+    // var url = "http://localhost:3000/url";
+    /*$.get(url, function(data) {
+        $("#yourimage").attr("src", data.url); //display image....
+    })*/
+
+	var src = getURL();
+$("#yourimage").attr("src", src);
+
+})
 });
 
 // uploading file to s3 bucket
