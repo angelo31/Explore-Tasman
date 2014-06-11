@@ -265,6 +265,10 @@ var policyBase64 = window.btoa(policy);
 // var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
 
 /* GMAP STUFF */
+
+mapStuff();
+
+function mapStuff() {
 var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
         var content = "<h4>Frenchman Bay</h4><br><img src ='"+imageURL+"'/>";
 
@@ -349,6 +353,8 @@ function gmap_clear_markers() {
     $('.infobox').each(function() {
         $(this).remove();
     });
+}
+
 }
 </script>
 
