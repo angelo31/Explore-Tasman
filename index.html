@@ -9,8 +9,11 @@
     <!-- Jquery and Jquery mobile -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
-    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js">
-    </script>
+    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+
+	<!-- gmap3 -->
+    <script src="http://cdn.jsdelivr.net/gmap3/5.1.1/gmap3.min.js"></script>
+
 
     <style>
     #yourimage {
@@ -29,6 +32,10 @@
           float: left;
           margin-right: 3px;    
       }
+
+	#map {
+		width: 100%;
+	}
       </style>
   </head>
 
@@ -72,6 +79,8 @@
         </form>
 
         <img id="yourimage"/>
+
+	<div id = "map"></div> <!-- testing map-->
 
 <!--    <div id="swatches">
         <div id="swatch0" class="swatch"></div>
@@ -251,6 +260,93 @@ var policyBase64 = window.btoa(policy);
 
 // var signature = "373d4d4a847056a79c9f80a86a6875ee6bb89f08"
 // var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
+
+/* GMAP STUFF */
+var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
+        var content = "<h4>Frenchman Bay</h4><br><img src ='"+imageURL+"'/>";
+
+        var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
+        var content1 = "<h4>Abel Tasman</h4><br><img src ='"+img+"'/>";
+
+        var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
+        var icon = "https://maps.google.com/mapfiles/kml/shapes/"
+
+var data = [{
+            "address": "-40.9206539,173.0071976",
+            "content": content,
+            "status": "live",
+            icon: diffIcon
+        }, {
+            "address": "-40.921829,173.057123",
+            "content": content1,
+            icon: icon + "schools_maps.png"
+        }, {
+            "address": "-40.939611,173.061179",
+            "content": "Abel Tasman Walkway"
+        }, {
+            "address": "-40.939611,173.117179",
+            "content": "Abel Tasman boat",
+            icon: icon + "info-i_maps.png"
+        }];
+
+
+        var $map = $("#map");
+
+        // Gmap Defaults
+        $map.gmap3({
+            map:{
+                options:{
+                    center:[-40.930, 173.050],
+                    zoom: 12,
+                    disableDefaultUI:true,
+                    // bounds: {n:-40.793657, e:173.075851, s:-41.005412, w:172.834839},
+                }
+            }
+        });
+
+// Json Loop
+$.each(data, function(key, val) {
+    $map.gmap3({
+        marker:{
+            values:[{
+                address:val.address,
+                options: {
+                    icon: val.icon,
+                },
+                events: {
+                    click: function (marker, event, context) {
+                        gmap_clear_markers();
+                        $map.gmap3({
+                            map:{
+                              options: {
+                            // center:event.latLng
+                        }
+                    }
+                });
+                        var infowindows = $(this).gmap3({
+                            infowindow:{
+                                address:val.address,
+                                options:{
+                                    content: '<div class="infobox">'+val.content+'</div>',
+                                    offset:{
+                                        y:-32,
+                                        x:12
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }]
+        }
+    });
+});
+// Function Clear Markers
+function gmap_clear_markers() {
+    $('.infobox').each(function() {
+        $(this).remove();
+    });
+}
 </script>
 
 </body>
