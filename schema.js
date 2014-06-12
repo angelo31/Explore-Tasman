@@ -5,10 +5,12 @@ var pg = require('pg').native
 
 client = new pg.Client(connectionString);
 client.connect();
-query = client.query('CREATE TABLE tasman_table (userid text, imgName text, imagedescription text, imageurl text)');
+// query = client.query('CREATE TABLE tasman_table (userid text, imgName text, imagedescription text, imageurl text)');
+
+client.query('CREATE TABLE tasman_table (userid text, imgName text, imagedescription text, imageurl text)');
 
 var newTable = 'CREATE TABLE gps (address text, content text, icon text);';
-	client.query(newTable); //create table
+	query = client.query(newTable); //create table
 
 /* 
 CREATE TABLE tasman_table (
