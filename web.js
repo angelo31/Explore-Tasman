@@ -257,7 +257,7 @@ app.get("/gps", function (req, res) {
 		else {
 			console.log(result);
 			var gpsData = result;
-			res.send(gpsData);
+			res.send("the data: " + gpsData);
 		}
 	})
 });

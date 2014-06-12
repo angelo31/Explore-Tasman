@@ -10,7 +10,7 @@ client.connect();
 client.query('CREATE TABLE tasman_table (userid text, imgName text, imagedescription text, imageurl text)');
 
 // var newTable = 'CREATE TABLE gps (address text, content text, icon text);';
-query = client.query('CREATE TABLE gps (address text, content text, icon text)'); //create table
+query = client.query('CREATE TABLE gps_table (address text, content text, icon text)'); //create table
 
 /* 
 CREATE TABLE tasman_table (
