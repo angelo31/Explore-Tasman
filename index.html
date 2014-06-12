@@ -79,7 +79,7 @@ label.error {
         </form>
 
         <h2>Upload to s3</h2>
-        <form id="form1" enctype="multipart/form-data" method="post">
+        <form id="form1" enctype="multipart/form-data" method="post" class="validate">
             <div class="row">
                 <fieldset data-role="fieldcontain">
                     <!-- <label for = "IDText" class="ui-hidden-accessible">User ID:</label> -->
@@ -127,49 +127,47 @@ label.error {
             <div id="map"></div> <!-- testing map-->
 
         </div>
+    </div>
 
-        <script>
-        var desiredWidth;
-        $(document).ready(function() {
-            console.log('onReady');
-            $("#takePictureField").on("change",gotPic);
-        // $("#yourimage").load(getSwatches);
-        desiredWidth = window.innerWidth;
+    <script>
+    var desiredWidth;
+    $(document).ready(function () {
+        console.log('onReady');
+        $("#takePictureField").on("change", gotPic);
+    // $("#yourimage").load(getSwatches);
+    desiredWidth = window.innerWidth;
 
-        if(!("url" in window) && ("webkitURL" in window)) {
-            window.URL = window.webkitURL;   
+    if (!("url" in window) && ("webkitURL" in window)) {
+        window.URL = window.webkitURL;
+    }
+});
+
+    function getSwatches() {
+        var colorArr = createPalette($("#yourimage"), 5);
+        for (var i = 0; i < Math.min(5, colorArr.length); i++) {
+            $("#swatch" + i).css("background-color", "rgb(" + colorArr[i][0] + "," + colorArr[i][1] + "," + colorArr[i][2] + ")");
+            console.log($("#swatch" + i).css("background-color"));
         }
-    });
+    }
 
-        function getSwatches(){
-            var colorArr = createPalette($("#yourimage"), 5);
-            for (var i = 0; i < Math.min(5, colorArr.length); i++) {
-                $("#swatch"+i).css("background-color","rgb("+colorArr[i][0]+","+colorArr[i][1]+","+colorArr[i][2]+")");
-                console.log($("#swatch"+i).css("background-color"));
-            }
-        }
+//Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
+function gotPic(event) {
+    if (event.target.files.length == 1 && event.target.files[0].type.indexOf("image/") == 0) {
+        var blob = event.target.files[0];
+        // $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
+    }
 
-    //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
-    function gotPic(event) {
-        if(event.target.files.length == 1 && 
-            event.target.files[0].type.indexOf("image/") == 0) {
-
-            var blob = event.target.files[0]
-            // $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
-        }
-
-        var reader = new window.FileReader();
-        reader.readAsDataURL(blob);
-        var base64data;
-        var js;
-        reader.onloadend = function() {
-            base64data = reader.result;
-            js = JSON.stringify(base64data)
-            // console.log(base64data);
-    var encodedData = window.btoa(blob); // encode a string
-    var decodedData = window.atob(encodedData); // decode the string
-}
-
+    var reader = new window.FileReader();
+    reader.readAsDataURL(blob);
+    var base64data;
+    var js;
+    reader.onloadend = function () {
+        base64data = reader.result;
+        js = JSON.stringify(base64data);
+        // console.log(base64data);
+        var encodedData = window.btoa(blob); // encode a string
+        var decodedData = window.atob(encodedData); // decode the string
+    };
 }
 </script>
 
@@ -201,7 +199,6 @@ $("#form1").validate({
             required: true
         },
         descText: {
-            required: true,
             minlength: 5
         },
         file: {
@@ -221,10 +218,9 @@ $("#sendButton").bind("click", function (event, ui) {
     var desc = $("#descText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
 
-
 // if any fields are empty then cant upload
 if (!id || !imageName) {
-    alert("Some fields are empty and need to be filled out! >:)");
+    // alert("Some fields are empty and need to be filled out! >:)");
 }
 
 else {
@@ -232,7 +228,7 @@ else {
 
     var getURL = function() {
        return imgURL;
-   }
+   };
 
    var inJSON = {"id": id, "imageName": imageName, "description": desc, "url": imgURL};
    console.log("posting: ", inJSON);
@@ -244,14 +240,9 @@ else {
     // testing to show img on page
     $("#getButton").bind("click", function (event, ui) {
         var url = "http://intense-harbor-6396.herokuapp.com/url";
-    // var url = "http://localhost:3000/url";
-    /*$.get(url, function(data) {
-        $("#yourimage").attr("src", data.url); //display image....
-    })*/
-
-    var src = getURL();
-    $("#yourimage").attr("src", src);
-})
+        var src = getURL();
+        $("#yourimage").attr("src", src);
+    });
 }
 
 });
@@ -302,7 +293,6 @@ function uploadCanceled(evt) {
 }
 
 // var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
-
 POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 "conditions": [
 {"bucket": "exploretasman"},
@@ -310,8 +300,7 @@ POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 {"acl": "public-read"},                           
 ["starts-with", "$Content-Type", ""],
 ["content-length-range", 0, 524288000] //max file size is 500MB?
-]
-};
+]};
 
 var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
 var secret = window.atob(secret64);
@@ -320,58 +309,19 @@ var policy = JSON.stringify(POLICY_JSON);
 var policyBase64 = window.btoa(policy);
 
 
-
 /* GMAP STUFF */
-
 $("#mapButton").bind("click", function (event, ui) {
-
-    // var url = "http://intense-harbor-6396.herokuapp.com/gps";
-    var url = "http://localhost:3000/gps";
+    var url = "http://intense-harbor-6396.herokuapp.com/gps";
+    // var url = "http://localhost:3000/gps";
     var data = [];
-
-/*$.get(url, function(data) {
-        $("#yourimage").attr("src", data.url); //display image....
-    })*/
 
     $.get(url, function (gps) {
         data = gps;
-        console.log("Data: ", data)
         mapStuff(data)
     })
 })
 
 function mapStuff(data) {
-    /*
-    var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
-    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
-
-    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
-    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
-
-    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
-    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
-
-    var data = [{
-        "address": "-40.9206539,173.0071976",
-        "content": content,
-        "status": "live",
-        icon: diffIcon
-    }, {
-        "address": "-40.921829,173.057123",
-        "content": content1,
-        icon: icon + "schools_maps.png"
-    }, {
-        "address": "-40.939611,173.061179",
-        "content": "Abel Tasman Walkway"
-    }, {
-        "address": "-40.939611,173.117179",
-        "content": "Abel Tasman boat",
-        icon: icon + "info-i_maps.png"
-    }];*/
-
-    console.log("DAta here", data)
-
-
     var $map = $("#map");
 
     // Gmap Defaults
@@ -430,9 +380,7 @@ function mapStuff(data) {
             $(this).remove();
         });
     }
-
 }
 </script>
-
 </body>
 </html>

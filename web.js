@@ -36,7 +36,7 @@ app.get('/', function(req, res) {
 	// res.end(form);
 	res.sendFile("index.html")
 	// res.send("No.")
-})
+});
 
 /// Post files
 app.post('/upload', function (req, res) {
@@ -148,7 +148,7 @@ client.query("INSERT into tasman_table (userid, imgName, imagedescription, image
 		}
 	});*/
 
-res.send(row1)
+res.send(row1);
 // res.redirect('/');
 	// });
 });
@@ -172,22 +172,31 @@ query.on("row", function(result) {
 	}
 })*/
 	res.send(inJSON);
-})
+});
 
+
+/* testing gps */
 app.get("/gps", function (req, res) {
+	var newTable = 'CREATE TABLE gps (address text, content text, icon text);';
+	client.query(newTable); //create table
+
+	query.on("err", function(err) {
+		res.send("error: " + err);
+	});
+
+	// query.on("end", function(result) {
+	// 	client.end();
+	// });
+
 	var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
     var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
-
     var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
     var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
-
     var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
     var icon = "https://maps.google.com/mapfiles/kml/shapes/";
-
 	var data = [{
         "address": "-40.9206539,173.0071976",
         "content": content,
-        "status": "live",
         icon: diffIcon
     }, {
         "address": "-40.921829,173.057123",
@@ -201,10 +210,26 @@ app.get("/gps", function (req, res) {
         "content": "Abel Tasman boat",
         icon: icon + "info-i_maps.png"
     }];
+	// res.send(data);
 
-    console.log(data)
-	res.send(data);
-})
+	client.query("INSERT into gps (address, content, icon) VALUES ('-40.9206539,173.0071976', '" + content + "', '" + diffIcon + "'), ('-40.921829,173.057123', '" + content1 +"', 'https://maps.google.com/mapfiles/kml/shapes/schools_maps.png'), ('-40.939611,173.061179', 'Abel Tasman Walkway', 'https://http://maps.google.com/mapfiles/ms/micons/camera.png'), ('-40.939611,173.117179', 'Abel Tasman boat', 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png');");
+
+	var query = client.query("SELECT row_to_json(gps) from gps;");
+
+	query.on("row", function(result) {
+		if (!result) {
+			return res.send("No data found");
+		}
+
+		else {
+			console.log(result);
+			var gpsData = result;
+			res.send(gpsData);
+		}
+	})
+
+
+});
 
 var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
 var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
