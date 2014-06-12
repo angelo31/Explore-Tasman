@@ -34,7 +34,7 @@ client.connect();
 app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
 	// res.end(form);
-
+/*
 	var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
     var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
     var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
@@ -66,7 +66,7 @@ app.get('/', function(req, res) {
 			} else {
 				console.log("inserted into table!");
 			}
-		});
+		});*/
 
 	res.sendFile("index.html")
 });
