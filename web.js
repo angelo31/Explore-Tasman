@@ -228,11 +228,7 @@ var gpsData = [];
 		else {
 			console.log(result);
 			// gpsData = result;
-			gpsData = [{"address":"-40.9206539,173.0071976","content":"<h4>Frenchman Bay</h4><br><img src ='https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png'/>","icon":"http://maps.google.com
-/mapfiles/marker_green.png"},{"address":"-40.921829,173.057123","content":"<h4>Abel Tasman</h4><br><img src ='https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg'
-/>","icon":"https://maps.google.com/mapfiles/kml/shapes/schools_maps.png"},{"address":"-40.939611,173.061179","content":"Abel Tasman Walkway","icon":"https://maps.google.com/mapfiles/ms/mico
-ns/camera.png"},{"address":"-40.939611,173.117179","content":"Abel Tasman boat","icon":"https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png"}];
-
+			gpsData = [{"address":"-40.9206539,173.0071976","content":"<h4>Frenchman Bay</h4><br><img src ='https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png'/>","icon":"http://maps.google.com/mapfiles/marker_green.png"},{"address":"-40.921829,173.057123","content":"<h4>Abel Tasman</h4><br><img src ='https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg'/>","icon":"https://maps.google.com/mapfiles/kml/shapes/schools_maps.png"},{"address":"-40.939611,173.061179","content":"Abel Tasman Walkway","icon":"https://maps.google.com/mapfiles/ms/micons/camera.png"},{"address":"-40.939611,173.117179","content":"Abel Tasman boat","icon":"https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png"}];
 			res.send(gpsData);
 		}
 	});
