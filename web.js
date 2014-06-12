@@ -217,7 +217,7 @@ VALUES ('-40.9206539,173.0071976', '<h4>Frenchman Bay</h4><br><img src ="https:/
 ('-40.939611,173.061179', 'Abel Tasman Walkway', 'https://maps.google.com/mapfiles/ms/micons/camera.png'), 
 ('-40.939611,173.117179', 'Abel Tasman boat', 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png') );
 	*/
-
+var gpsData = [];
 	var query = client.query("SELECT row_to_json(gps_table) FROM gps_table;");
 	query.on("row", function(result) {
 		if (!result) {
@@ -226,7 +226,7 @@ VALUES ('-40.9206539,173.0071976', '<h4>Frenchman Bay</h4><br><img src ="https:/
 
 		else {
 			console.log(result);
-			var gpsData = result;
+			gpsData += result;
 			res.send(gpsData);
 		}
 	})
