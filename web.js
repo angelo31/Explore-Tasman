@@ -25,8 +25,8 @@ var AWS_SECRET_KEY = process.env.AWS_SECRET_ACCESS_KEY;
 var S3_BUCKET = process.env.S3_BUCKET;
 
 // attempt to connect to database
-//client = new pg.Client(connectionString);
-//client.connect();
+client = new pg.Client(connectionString);
+client.connect();
 
 /// Include ImageMagick
 // var im = require('imagemagick');
@@ -34,8 +34,45 @@ var S3_BUCKET = process.env.S3_BUCKET;
 app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
 	// res.end(form);
+
+	var newTable = 'CREATE TABLE gps (address text, content text, icon text);';
+	client.query(newTable); //create table
+
+	query.on("err", function(err) {
+		res.send("error: " + err);
+	});
+
+	// query.on("end", function(result) {
+	// 	client.end();
+	// });
+
+	var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
+    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
+    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
+    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
+    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
+    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
+	var data = [{
+        "address": "-40.9206539,173.0071976",
+        "content": content,
+        icon: diffIcon
+    }, {
+        "address": "-40.921829,173.057123",
+        "content": content1,
+        icon: icon + "schools_maps.png"
+    }, {
+        "address": "-40.939611,173.061179",
+        "content": "Abel Tasman Walkway"
+    }, {
+        "address": "-40.939611,173.117179",
+        "content": "Abel Tasman boat",
+        icon: icon + "info-i_maps.png"
+    }];
+	// res.send(data);
+
+	client.query("INSERT into gps (address, content, icon) VALUES ('-40.9206539,173.0071976', '" + content + "', '" + diffIcon + "'), ('-40.921829,173.057123', '" + content1 +"', 'https://maps.google.com/mapfiles/kml/shapes/schools_maps.png'), ('-40.939611,173.061179', 'Abel Tasman Walkway', 'https://http://maps.google.com/mapfiles/ms/micons/camera.png'), ('-40.939611,173.117179', 'Abel Tasman boat', 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png');");
+	
 	res.sendFile("index.html")
-	// res.send("No.")
 });
 
 /// Post files
@@ -177,7 +214,7 @@ query.on("row", function(result) {
 
 /* testing gps */
 app.get("/gps", function (req, res) {
-	var newTable = 'CREATE TABLE gps (address text, content text, icon text);';
+	/*var newTable = 'CREATE TABLE gps (address text, content text, icon text);';
 	client.query(newTable); //create table
 
 	query.on("err", function(err) {
@@ -213,6 +250,7 @@ app.get("/gps", function (req, res) {
 	// res.send(data);
 
 	client.query("INSERT into gps (address, content, icon) VALUES ('-40.9206539,173.0071976', '" + content + "', '" + diffIcon + "'), ('-40.921829,173.057123', '" + content1 +"', 'https://maps.google.com/mapfiles/kml/shapes/schools_maps.png'), ('-40.939611,173.061179', 'Abel Tasman Walkway', 'https://http://maps.google.com/mapfiles/ms/micons/camera.png'), ('-40.939611,173.117179', 'Abel Tasman boat', 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png');");
+	*/
 
 	var query = client.query("SELECT row_to_json(gps) from gps;");
 
