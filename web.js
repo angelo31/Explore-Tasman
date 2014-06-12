@@ -227,7 +227,7 @@ VALUES ('-40.9206539,173.0071976', '<h4>Frenchman Bay</h4><br><img src ="https:/
 		else {
 			console.log(result);
 			var gpsData = result;
-			res.send("the data: " + gpsData);
+			res.send(gpsData);
 		}
 	})
 });
