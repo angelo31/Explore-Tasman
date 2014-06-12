@@ -174,11 +174,44 @@ query.on("row", function(result) {
 	res.send(inJSON);
 })
 
+app.get("/gps", function (req, res) {
+	var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
+    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
+
+    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
+    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
+
+    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
+    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
+
+	var data = [{
+        "address": "-40.9206539,173.0071976",
+        "content": content,
+        "status": "live",
+        icon: diffIcon
+    }, {
+        "address": "-40.921829,173.057123",
+        "content": content1,
+        icon: icon + "schools_maps.png"
+    }, {
+        "address": "-40.939611,173.061179",
+        "content": "Abel Tasman Walkway"
+    }, {
+        "address": "-40.939611,173.117179",
+        "content": "Abel Tasman boat",
+        icon: icon + "info-i_maps.png"
+    }];
+
+    console.log(data)
+	res.send(data);
+})
+
 var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
 var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
 var secret = new Buffer(secret64, 'base64').toString('ascii');
 var bucket = "exploretasman";
 
+/*
 app.get("/get", function (req, res, next) {
 	client.query('select img from tasman_table limit 1',
 		function(err, readResult) {
@@ -211,6 +244,7 @@ app.post('/upload/photos', function (req, res) {
 		);
 })
 
+
 /// Show files
 app.get('/uploads/fullsize/:file', function (req, res){
 	file = req.params.file;
@@ -219,55 +253,12 @@ app.get('/uploads/fullsize/:file', function (req, res){
 	res.end(img, 'binary');
 });
 
-
 app.get('/uploads/thumbs/:file', function (req, res){
 	file = req.params.file;
 	var img = fs.readFile( __dirname + "/uploads/thumbs/" + file);
 	res.writeHead(200, {'Content-Type': 'image/jpg' });
 	res.end(img, 'binary');
-});
-
-
-/*
-app.get("/location", function (req, res) {
-	res.send(coords);
-});
-
-//do location stuff
-app.post('/location', function(req, res) {
-	console.log(req.body);
-	if(!req.body.hasOwnProperty('lat') || !req.body.hasOwnProperty('lon')) {
-		res.statusCode = 400;
-		return res.send('Error 400: Post syntax incorrect.');
-	}
-
-	var newCoords = {
-		lat : req.body.lat,
-		lon : req.body.lon
-	};
-
-	coords.push(newCoords);
-	client.query('INSERT INTO tasman_table(text) VALUES($1)', [coords]);
-
-  // should send back the location at this point
-  console.log("Added!");
-  //newCoords.pos = coords.length-1;
-  res.json(true);
-  res.send(newCoords);
-});
-
-app.get('/location/random', function(req, res) {
-	var id = Math.floor(Math.random() * coords.length);
-	var q = coords[id];
-	console.log("Sent!");
-	res.send(q);
-});
-
-//get photos and show in gallery...
-app.get("/gallery", function(req, res) {
-	
-});
-*/
+});*/
 
 app.listen(port, function () {
 	console.log('Listening on:', port);
