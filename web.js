@@ -59,7 +59,14 @@ app.get('/', function(req, res) {
     }];
 	// res.send(data);
 
-	client.query("INSERT into gps (address, content, icon) VALUES ('-40.9206539,173.0071976', '" + content + "', '" + diffIcon + "'), ('-40.921829,173.057123', '" + content1 +"', 'https://maps.google.com/mapfiles/kml/shapes/schools_maps.png'), ('-40.939611,173.061179', 'Abel Tasman Walkway', 'https://http://maps.google.com/mapfiles/ms/micons/camera.png'), ('-40.939611,173.117179', 'Abel Tasman boat', 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png');");
+	client.query("INSERT into gps (address, content, icon) VALUES ('-40.9206539,173.0071976', '" + content + "', '" + diffIcon + "'), ('-40.921829,173.057123', '" + content1 +"', 'https://maps.google.com/mapfiles/kml/shapes/schools_maps.png'), ('-40.939611,173.061179', 'Abel Tasman Walkway', 'https://http://maps.google.com/mapfiles/ms/micons/camera.png'), ('-40.939611,173.117179', 'Abel Tasman boat', 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png');", 
+		function(err, result) {
+			if (err) {
+				console.log(err);
+			} else {
+				console.log("inserted into table!");
+			}
+		});
 
 	res.sendFile("index.html")
 });
@@ -241,8 +248,7 @@ app.get("/gps", function (req, res) {
 	client.query("INSERT into gps (address, content, icon) VALUES ('-40.9206539,173.0071976', '" + content + "', '" + diffIcon + "'), ('-40.921829,173.057123', '" + content1 +"', 'https://maps.google.com/mapfiles/kml/shapes/schools_maps.png'), ('-40.939611,173.061179', 'Abel Tasman Walkway', 'https://http://maps.google.com/mapfiles/ms/micons/camera.png'), ('-40.939611,173.117179', 'Abel Tasman boat', 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png');");
 	*/
 
-	var query = client.query("SELECT row_to_json(gps) from gps;");
-
+	var query = client.query("SELECT row_to_json(gps) FROM gps;");
 	query.on("row", function(result) {
 		if (!result) {
 			return res.send("No data found");
@@ -254,8 +260,6 @@ app.get("/gps", function (req, res) {
 			res.send(gpsData);
 		}
 	})
-
-
 });
 
 var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
