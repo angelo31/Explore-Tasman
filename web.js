@@ -227,14 +227,10 @@ var gpsData = [];
 
 		else {
 			console.log(result);
-			gpsData = [{
-			address: result.address,
-			content: result.content,
-			icon: result.icon
-		}];
-			res.send(gpsData);
+			gpsData = result;
 		}
-	})
+		res.send(gpsData);
+	});
 });
 
 var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
