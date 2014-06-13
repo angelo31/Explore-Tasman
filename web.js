@@ -37,9 +37,13 @@ app.get('/', function(req, res) {
 	res.sendFile("index.html")
 });
 
+
+// client.query('CREATE TABLE tasman_table (userid text, title text, imagedescription text, category text, gps text, imageurl text)');
+
+
 /// Post files
 app.post('/upload', function (req, res) {
-	if(!req.body.hasOwnProperty("id") || !req.body.hasOwnProperty("imageName") || !req.body.hasOwnProperty("description") || !req.body.hasOwnProperty("url")) {
+	if(!req.body.hasOwnProperty("id") || !req.body.hasOwnProperty("title") || !req.body.hasOwnProperty("description") || !req.body.hasOwnProperty("url")) {
 		res.statusCode = 400;
 		return res.send("Error 400: Post syntax incorrect.")
 	}
@@ -127,6 +131,7 @@ var row1 = {
 	title: req.body.imageName,
 	description: req.body.description,
 	category: req.body.category,
+	gps: req.body.gps,
 	imageURL: req.body.url
 };
 
@@ -134,13 +139,14 @@ var id = req.body.id,
 	title= req.body.imageName,
 	description= req.body.description,
 	category= req.body.category,
+	gps = req.body.gps,
 	imageURL= req.body.url
 
 console.log("Received info: ", row1);
 
 /*
-client.query("INSERT into tasman_table (userid, title, imagedescription, category, imageurl) VALUES($1, $2, $3, $4)",
-	[id, title, description, category, imageURL],
+client.query("INSERT into tasman_table (userid, title, imagedescription, category, gps, imageurl) VALUES($1, $2, $3, $4, $5, $6)",
+	[id, title, description, category, gps, imageURL],
 	function(err, result) {
 		if (err) {
 			console.log(err);

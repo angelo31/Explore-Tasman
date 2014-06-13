@@ -207,6 +207,9 @@ $("#form1").validate({
         descText: {
             minlength: 5
         },
+        categoryText: {
+            required: true
+        },
         file: {
             required: true
         },
@@ -249,8 +252,8 @@ $("#sendButton").bind("click", function (event, ui) {
     console.log(gps);
 
 // if any fields are empty then cant upload
-if (!id || !TitleText) {
-    // alert("Some fields are empty and need to be filled out! >:)");
+if (!id || !TitleText || !category) {
+    alert("Some fields are empty and need to be filled out! >:)");
 }
 
 else {
@@ -260,7 +263,7 @@ else {
        return imgURL;
    };
 
-   var inJSON = {"id": id, "TitleText": TitleText, "description": desc, "category": category, "url": imgURL};
+   var inJSON = {"id": id, "TitleText": TitleText, "description": desc, "category": category, "gps": gps, "url": imgURL};
    console.log("posting: ", inJSON);
 
     // sending to server
