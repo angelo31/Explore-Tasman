@@ -132,6 +132,10 @@ label.error {
 
             <div id="map"></div> <!-- testing map-->
 
+            <input type="button" value="Animals" id = "animalButton"/>
+            <input type="button" value="Plants" id = "plantButton"/>
+            <input type="button" value="Other" id = "otherButton"/>
+
         </div>
     </div>
 
@@ -224,8 +228,8 @@ function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-         alert("Geolocation is not supported by this browser.");
-    }
+     alert("Geolocation is not supported by this browser.");
+ }
 }
 
 function showPosition(position) {
@@ -235,21 +239,20 @@ function showPosition(position) {
     document.getElementById("locationText").innerHTML = data;
 }
 
-
 function showError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            alert("User denied the request for Geolocation.");
-            break;
+        alert("User denied the request for Geolocation.");
+        break;
         case error.POSITION_UNAVAILABLE:
-            alert("Location information is unavailable.");
-            break;
+        alert("Location information is unavailable.");
+        break;
         case error.TIMEOUT:
-            alert("The request to get user location timed out.");
-            break;
+        alert("The request to get user location timed out.");
+        break;
         case error.UNKNOWN_ERROR:
-            alert("An unknown error occurred.");
-            break;
+        alert("An unknown error occurred.");
+        break;
     }
 }
 
@@ -290,7 +293,7 @@ else {
 
     // testing to show img on page
     $("#getButton").bind("click", function (event, ui) {
-        var url = "http://intense-harbor-6396.herokuapp.com/url";
+        // var url = "http://intense-harbor-6396.herokuapp.com/url";
         var src = getURL();
         $("#yourimage").attr("src", src);
     });
@@ -370,10 +373,10 @@ $("#mapButton").bind("click", function (event, ui) {
         data = gps;
         mapStuff(data)
     })
-})
+});
 
-function mapStuff(data) {
-    var $map = $("#map");
+/* Showing map */
+var $map = $("#map");
 
     // Gmap Defaults
     $map.gmap3({
@@ -387,6 +390,43 @@ function mapStuff(data) {
             }
         }
     });
+
+    $("#animalButton").bind("click", function (event, ui) {
+        var url = "http://intense-harbor-6396.herokuapp.com/animals";
+    // var url = "http://localhost:3000/animals";
+    var data = [];
+
+    $.get(url, function (gps) {
+        data = gps;
+        mapStuff(data)
+    })
+});
+
+    $("#plantButton").bind("click", function (event, ui) {
+        var url = "http://intense-harbor-6396.herokuapp.com/plants";
+    // var url = "http://localhost:3000/plants";
+    var data = [];
+
+    $.get(url, function (gps) {
+        data = gps;
+        mapStuff(data)
+    })
+});
+
+    $("#otherButton").bind("click", function (event, ui) {
+        var url = "http://intense-harbor-6396.herokuapp.com/other";
+    // var url = "http://localhost:3000/other";
+    var data = [];
+
+    $.get(url, function (gps) {
+        data = gps;
+        mapStuff(data)
+    })
+});
+
+    /* Plot data onto map */
+    function mapStuff(data) {
+        var $map = $("#map");
 
     // Json Loop
     $.each(data, function (key, val) {
@@ -408,7 +448,7 @@ function mapStuff(data) {
                                 }
                             });
                             var infowindows = $(this).gmap3({
-                                overlay: {
+                                infowindow: {
                                     address: val.address,
                                     options: {
                                         content: '<div class="infobox">'+val.content+'</div>',

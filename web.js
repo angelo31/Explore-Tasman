@@ -234,6 +234,65 @@ var gpsData = [];
 	})
 });
 
+
+/****************************************************
+				FILTERING STUFF
+****************************************************/
+
+// get all posts filtered by animal 
+app.get("/animals", function (req, res) {
+var animalData = [];
+	var query = client.query("SELECT * from gps_table WHERE category = 'Animals'");
+
+	query.on("row", function (result) {
+			animalData.push(result);
+	});
+
+	query.on("err", function(err) {
+		return res.send("error: ", err);
+	})
+
+	query.on("end", function(row, result) {
+		return res.send(animalData);
+	})
+});
+
+// get all posts filtered by plants
+app.get("/plants", function (req, res) {
+var plantData = [];
+	var query = client.query("SELECT * from gps_table WHERE category = 'Plants'");
+
+	query.on("row", function (result) {
+			plantData.push(result);
+	});
+
+	query.on("err", function(err) {
+		return res.send("error: ", err);
+	})
+
+	query.on("end", function(row, result) {
+		return res.send(plantData);
+	})
+});
+
+// get all posts filtered by other
+app.get("/other", function (req, res) {
+var otherData = [];
+	var query = client.query("SELECT * from gps_table WHERE category = 'Other'");
+
+	query.on("row", function (result) {
+			otherData.push(result);
+	});
+
+	query.on("err", function(err) {
+		return res.send("error: ", err);
+	})
+
+	query.on("end", function(row, result) {
+		return res.send(otherData);
+	})
+});
+
 var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
 var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
 var secret = new Buffer(secret64, 'base64').toString('ascii');
