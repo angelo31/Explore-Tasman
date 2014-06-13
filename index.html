@@ -247,9 +247,9 @@ $("#sendButton").bind("click", function (event, ui) {
     var category = $("#categoryText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
 
-    getLocation(); //get lcation
+    getLocation(); //get location
     var gps = $("#locationText").val(); //hopefully has location text
-    console.log(gps);
+    console.log("gps: ", gps);
 
 // if any fields are empty then cant upload
 if (!id || !TitleText || !category) {
