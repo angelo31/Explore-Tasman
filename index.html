@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=320 user-scalable=no" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>ColorThief Demo</title>
+    <title>Explore Tasman</title>
     <script type="text/javascript" src="phonegap.js"></script>
 
     <!-- Jquery and Jquery mobile -->
@@ -88,7 +88,7 @@ label.error {
 
                 <fieldset data-role="fieldcontain">
                     <!-- <label for = "ImageNameText">Image name:</label> -->
-                    <input name = "ImageNameText" id = "ImageNameText" type = "text" placeholder = "Image name">
+                    <input name = "TitleText" id = "TitleText" type = "text" placeholder = "Title">
                 </fieldset>
 
                 <fieldset data-role="fieldcontain">
@@ -97,7 +97,7 @@ label.error {
                 </fieldset>
 
                 <fieldset data-role="fieldcontain">
-                    <select name="category">
+                    <select name="category" id = "categoryText">
                         <option selected disabled>Choose category</option>
                         <option value="animals">Animals</option>
                         <option value="plants">Plants</option>
@@ -108,6 +108,12 @@ label.error {
                 <fieldset data-role="fieldcontain">
                     <label for="file">Select a File to Upload</label>
                     <input type="file" name="file" id="file" capture="camera" accept="image/*" />
+                </fieldset>
+
+                <fieldset data-role="fieldcontain" class="ui-screen-hidden">
+                    <input name = "locationText" id = "locationText" type = "text" >
+                    <!-- <input name = "lonText" id = "lonText" type = "text" > -->
+
                 </fieldset>
 
                 <div class="row">
@@ -195,7 +201,7 @@ $("#form1").validate({
         IDText: {
             required: true
         },
-        ImageNameText: {
+        TitleText: {
             required: true
         },
         descText: {
@@ -211,6 +217,21 @@ $("#form1").validate({
     }
 });
 
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+         alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPosition(position) {
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    var data = lat + "," + lon;
+    document.getElementById("locationText").innerHTML = data;
+}
+
 /* post form info to server */
 $("#sendButton").bind("click", function (event, ui) {
     var url = "http://intense-harbor-6396.herokuapp.com/upload";
@@ -218,12 +239,17 @@ $("#sendButton").bind("click", function (event, ui) {
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
     var id = $("#IDText").val();
-    var imageName = $("#ImageNameText").val();
+    var TitleText = $("#TitleText").val();
     var desc = $("#descText").val();
+    var category = $("#categoryText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
 
+    getLocation(); //get lcation
+    var gps = $("#locationText").val(); //hopefully has location text
+    console.log(gps);
+
 // if any fields are empty then cant upload
-if (!id || !imageName) {
+if (!id || !TitleText) {
     // alert("Some fields are empty and need to be filled out! >:)");
 }
 
@@ -234,7 +260,7 @@ else {
        return imgURL;
    };
 
-   var inJSON = {"id": id, "imageName": imageName, "description": desc, "url": imgURL};
+   var inJSON = {"id": id, "TitleText": TitleText, "description": desc, "category": category, "url": imgURL};
    console.log("posting: ", inJSON);
 
     // sending to server

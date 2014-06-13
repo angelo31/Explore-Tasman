@@ -124,21 +124,23 @@ POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 
 var row1 = {
 	id: req.body.id,
-	imageName: req.body.imageName,
+	title: req.body.imageName,
 	description: req.body.description,
+	category= req.body.category,
 	imageURL: req.body.url
 };
 
 var id = req.body.id,
-	imageName= req.body.imageName,
+	title= req.body.imageName,
 	description= req.body.description,
+	category= req.body.category,
 	imageURL= req.body.url
 
 console.log("Received info: ", row1);
 
 /*
-client.query("INSERT into tasman_table (userid, imgName, imagedescription, imageurl) VALUES($1, $2, $3, $4)",
-	[id, imageName, description, imageURL],
+client.query("INSERT into tasman_table (userid, title, imagedescription, category, imageurl) VALUES($1, $2, $3, $4)",
+	[id, title, description, category, imageURL],
 	function(err, result) {
 		if (err) {
 			console.log(err);
