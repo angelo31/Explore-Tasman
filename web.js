@@ -126,7 +126,7 @@ var row1 = {
 	id: req.body.id,
 	title: req.body.imageName,
 	description: req.body.description,
-	category= req.body.category,
+	category: req.body.category,
 	imageURL: req.body.url
 };
 
