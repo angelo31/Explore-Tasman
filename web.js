@@ -43,7 +43,7 @@ app.get('/', function(req, res) {
 
 /// Post files
 app.post('/upload', function (req, res) {
-	if(!req.body.hasOwnProperty("id") || !req.body.hasOwnProperty("title") || !req.body.hasOwnProperty("description") || !req.body.hasOwnProperty("url")) {
+	if(!req.body.hasOwnProperty("id") || !req.body.hasOwnProperty("title") || !req.body.hasOwnProperty("description") || !req.body.hasOwnProperty("category") || !req.body.hasOwnProperty("gps") || !req.body.hasOwnProperty("url")) {
 		res.statusCode = 400;
 		return res.send("Error 400: Post syntax incorrect.")
 	}
@@ -151,7 +151,7 @@ client.query("INSERT into tasman_table (userid, title, imagedescription, categor
 		if (err) {
 			console.log(err);
 		} else {
-			console.log("row inserted: " + id + " " + imageURL)
+			console.log("row inserted!");
 		}
 	});*/
 
@@ -240,39 +240,6 @@ var secret = new Buffer(secret64, 'base64').toString('ascii');
 var bucket = "exploretasman";
 
 /*
-app.get("/get", function (req, res, next) {
-	client.query('select img from tasman_table limit 1',
-		function(err, readResult) {
-			console.log("err", err, "pg readResult", readResult);
-			fs.writeFile('')
-		})
-})
-
-app.post('/upload/photos', function (req, res) {
-
-	var serverPath = 'images/' + req.files.userPhoto.name;
-
-	console.log(__dirname + " /public/" + serverPath)
-
-	fs.rename ( 
-		req.files.userPhoto.path,
-		__dirname + '/public/' + serverPath,
-		function (error) {
-			if(error) {
-				res.send( {
-					error: "Something went wrong!"
-				})
-				return;
-			}
-
-			res.send({
-				path: serverPath
-			});
-		}
-		);
-})
-
-
 /// Show files
 app.get('/uploads/fullsize/:file', function (req, res){
 	file = req.params.file;
