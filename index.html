@@ -209,6 +209,10 @@ $("#form1").validate({
         },
         file: {
             required: true
+        },
+
+        submitHandler: function(form) {
+            form.submit();
         }
     }
 });
