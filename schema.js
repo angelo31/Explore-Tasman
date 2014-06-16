@@ -5,7 +5,6 @@ var pg = require('pg').native
 
 client = new pg.Client(connectionString);
 client.connect();
-// query = client.query('CREATE TABLE tasman_table (userid text, imgName text, imagedescription text, imageurl text)');
 
 // database table to store userID, title of image, image description, category for image, GPS coordinates of where user uploaded photo, and imageURL of image in bucket
 query = client.query('CREATE TABLE tasman_table (userid text, title text, imagedesc text, category text, gps text, imageurl text)');

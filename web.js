@@ -38,7 +38,7 @@ app.post('/upload', function (req, res) {
 	}
 
 	var id = req.body.id,
-	title = req.body.imageName,
+	title = req.body.title,
 	description = req.body.description,
 	category = req.body.category,
 	gps = req.body.gps,
@@ -55,7 +55,7 @@ app.post('/upload', function (req, res) {
 	};
 	console.log("Received info: ", row1);
 
-client.query("INSERT into tasman_table (userid, title, imagedesc, category, gps, imageurl) VALUES($1, $2, $3, $4, $5, $6)",
+client.query("INSERT INTO tasman_table (userid, title, imagedesc, category, gps, imageurl) VALUES($1, $2, $3, $4, $5, $6)",
 	[id, title, description, category, gps, imageURL],
 	function(err, result) {
 		if (err) {

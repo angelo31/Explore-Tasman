@@ -70,7 +70,7 @@ label.error {
                 <input name="IDText" id="IDText" type="text" placeholder="User ID"/>
             </fieldset>
             <fieldset data-role="fieldcontain">
-                <label for=" ImageNameText">Title:</label>
+                <!-- <label for=" TitleText">Title:</label> -->
                 <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true"/>
             </fieldset>
             <fieldset data-role="fieldcontain">
@@ -138,37 +138,12 @@ function previewImage(event) {
     cache: false
 });
 
- /* Form validation... */
- $("#form1").validate({
-    rules: {
-        IDText: {
-            required: true
-        },
-        TitleText: {
-            required: true
-        },
-        descText: {
-            minlength: 5
-        },
-        categoryText: {
-            required: true
-        },
-        file: {
-            required: true
-        },
-
-        // submitHandler: function(form) {
-        //     form.submit();
-        // }
-    }
-});
-
  function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-       alert("Geolocation is not supported :(");
-   }
+     alert("Geolocation is not supported :(");
+ }
 }
 
 function showPosition(position) {
@@ -195,6 +170,29 @@ function showError(error) {
     }
 }
 
+/* Form validation... */
+$("#form1").validate({
+    rules: {
+        IDText: {
+            required: true
+        },
+        TitleText: {
+            required: true
+        },
+        descText: {
+            minlength: 5
+        },
+        categoryText: {
+            required: true
+        },
+        file: {
+            required: true
+        },
+        submitHandler: function(form) {
+        }
+    }
+});
+
 /* post form info to server */
 $("#sendButton").bind("click", function (event, ui) {
     var file = document.getElementById('file').files[0];
@@ -208,6 +206,7 @@ $("#sendButton").bind("click", function (event, ui) {
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
 
+
 // if any fields are empty then cant upload
 if (!id || !title || !category) {
     alert("Some fields are empty and need to be filled out!");
@@ -215,32 +214,21 @@ if (!id || !title || !category) {
 
 else {
     var url = "http://intense-harbor-6396.herokuapp.com/upload";
-    // var url = "http://localhost:3000/upload";
-   uploadFile(file, key); //call so can upload file to S3
+            // var url = "http://localhost:3000/upload";
+            uploadFile(file, key); //call so can upload file to S3
+            var inJSON = {
+                "id": id,
+                "title": title,
+                "description": desc,
+                "category": category,
+                "gps": gps,
+                "url": imgURL
+            };
 
-var inJSON = {
-    "id": id,
-    "title": title,
-    "description": desc,
-    "category": category,
-    "gps": gps,
-    "url": imgURL
-};
-
-var cotnent = "" + TitleText + "<br><h1>TEST this</h1>";
-var icon = "https://maps.google.com/mapfiles/kml/pal2/icon4.png";
-
-// var inJSON = {
-//     "address": "-40.962368, 173.033719",
-//     "content": "Purple marker",
-//     icon: "http://maps.google.com/mapfiles/marker_purple.png"
-// };
-console.log("posting: ", inJSON);
-// mapStuff(inJSON);
-
-    // sending to server
-    $.post(url, inJSON, function (data) {
-    }, "json");
+            console.log("posting: ", inJSON);
+            // sending to server
+            $.post(url, inJSON, function (data) {
+            }, "json");
 }
 });
 
@@ -370,6 +358,8 @@ $("#plantButton").bind("click", function () {
 
     var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
     var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
+    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
+    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
     var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
 
     var data = [{
@@ -401,7 +391,7 @@ $("#otherButton").bind("click", function (event, ui) {
     var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
     var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
     var icon = "http://maps.google.com/mapfiles/marker_purple.png";
-    
+
     var data = [{
         "address": "-40.922133, 172.973554",
         "content": content,
