@@ -142,8 +142,8 @@ function previewImage(event) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-       alert("Geolocation is not supported :(");
-   }
+     alert("Geolocation is not supported :(");
+ }
 }
 
 function showPosition(position) {
@@ -309,21 +309,8 @@ var secret = window.atob(secret64);
 var policy = JSON.stringify(POLICY_JSON);
 var policyBase64 = window.btoa(policy);
 
-/* GMAP STUFF */
-$("#mapButton").bind("click", function (event, ui) {
-    var url = "http://intense-harbor-6396.herokuapp.com/gps";
-    // var url = "http://localhost:3000/gps";
-    var data = [];
 
-    $.get(url, function (gps) {
-        data = gps;
-        mapStuff(data)
-    })
-});
-
-/* Showing map */
-// function createMap() {
-    var $map = $("#map");
+var $map = $("#map");
 
     // Gmap Defaults
     $map.gmap3({
@@ -340,11 +327,23 @@ $("#mapButton").bind("click", function (event, ui) {
             }
         }
     });
-// }
-// createMap();
 
-$("#animalButton").click(function () {
-    var url = "http://intense-harbor-6396.herokuapp.com/animals";
+
+    /* GMAP STUFF */
+    $("#mapButton").bind("click", function (event, ui) {
+        var url = "http://intense-harbor-6396.herokuapp.com/gps";
+    // var url = "http://localhost:3000/gps";
+    var data = [];
+    $map.gmap3("clear");
+
+    $.get(url, function (gps) {
+        data = gps;
+        mapStuff(data)
+    });
+});
+
+    $("#animalButton").click(function () {
+        var url = "http://intense-harbor-6396.herokuapp.com/animals";
     // var url = "http://localhost:3000/animals";
     var data = [];
     $map.gmap3("clear");
@@ -368,8 +367,8 @@ $("#animalButton").click(function () {
     })
 });
 
-$("#plantButton").bind("click", function () {
-    var url = "http://intense-harbor-6396.herokuapp.com/plants";
+    $("#plantButton").bind("click", function () {
+        var url = "http://intense-harbor-6396.herokuapp.com/plants";
     // var url = "http://localhost:3000/plants";
     var data = [];
     $map.gmap3("clear");
@@ -398,8 +397,8 @@ $("#plantButton").bind("click", function () {
     })
 });
 
-$("#otherButton").bind("click", function (event, ui) {
-    var url = "http://intense-harbor-6396.herokuapp.com/other";
+    $("#otherButton").bind("click", function (event, ui) {
+        var url = "http://intense-harbor-6396.herokuapp.com/other";
     // var url = "http://localhost:3000/other";
     var data = [];
     $map.gmap3("clear");
@@ -485,7 +484,7 @@ function mapStuff(data) {
                                         maxWidth: 300,
                                         // content: '<div class="infobox">'+val.content+'</div>',
                                         // content: val.content,
-                                        content: "<h5>" + val.title + "</h5><br><img src ='" + val.imageurl + "'/><br><p>" + val.imagedesc + "</p>",
+                                        content: "<h4>" + val.title + "</h4><br><img src ='" + val.imageurl + "'/><br><p>" + val.imagedesc + "</p>",
                                         offset: {
                                             y: -32,
                                             x: 12
