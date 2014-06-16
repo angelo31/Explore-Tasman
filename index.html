@@ -70,7 +70,7 @@ label.error {
                 <input name="IDText" id="IDText" type="text" placeholder="User ID"/>
             </fieldset>
             <fieldset data-role="fieldcontain">
-                <!-- <label for=" ImageNameText">Image name:</label> -->
+                <label for=" ImageNameText">Title:</label>
                 <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true"/>
             </fieldset>
             <fieldset data-role="fieldcontain">
@@ -98,19 +98,10 @@ label.error {
             </div>
             <div id="progressNumber"></div>
         </form>
-
         <img id="yourimage"/>
 
         <input type="button" value="show map" id = "mapButton"/>
-
         <div id="map"></div> <!-- testing map-->
-
-        <!-- <div data-role="controlgroup" data-type"horizontal">
-            <input type="button" value="Animals" id = "animalButton"/>
-            <input type="button" value="Plants" id = "plantButton"/>
-            <input type="button" value="Other" id = "otherButton"/>
-        </div> -->
-
         <fieldset data-role="controlgroup">
             <legend>Filter categories:</legend>
 
@@ -123,7 +114,6 @@ label.error {
             <input type="radio" name="radio-choice" id="otherButton" value="Other">
             <label for="otherButton">Other</label>
         </fieldset>
-
     </div>
 </div>
 
@@ -212,43 +202,45 @@ $("#sendButton").bind("click", function (event, ui) {
 
     // getting values of form fields
     var id = $("#IDText").val();
-    var TitleText = $("#TitleText").val();
+    var title = $("#TitleText").val();
     var desc = $("#descText").val();
     var category = $("#categoryText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
 
 // if any fields are empty then cant upload
-if (!id || !TitleText || !category) {
+if (!id || !TitletitleText || !category) {
     alert("Some fields are empty and need to be filled out!");
 }
 
 else {
-    // var url = "http://intense-harbor-6396.herokuapp.com/upload";
+    var url = "http://intense-harbor-6396.herokuapp.com/upload";
     // var url = "http://localhost:3000/upload";
-//    uploadFile(file, key); //call so can upload file to S3
+   uploadFile(file, key); //call so can upload file to S3
 
-// var inJSON = {"id": id, "TitleText": TitleText, "description": desc, "category": category, "gps": gps, "url": imgURL};
+var inJSON = {
+    "id": id,
+    "title": title,
+    "description": desc,
+    "category": category,
+    "gps": gps,
+    "url": imgURL
+};
 
 var cotnent = "" + TitleText + "<br><h1>TEST this</h1>";
 var icon = "https://maps.google.com/mapfiles/kml/pal2/icon4.png";
-// var inJSON = {
-//     "address": gps, 
-//     "content": cotnent,
-//     "icon": icon
-// };
 
-var inJSON = {
-    "address": "-40.962368, 173.033719",
-    "content": "Purple marker",
-    icon: "http://maps.google.com/mapfiles/marker_purple.png"
-};
+// var inJSON = {
+//     "address": "-40.962368, 173.033719",
+//     "content": "Purple marker",
+//     icon: "http://maps.google.com/mapfiles/marker_purple.png"
+// };
 console.log("posting: ", inJSON);
-mapStuff(inJSON);
+// mapStuff(inJSON);
 
     // sending to server
-    // $.post(url, inJSON, function (data) {
-    // }, "json");
+    $.post(url, inJSON, function (data) {
+    }, "json");
 }
 });
 
@@ -354,12 +346,6 @@ $("#animalButton").click(function () {
     // var data = [];
     $map.gmap3("clear");
 
-    var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
-    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
-    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
-    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
-    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
-
     var data = [{
         "address": "-40.939611,173.061179",
         "content": "Abel Tasman Walkway"
@@ -384,10 +370,8 @@ $("#plantButton").bind("click", function () {
 
     var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
     var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
-    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
-    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
     var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
-    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
+
     var data = [{
         "address": "-40.9206539,173.0071976",
         "content": content,
@@ -416,28 +400,28 @@ $("#otherButton").bind("click", function (event, ui) {
     var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
     var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
     var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
-    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
-    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
+    var icon = "http://maps.google.com/mapfiles/marker_purple.png";
+    
     var data = [{
         "address": "-40.922133, 172.973554",
         "content": content,
-        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+        icon: icon
     }, {
         "address": "-40.921829,173.057123",
         "content": content1,
-        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+        icon: icon
     }, {
         "address": "-40.939611,173.061179",
         "content": "Abel Tasman Walkway",
-        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+        icon: icon
     }, {
         "address": "-40.939611,173.117179",
         "content": "Abel Tasman boat",
-        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+        icon: icon
     }, {
         "address": "-40.962368, 173.033719",
         "content": "Purple marker",
-        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+        icon: icon
     }];
 
     mapStuff(data);

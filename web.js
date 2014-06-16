@@ -36,82 +36,26 @@ app.post('/upload', function (req, res) {
 		res.statusCode = 400;
 		return res.send("Error 400: Post syntax incorrect.")
 	}
-/*
-	fs.readFile(req.files.image.path, function (err, data) {
-		// console.log("data", data)
-		// var newData = '\\x' + data;
-		// console.log("hex data", data)
-		var imageName = req.files.image.name
-/*
-		/// If there's an error
-		if(!imageName){
-			console.log("There was an error")
-			res.redirect("/");
-			res.end();
-		}
 
-		else {
-			var newPath = __dirname + "/uploads/fullsize/" + imageName;
-			var thumbPath = __dirname + "/uploads/thumbs/" + imageName;
-
-			// var newPath = "http://intense-harbor-6396.herokuapp.com/uploads/fullsize/" + imageName;
-			// var thumbPath = "http://intense-harbor-6396.herokuapp.com/uploads/thumbs/" + imageName;
-		  /// write file to uploads/fullsize folder
-		  fs.writeFile(newPath, data, function (err) {
-
-		  	/// write file to uploads/thumbs folder
-		  	im.resize({
-		  		srcPath: newPath,
-		  		dstPath: thumbPath,
-		  		width:   200
-		  	}, function(err, stdout, stderr){
-		  		if (err) throw err;
-		  		console.log('resized image to fit within 200x200px');
-		  	});
-
-		  	// console.log((JSON.stringify(req.files)))
-		  	// res.redirect("/uploads/fullsize/" + imageName);
-
-			// res.redirect("/");
-			// res.end();
-		  });
-		});
-/*
-	client.query("INSERT INTO tasman_table (imgName, img) VALUES ($1, $2)", 
-		[imageName, newData],
-		function(err, writeResult) {
-			console.log("err", err, "pg writeResult", writeResult)
-		});
-
-		  	res.redirect("/uploads/thumbs/" + imageName);
-/*
-		  	client.query("INSERT INTO tasman_table (imgName, image) VALUES ($1, $2)", 
-		  		[imageName, data],
-		  		function(err, writeResult) {
-		  			console.log("err", err, "pg writeResult", writeResult)
-		  		});*/
-		// }
-
-var row1 = {
-	id: req.body.id,
-	title: req.body.imageName,
-	description: req.body.description,
-	category: req.body.category,
-	gps: req.body.gps,
-	imageURL: req.body.url
-};
-
-var id = req.body.id,
+	var id = req.body.id,
 	title = req.body.imageName,
 	description = req.body.description,
 	category = req.body.category,
 	gps = req.body.gps,
 	imageURL = req.body.url
+	;
 
-console.log("Received info: ", row1);
+	var row1 = {
+		id: id,
+		title: title,
+		description: description,
+		category: category,
+		gps: gps,
+		imageURL: imageURL
+	};
+	console.log("Received info: ", row1);
 
-/*
-client.query("INSERT into tasman_table (userid, title, imagedescription, category, gps, imageurl) VALUES($1, $2, $3, $4, $5, $6)",
+client.query("INSERT into tasman_table (userid, title, imagedesc, category, gps, imageurl) VALUES($1, $2, $3, $4, $5, $6)",
 	[id, title, description, category, gps, imageURL],
 	function(err, result) {
 		if (err) {
@@ -119,32 +63,11 @@ client.query("INSERT into tasman_table (userid, title, imagedescription, categor
 		} else {
 			console.log("row inserted!");
 		}
-	});*/
+	});
 
 res.send(row1);
 // res.redirect('/');
 	// });
-});
-
-app.get("/url", function (req, res) {
-	var imageURL =  "https://exploretasman.s3.amazonaws.com/events/1402229247866-icon.png";
-	var inJSON  = {"url": imageURL};
-/*
-var query = client.query("SELECT imageurl FROM tasman_table WHERE imagedescription='test d'")
-
-query.on("row", function(result) {
-	console.log(result);
-
-	if(!result) {
-		return res.send("No data found!");
-	}
-	else {
-		console.log(result)
-		var json = {"url": result.imageURL};
-		res.send(json);
-	}
-})*/
-	res.send(inJSON);
 });
 
 /* testing gps */
@@ -187,7 +110,7 @@ var gpsData = [];
 	var query = client.query("SELECT * from gps_table");
 
 	query.on("row", function (result) {
-			gpsData.push(result);
+		gpsData.push(result);
 	});
 
 	query.on("err", function(err) {
@@ -199,18 +122,17 @@ var gpsData = [];
 	})
 });
 
-
 /****************************************************
 				FILTERING STUFF
 ****************************************************/
 
 // get all posts filtered by animal 
 app.get("/animals", function (req, res) {
-var animalData = [];
-	var query = client.query("SELECT * from gps_table WHERE category = 'Animals'");
+	var animalData = [];
+	var query = client.query("SELECT * from tasman_table WHERE category = 'Animals'");
 
 	query.on("row", function (result) {
-			animalData.push(result);
+		animalData.push(result);
 	});
 
 	query.on("err", function(err) {
@@ -224,11 +146,11 @@ var animalData = [];
 
 // get all posts filtered by plants
 app.get("/plants", function (req, res) {
-var plantData = [];
-	var query = client.query("SELECT * from gps_table WHERE category = 'Plants'");
+	var plantData = [];
+	var query = client.query("SELECT * from tasman_table WHERE category = 'Plants'");
 
 	query.on("row", function (result) {
-			plantData.push(result);
+		plantData.push(result);
 	});
 
 	query.on("err", function(err) {
@@ -242,11 +164,11 @@ var plantData = [];
 
 // get all posts filtered by other
 app.get("/other", function (req, res) {
-var otherData = [];
-	var query = client.query("SELECT * from gps_table WHERE category = 'Other'");
+	var otherData = [];
+	var query = client.query("SELECT * from tasman_table WHERE category = 'Other'");
 
 	query.on("row", function (result) {
-			otherData.push(result);
+		otherData.push(result);
 	});
 
 	query.on("err", function(err) {
