@@ -445,16 +445,21 @@ function mapStuff(data) {
     // loop through data
     $.each(data, function (key, val) {
 
-     var plantIcon = "http://maps.google.com/mapfiles/marker_green.png";
-     var otherIcon = "http://maps.google.com/mapfiles/marker_purple.png";
+        var animalIcon = "img/wildfire.png";
+        var plantIcon = "img/palm-tree-export.png";
+        var otherIcon = "http://maps.google.com/mapfiles/marker_purple.png";
 
-     if (val.category == "Plants") {
-        icon = plantIcon;
-     }
+        if (val.category == "Plants") {
+            icon = plantIcon;
+        }
 
-     if (val.category == "Other") {
-        icon = otherIcon;
-     }
+        else if (val.category == "Other") {
+            icon = otherIcon;
+        }
+
+        else {
+            icon = animalIcon;
+        }
 
         $map.gmap3({
             marker: {
