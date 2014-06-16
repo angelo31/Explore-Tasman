@@ -71,7 +71,7 @@ res.send(row1);
 });
 
 /* testing gps */
-app.get("/gps", function (req, res) {
+app.get("/all", function (req, res) {
 	/*
 	var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
     var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";

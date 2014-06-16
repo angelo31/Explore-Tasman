@@ -100,10 +100,13 @@ img {
             <div id="progressNumber"></div>
         </form>
 
-        <input type="button" value="show map" id = "mapButton"/>
+        <!-- <input type="button" value="show map" id = "mapButton"/> -->
         <div id="map"></div> <!-- testing map-->
         <fieldset data-role="controlgroup">
             <legend>Filter categories:</legend>
+
+            <input type="radio" name="radio-choice" id="allButton" value="All">
+            <label for="allButton">All</label>
 
             <input type="radio" name="radio-choice" id="animalButton" value="Animals">
             <label for="animalButton">Animals</label>
@@ -330,15 +333,12 @@ var $map = $("#map");
 
 
     /* GMAP STUFF */
-    $("#mapButton").bind("click", function (event, ui) {
-        var url = "http://intense-harbor-6396.herokuapp.com/gps";
-    // var url = "http://localhost:3000/gps";
+    $("#allButton").bind("click", function (event, ui) {
+        var url = "http://intense-harbor-6396.herokuapp.com/all";
+    // var url = "http://localhost:3000/all";
     var data = [];
     $map.gmap3("clear");
 
-    $('input[type=radio]').prop('checked', function () {
-        return this.getAttribute('checked') == 'checked';
-    });
     $.get(url, function (gps) {
         data = gps;
         mapStuff(data)
