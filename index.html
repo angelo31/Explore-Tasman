@@ -38,17 +38,17 @@ img {
 
 /*img:hover {
     width: 100%;
-}*/
+    }*/
 
-label.error {
-    color: red; 
-    font-size: 16px;
-    font-weight: normal;
-    line-height: 1.4;
-    padding-left: 5px
-}
+    label.error {
+        color: red; 
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.4;
+        padding-left: 5px
+    }
 
-</style>
+    </style>
 </head>
 
 <body>
@@ -142,8 +142,8 @@ function previewImage(event) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-     alert("Geolocation is not supported :(");
- }
+       alert("Geolocation is not supported :(");
+   }
 }
 
 function showPosition(position) {
@@ -231,20 +231,20 @@ else {
             // $.post(url, inJSON, function (data) {
             // }, "json");
 
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: inJSON,
-                dataType: "json",
-                success:function(data) {
-                    alert("Upload complete!")
-                },
-                complete:function() {
-                    $("#form1").each(function(){
-                        this.reset();
-                    });
-                }
-            });
+$.ajax({
+    type: "POST",
+    url: url,
+    data: inJSON,
+    dataType: "json",
+    success:function(data) {
+        alert("Upload complete!")
+    },
+    complete:function() {
+        $("#form1").each(function(){
+            this.reset();
+        });
+    }
+});
 }
 });
 
@@ -444,12 +444,24 @@ $("#otherButton").bind("click", function (event, ui) {
 function mapStuff(data) {
     // loop through data
     $.each(data, function (key, val) {
+
+     var plantIcon = "http://maps.google.com/mapfiles/marker_green.png";
+     var otherIcon = "http://maps.google.com/mapfiles/marker_purple.png";
+
+     if (val.category == "Plants") {
+        icon = plantIcon;
+     }
+
+     if (va.category == "Other") {
+        icon = otherIcon;
+     }
+     
         $map.gmap3({
             marker: {
                 values: [{
                     address: val.address,
                     options: {
-                        icon: val.icon,
+                        icon: icon,
                     },
                     events: {
                         click: function () {
