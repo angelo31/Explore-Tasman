@@ -104,10 +104,21 @@ VALUES ('-40.9206539,173.0071976', '<h4>Frenchman Bay</h4><br><img src =''https:
 ('-40.939611,173.117179', 'Abel Tasman boat', 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png'));
 */
 
+/* FAKE DATA FOR DATABASE */
+/*
+INSERT INTO tasman_table (userid, title, imagedesc, category, gps, imageurl) 
+	VALUES ('0', 'Abel Tasman Beach', 'At the beach. Much peaceful. Such beauty.', 'Other', '-40.922133, 172.973554', 'http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetWidth600-W-WilsonsAbelTasman08-Tonga-Quarrycrop-llr.jpg'), 
+	('0', 'Cute bird', 'This bird was looking at me funny', 'Animals', '-40.939611,173.061179', 'http://www.abeltasman.co.nz/assets/image-gallery/wildlife/_resampled/SetWidth600-DSC2.JPG'), 
+	('0', 'Scary!!', 'This was in the water while I was swimming. Watch out!', 'Animals', '-40.939611,173.117179', 'http://www.abeltasman.co.nz/assets/image-gallery/wildlife/_resampled/SetWidth600-sting2.jpg'), 
+	('0', 'Waterfall', 'Amazing scenery. Check out that tree', 'Other', '-40.939611,173.061179', 'http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetWidth600-S-WilsonsAbelTasman06BarkFalls-crop2.jpg'), 
+	('0', 'Dat Fauna', 'Check it yo', 'Plants', '-40.9206539,173.0071976', 'http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetHeight600-W-WilsonsAbelTasmanFern-bridge-llr.jpg'), 
+	('0', 'Beach with forest', 'Amazing plantations. This is a must for travellers everywhere.', 'Plants', '-40.962368, 173.033719', 'http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetWidth600-Beach-Walk-llr.jpg'), 
+	('0', 'Sea Lion', 'He wanted to say hello! :)', 'Animals', '-40.954626, 173.056923', 'http://www.abeltasman.co.nz/assets/image-gallery/wildlife/_resampled/SetWidth600-K-Wilsons-AbelTasman52KySeal-web-crop2.jpg')
+*/
+
 var gpsData = [];
-	// var query = client.query("SELECT array_to_json(array_agg(row_to_json(gps_table))) from gps_table;");
-	// var query = client.query("SELECT row_to_json(gps_table) from gps_table");
-	var query = client.query("SELECT * from gps_table");
+	// var query = client.query("SELECT * from gps_table");
+	var query = client.query("SELECT * from tasman_table");
 
 	query.on("row", function (result) {
 		gpsData.push(result);

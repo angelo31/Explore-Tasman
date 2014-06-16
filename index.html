@@ -33,12 +33,12 @@
 }
 
 img {
-    width: 25%;
+    width: 75%;
 }
 
-img:hover {
+/*img:hover {
     width: 100%;
-}
+}*/
 
 label.error {
     color: red; 
@@ -96,9 +96,9 @@ label.error {
                 <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
                 <!-- <button type="reset" data-icon="delete" data-iconpos="right" id="cancelButton">Cancel</button> -->
             </div>
+            <img id="yourimage"/>
             <div id="progressNumber"></div>
         </form>
-        <img id="yourimage"/>
 
         <input type="button" value="show map" id = "mapButton"/>
         <div id="map"></div> <!-- testing map-->
@@ -240,7 +240,6 @@ else {
                     alert("Upload complete!")
                 },
                 complete:function() {
-                    $("#yourimage").attr('src','data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAA‌​LAAAAAABAAEAAAICRAEAOw%3D%3D');
                     $("#form1").each(function(){
                         this.reset();
                     });
@@ -342,38 +341,40 @@ $("#mapButton").bind("click", function (event, ui) {
         }
     });
 // }
-
 // createMap();
 
 $("#animalButton").click(function () {
-    // var url = "http://intense-harbor-6396.herokuapp.com/animals";
+    var url = "http://intense-harbor-6396.herokuapp.com/animals";
     // var url = "http://localhost:3000/animals";
-    // var data = [];
+    var data = [];
     $map.gmap3("clear");
 
-    var data = [{
+    /*var data = [{
         "address": "-40.939611,173.061179",
         "content": "Abel Tasman Walkway"
     }, {
         "address": "-40.939611,173.117179",
         "content": "Abel Tasman boat"
-    }];
+    }, {
+        "address": "-40.954626, 173.056923", 
+        "content": "In the water"
+    }];*/
 
-    mapStuff(data);
+    // mapStuff(data);
 
-    // $.get(url, function (gps) {
-    //     data = gps;
-    //     mapStuff(data)
-    // })
+    $.get(url, function (gps) {
+        data = gps;
+        mapStuff(data)
+    })
 });
 
 $("#plantButton").bind("click", function () {
-    // var url = "http://intense-harbor-6396.herokuapp.com/plants";
+    var url = "http://intense-harbor-6396.herokuapp.com/plants";
     // var url = "http://localhost:3000/plants";
-    // var data = [];
+    var data = [];
     $map.gmap3("clear");
 
-    var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
+    /*var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
     var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
     var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
     var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
@@ -387,23 +388,23 @@ $("#plantButton").bind("click", function () {
         "address": "-40.921829,173.057123",
         "content": content1,
         icon: diffIcon
-    }];
+    }];*/
 
-    mapStuff(data);
+    // mapStuff(data);
 
-    // $.get(url, function (gps) {
-    //     data = gps;
-    //     mapStuff(data)
-    // })
+    $.get(url, function (gps) {
+        data = gps;
+        mapStuff(data)
+    })
 });
 
 $("#otherButton").bind("click", function (event, ui) {
-    // var url = "http://intense-harbor-6396.herokuapp.com/other";
+    var url = "http://intense-harbor-6396.herokuapp.com/other";
     // var url = "http://localhost:3000/other";
-    // var data = [];
+    var data = [];
     $map.gmap3("clear");
 
-    var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
+    /*var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
     var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
     var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
     var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
@@ -429,14 +430,14 @@ $("#otherButton").bind("click", function (event, ui) {
         "address": "-40.962368, 173.033719",
         "content": "Purple marker",
         icon: icon
-    }];
+    }];*/
 
-    mapStuff(data);
+    // mapStuff(data);
 
-    // $.get(url, function (gps) {
-    //     data = gps;
-    //     mapStuff(data)
-    // })
+    $.get(url, function (gps) {
+        data = gps;
+        mapStuff(data)
+    })
 });
 
 /* Plot data onto map */
@@ -464,8 +465,10 @@ function mapStuff(data) {
                                 infowindow: {
                                     address: val.address,
                                     options: {
+                                        maxWidth: 300,
                                         // content: '<div class="infobox">'+val.content+'</div>',
-                                        content: val.content,
+                                        // content: val.content,
+                                        content: "<h5>" + val.title + "</h5><br><img src ='" + val.imageurl + "'/><br><p>" + val.imagedesc + "</p>"
                                         offset: {
                                             y: -32,
                                             x: 12
