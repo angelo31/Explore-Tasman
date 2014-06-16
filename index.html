@@ -189,6 +189,7 @@ $("#form1").validate({
             required: true
         },
         submitHandler: function(form) {
+            // need something here
         }
     }
 });
@@ -224,11 +225,26 @@ else {
                 "gps": gps,
                 "url": imgURL
             };
-
             console.log("posting: ", inJSON);
+
             // sending to server
-            $.post(url, inJSON, function (data) {
-            }, "json");
+            // $.post(url, inJSON, function (data) {
+            // }, "json");
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: inJSON,
+                dataType: "json",
+                success:function(data) {
+                    alert("Upload complete!")
+                },
+                complete:function() {
+                    $("#form1").each(function(){
+                        this.reset();
+                    });
+                }
+            });
 }
 });
 
@@ -244,10 +260,10 @@ function uploadFile(file, key) {
     fd.append("file",file);
 
     var xhr = new XMLHttpRequest();
-    xhr.upload.addEventListener("progress", uploadProgress, false);
-    xhr.addEventListener("load", uploadComplete, false);
-    xhr.addEventListener("error", uploadFailed, false);
-    xhr.addEventListener("abort", uploadCanceled, false);
+    // xhr.upload.addEventListener("progress", uploadProgress, false);
+    // xhr.addEventListener("load", uploadComplete, false);
+    // xhr.addEventListener("error", uploadFailed, false);
+    // xhr.addEventListener("abort", uploadCanceled, false);
 
     xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE BEFORE YOU SEND 
     xhr.send(fd);
