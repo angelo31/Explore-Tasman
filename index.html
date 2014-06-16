@@ -459,7 +459,7 @@ function mapStuff(data) {
         $map.gmap3({
             marker: {
                 values: [{
-                    address: val.address,
+                    address: val.gps,
                     options: {
                         icon: icon,
                     },
@@ -475,7 +475,7 @@ function mapStuff(data) {
                             });
                             var infowindows = $(this).gmap3({
                                 infowindow: {
-                                    address: val.address,
+                                    address: val.gps,
                                     options: {
                                         maxWidth: 300,
                                         // content: '<div class="infobox">'+val.content+'</div>',
