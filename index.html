@@ -308,11 +308,10 @@ POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 
 var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
 var secret = window.atob(secret64);
-
 var policy = JSON.stringify(POLICY_JSON);
 var policyBase64 = window.btoa(policy);
 
-
+/* Show map on screen */
 var $map = $("#map");
 
     // Gmap Defaults
@@ -332,7 +331,7 @@ var $map = $("#map");
     });
 
 
-    /* GMAP STUFF */
+    /* show all categories */
     $("#allButton").bind("click", function (event, ui) {
         var url = "http://intense-harbor-6396.herokuapp.com/all";
     // var url = "http://localhost:3000/all";
@@ -345,96 +344,38 @@ var $map = $("#map");
     });
 });
 
+/* Show only animals */
     $("#animalButton").click(function () {
         var url = "http://intense-harbor-6396.herokuapp.com/animals";
     // var url = "http://localhost:3000/animals";
     var data = [];
     $map.gmap3("clear");
 
-    /*var data = [{
-        "address": "-40.939611,173.061179",
-        "content": "Abel Tasman Walkway"
-    }, {
-        "address": "-40.939611,173.117179",
-        "content": "Abel Tasman boat"
-    }, {
-        "address": "-40.954626, 173.056923", 
-        "content": "In the water"
-    }];*/
-
-    // mapStuff(data);
-
     $.get(url, function (gps) {
         data = gps;
         mapStuff(data)
     })
 });
 
+/* show only plants */
     $("#plantButton").bind("click", function () {
         var url = "http://intense-harbor-6396.herokuapp.com/plants";
     // var url = "http://localhost:3000/plants";
     var data = [];
     $map.gmap3("clear");
 
-    /*var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
-    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
-    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
-    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
-    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
-
-    var data = [{
-        "address": "-40.9206539,173.0071976",
-        "content": content,
-        icon: diffIcon
-    }, {
-        "address": "-40.921829,173.057123",
-        "content": content1,
-        icon: diffIcon
-    }];*/
-
-    // mapStuff(data);
-
     $.get(url, function (gps) {
         data = gps;
         mapStuff(data)
     })
 });
 
+/* show only other */
     $("#otherButton").bind("click", function (event, ui) {
         var url = "http://intense-harbor-6396.herokuapp.com/other";
     // var url = "http://localhost:3000/other";
     var data = [];
     $map.gmap3("clear");
-
-    /*var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
-    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
-    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
-    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
-    var icon = "http://maps.google.com/mapfiles/marker_purple.png";
-
-    var data = [{
-        "address": "-40.922133, 172.973554",
-        "content": content,
-        icon: icon
-    }, {
-        "address": "-40.921829,173.057123",
-        "content": content1,
-        icon: icon
-    }, {
-        "address": "-40.939611,173.061179",
-        "content": "Abel Tasman Walkway",
-        icon: icon
-    }, {
-        "address": "-40.939611,173.117179",
-        "content": "Abel Tasman boat",
-        icon: icon
-    }, {
-        "address": "-40.962368, 173.033719",
-        "content": "Purple marker",
-        icon: icon
-    }];*/
-
-    // mapStuff(data);
 
     $.get(url, function (gps) {
         data = gps;
@@ -484,7 +425,7 @@ function mapStuff(data) {
                                 infowindow: {
                                     address: val.gps,
                                     options: {
-                                        maxWidth: 300,
+                                        maxWidth: 200,
                                         // content: '<div class="infobox">'+val.content+'</div>',
                                         // content: val.content,
                                         content: "<h4>" + val.title + "</h4><br><img src ='" + val.imageurl + "'/><br><p>" + val.imagedesc + "</p>",
