@@ -1,14 +1,10 @@
 var express = require('express')
-// , bodyParser = require('body-parser')
-// ,app = express.createServer(express.logger())
 , app = express()
 , pg = require('pg').native
 , fs = require('fs')
-// , connectionString = process.env.DATABASE_URL || "http://intense-harbor-6396.herokuapp.com"
 , connectionString = process.env.DATABASE_URL
 , port = process.env.PORT || 3000
 , client
-// , knox = require('knox')
 , crypto = require("crypto")
 ;
 
@@ -28,9 +24,6 @@ var S3_BUCKET = process.env.S3_BUCKET;
 client = new pg.Client(connectionString);
 client.connect();
 
-/// Include ImageMagick
-// var im = require('imagemagick');
-
 app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
 	// res.end(form);
@@ -39,7 +32,7 @@ app.get('/', function(req, res) {
 
 /// Post files
 app.post('/upload', function (req, res) {
-	if(!req.body.hasOwnProperty("id") || !req.body.hasOwnProperty("imageName") || !req.body.hasOwnProperty("description") || !req.body.hasOwnProperty("url")) {
+	if(!req.body.hasOwnProperty("id") || !req.body.hasOwnProperty("title") || !req.body.hasOwnProperty("description") || !req.body.hasOwnProperty("category") || !req.body.hasOwnProperty("gps") || !req.body.hasOwnProperty("url")) {
 		res.statusCode = 400;
 		return res.send("Error 400: Post syntax incorrect.")
 	}
@@ -99,53 +92,32 @@ app.post('/upload', function (req, res) {
 		  		});*/
 		// }
 
-var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
-
-POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
-            "conditions": [
-            {"bucket": "exploretasman"},
-            ["starts-with", "$key", ""],
-            {"acl": "public-read"},                           
-            ["starts-with", "$Content-Type", ""],
-            ["content-length-range", 0, 524288000]
-            ]
-          };
-
-    var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
-    var secret = new Buffer(secret64, 'base64').toString('ascii');
-
-    var policy = JSON.stringify(POLICY_JSON);
-
-    var policyBase64 = new Buffer(JSON.stringify(POLICY_JSON), 'utf8').toString('base64');
-
-    // policy = eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0= 
-
-	var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
-
 var row1 = {
 	id: req.body.id,
 	title: req.body.imageName,
 	description: req.body.description,
-	category= req.body.category,
+	category: req.body.category,
+	gps: req.body.gps,
 	imageURL: req.body.url
 };
 
 var id = req.body.id,
-	title= req.body.imageName,
-	description= req.body.description,
-	category= req.body.category,
-	imageURL= req.body.url
+	title = req.body.imageName,
+	description = req.body.description,
+	category = req.body.category,
+	gps = req.body.gps,
+	imageURL = req.body.url
 
 console.log("Received info: ", row1);
 
 /*
-client.query("INSERT into tasman_table (userid, title, imagedescription, category, imageurl) VALUES($1, $2, $3, $4)",
-	[id, title, description, category, imageURL],
+client.query("INSERT into tasman_table (userid, title, imagedescription, category, gps, imageurl) VALUES($1, $2, $3, $4, $5, $6)",
+	[id, title, description, category, gps, imageURL],
 	function(err, result) {
 		if (err) {
 			console.log(err);
 		} else {
-			console.log("row inserted: " + id + " " + imageURL)
+			console.log("row inserted!");
 		}
 	});*/
 
@@ -174,7 +146,6 @@ query.on("row", function(result) {
 })*/
 	res.send(inJSON);
 });
-
 
 /* testing gps */
 app.get("/gps", function (req, res) {
@@ -228,45 +199,66 @@ var gpsData = [];
 	})
 });
 
-var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
-var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
-var secret = new Buffer(secret64, 'base64').toString('ascii');
-var bucket = "exploretasman";
+
+/****************************************************
+				FILTERING STUFF
+****************************************************/
+
+// get all posts filtered by animal 
+app.get("/animals", function (req, res) {
+var animalData = [];
+	var query = client.query("SELECT * from gps_table WHERE category = 'Animals'");
+
+	query.on("row", function (result) {
+			animalData.push(result);
+	});
+
+	query.on("err", function(err) {
+		return res.send("error: ", err);
+	})
+
+	query.on("end", function(row, result) {
+		return res.send(animalData);
+	})
+});
+
+// get all posts filtered by plants
+app.get("/plants", function (req, res) {
+var plantData = [];
+	var query = client.query("SELECT * from gps_table WHERE category = 'Plants'");
+
+	query.on("row", function (result) {
+			plantData.push(result);
+	});
+
+	query.on("err", function(err) {
+		return res.send("error: ", err);
+	})
+
+	query.on("end", function(row, result) {
+		return res.send(plantData);
+	})
+});
+
+// get all posts filtered by other
+app.get("/other", function (req, res) {
+var otherData = [];
+	var query = client.query("SELECT * from gps_table WHERE category = 'Other'");
+
+	query.on("row", function (result) {
+			otherData.push(result);
+	});
+
+	query.on("err", function(err) {
+		return res.send("error: ", err);
+	})
+
+	query.on("end", function(row, result) {
+		return res.send(otherData);
+	})
+});
 
 /*
-app.get("/get", function (req, res, next) {
-	client.query('select img from tasman_table limit 1',
-		function(err, readResult) {
-			console.log("err", err, "pg readResult", readResult);
-			fs.writeFile('')
-		})
-})
-
-app.post('/upload/photos', function (req, res) {
-
-	var serverPath = 'images/' + req.files.userPhoto.name;
-
-	console.log(__dirname + " /public/" + serverPath)
-
-	fs.rename ( 
-		req.files.userPhoto.path,
-		__dirname + '/public/' + serverPath,
-		function (error) {
-			if(error) {
-				res.send( {
-					error: "Something went wrong!"
-				})
-				return;
-			}
-
-			res.send({
-				path: serverPath
-			});
-		}
-		);
-})
-
-
 /// Show files
 app.get('/uploads/fullsize/:file', function (req, res){
 	file = req.params.file;

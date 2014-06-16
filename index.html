@@ -21,31 +21,15 @@
     
     <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/additional-methods.min.js"></script>
 
-
-
     <style>
     #yourimage {
-      width: 50%;
-      /*height: 15%;  */
-  }
-  #swatches {
-      width: 100%;
-      height: 50px; 
-  }
-  .swatch {
-      width:18%;
-      height: 50px;
-      border-style:solid;
-      border-width:thin;    
-      float: left;
-      margin-right: 3px;    
+      width: 25%;
   }
 
   #map {
-   /*height: 100%;*/
-   height: 500px;
-
-   width: 100%;
+    /*height: 100%;*/
+    height: 500px;
+    width: 100%;
 }
 
 img {
@@ -57,7 +41,6 @@ img:hover {
 }
 
 label.error {
-    /*float: none; */
     color: red; 
     font-size: 16px;
     font-weight: normal;
@@ -69,134 +52,104 @@ label.error {
 </head>
 
 <body>
-
     <!-- <div role="main" class="ui-content"> -->
     <div data-role="content">
 
+<!--
         <form method="post" enctype="multipart/form-data" action="/upload">
             <input type="file" id = "files" capture="camera" accept="image/*" id="takePictureField" name='image'/>
             <input type="submit" value="submit"/>
         </form>
+    -->
 
-        <h2>Upload to s3</h2>
-        <form id="form1" enctype="multipart/form-data" method="post" class="validate">
-            <div class="row">
-                <fieldset data-role="fieldcontain">
-                    <!-- <label for = "IDText" class="ui-hidden-accessible">User ID:</label> -->
-                    <input name = "IDText" id = "IDText" type = "text" placeholder = "User ID">
-                </fieldset>
+    <h2>Upload to s3</h2>
+    <form id="form1" enctype="multipart/form-data" method="post" class="validate">
+        <div class="row">
+            <fieldset data-role="fieldcontain">
+                <!-- <label for=" IDText" class="ui-hidden-accessible">User ID:</label> -->
+                <input name="IDText" id="IDText" type="text" placeholder="User ID"/>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <!-- <label for=" ImageNameText">Image name:</label> -->
+                <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true"/>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <!-- <label for=" descText">Description:</label> -->
+                <input name="descText" id="descText" type="text" placeholder="Description" data-clear-btn="true"/>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <select name="category" id="categoryText">
+                    <option selected disabled>Choose category</option>
+                    <option value="Animals">Animals</option>
+                    <option value="Plants">Plants</option>
+                    <option value="Other">Other</option>
+                </select>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <label for="file">Select a File to Upload</label>
+                <input type="file" name="file" id="file" capture="camera" accept="image/*" />
+            </fieldset>
+            <fieldset data-role="fieldcontain" class="ui-screen-hidden">
+                <input name="locationText" id="locationText" type="text"/>
+            </fieldset>
+            <div data-role="controlgroup">
+                <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
+                <!-- <button type="reset" data-icon="delete" data-iconpos="right" id="cancelButton">Cancel</button> -->
+            </div>
+            <div id="progressNumber"></div>
+        </form>
 
-                <fieldset data-role="fieldcontain">
-                    <!-- <label for = "ImageNameText">Image name:</label> -->
-                    <input name = "TitleText" id = "TitleText" type = "text" placeholder = "Title">
-                </fieldset>
+        <img id="yourimage"/>
 
-                <fieldset data-role="fieldcontain">
-                    <!-- <label for = "descText">Description:</label> -->
-                    <input name = "descText" id = "descText" type = "text" placeholder = "Description"> 
-                </fieldset>
+        <input type="button" value="show map" id = "mapButton"/>
 
-                <fieldset data-role="fieldcontain">
-                    <select name="category" id = "categoryText">
-                        <option selected disabled>Choose category</option>
-                        <option value="animals">Animals</option>
-                        <option value="plants">Plants</option>
-                        <option value="other">Other</option>
-                    </select>
-                </fieldset>
+        <div id="map"></div> <!-- testing map-->
 
-                <fieldset data-role="fieldcontain">
-                    <label for="file">Select a File to Upload</label>
-                    <input type="file" name="file" id="file" capture="camera" accept="image/*" />
-                </fieldset>
+        <!-- <div data-role="controlgroup" data-type"horizontal">
+            <input type="button" value="Animals" id = "animalButton"/>
+            <input type="button" value="Plants" id = "plantButton"/>
+            <input type="button" value="Other" id = "otherButton"/>
+        </div> -->
 
-                <fieldset data-role="fieldcontain" class="ui-screen-hidden">
-                    <input name = "locationText" id = "locationText" type = "text" >
-                    <!-- <input name = "lonText" id = "lonText" type = "text" > -->
+        <fieldset data-role="controlgroup">
+            <legend>Filter categories:</legend>
 
-                </fieldset>
+            <input type="radio" name="radio-choice" id="animalButton" value="Animals">
+            <label for="animalButton">Animals</label>
 
-                <div class="row">
-                    <!-- <input type="button" value="Upload" id = "sendButton"/> -->
-                    <button type="submit" class="btnLogin" data-theme="a" id="sendButton">Upload</button>
+            <input type="radio" name="radio-choice" id="plantButton" value="Plants">
+            <label for="plantButton">Plants</label>
 
+            <input type="radio" name="radio-choice" id="otherButton" value="Other">
+            <label for="otherButton">Other</label>
+        </fieldset>
 
-                </div>
-                <div id="progressNumber"></div>
-                <input type="button" value="get image" id = "getButton"/>
-            </form>
-
-            <img id="yourimage"/>
-
-            <input type="button" value="show map" id = "mapButton"/>
-
-            <div id="map"></div> <!-- testing map-->
-
-        </div>
     </div>
-
-    <script>
-    var desiredWidth;
-    $(document).ready(function () {
-        console.log('onReady');
-        $("#takePictureField").on("change", gotPic);
-    // $("#yourimage").load(getSwatches);
-    desiredWidth = window.innerWidth;
-
-    if (!("url" in window) && ("webkitURL" in window)) {
-        window.URL = window.webkitURL;
-    }
-});
-
-    function getSwatches() {
-        var colorArr = createPalette($("#yourimage"), 5);
-        for (var i = 0; i < Math.min(5, colorArr.length); i++) {
-            $("#swatch" + i).css("background-color", "rgb(" + colorArr[i][0] + "," + colorArr[i][1] + "," + colorArr[i][2] + ")");
-            console.log($("#swatch" + i).css("background-color"));
-        }
-    }
-
-//Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
-function gotPic(event) {
-    if (event.target.files.length == 1 && event.target.files[0].type.indexOf("image/") == 0) {
-        var blob = event.target.files[0];
-        // $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
-    }
-
-    var reader = new window.FileReader();
-    reader.readAsDataURL(blob);
-    var base64data;
-    var js;
-    reader.onloadend = function () {
-        base64data = reader.result;
-        js = JSON.stringify(base64data);
-        // console.log(base64data);
-        var encodedData = window.btoa(blob); // encode a string
-        var decodedData = window.atob(encodedData); // decode the string
-    };
-}
-</script>
+</div>
 
 <script>
-$.ajaxSetup ({
+$(document).ready(function () {
+    console.log('onReady');
+    $("#file").on("change", previewImage);
+});
+
+//Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
+function previewImage(event) {
+    getLocation(); // get location of where user is uploading photo 
+    if (event.target.files.length == 1 && event.target.files[0].type.indexOf("image/") == 0) {
+        var blob = event.target.files[0];
+         $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
+     }
+ }
+ </script>
+
+ <script>
+ $.ajaxSetup ({
     cache: false
 });
 
-/*
-$("#getButton").bind("click", function (event, ui) {
-    var url = "http://intense-harbor-6396.herokuapp.com/url";
-    // var url = "http://localhost:3000/url";
-    /*$.get(url, function(data) {
-        $("#yourimage").attr("src", data.url); //display image....
-    })*/
-
-	/*var src = getURL();
-$("#yourimage").attr("src", src);
-
-})*/
-
-/* Form validation... */
-$("#form1").validate({
+ /* Form validation... */
+ $("#form1").validate({
     rules: {
         IDText: {
             required: true
@@ -207,80 +160,101 @@ $("#form1").validate({
         descText: {
             minlength: 5
         },
+        categoryText: {
+            required: true
+        },
         file: {
             required: true
         },
 
-        submitHandler: function(form) {
-            form.submit();
-        }
+        // submitHandler: function(form) {
+        //     form.submit();
+        // }
     }
 });
 
-function getLocation() {
+ function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-         alert("Geolocation is not supported by this browser.");
-    }
+       alert("Geolocation is not supported :(");
+   }
 }
 
 function showPosition(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
     var data = lat + "," + lon;
-    document.getElementById("locationText").innerHTML = data;
+    $("#locationText").val(data);
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+        alert("User denied the request for Geolocation.");
+        break;
+        case error.POSITION_UNAVAILABLE:
+        alert("Location information is unavailable.");
+        break;
+        case error.TIMEOUT:
+        alert("The request to get user location timed out.");
+        break;
+        case error.UNKNOWN_ERROR:
+        alert("An unknown error occurred.");
+        break;
+    }
 }
 
 /* post form info to server */
 $("#sendButton").bind("click", function (event, ui) {
-    var url = "http://intense-harbor-6396.herokuapp.com/upload";
-    // var url = "http://localhost:3000/upload";
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
+
+    // getting values of form fields
     var id = $("#IDText").val();
     var TitleText = $("#TitleText").val();
     var desc = $("#descText").val();
     var category = $("#categoryText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
-
-    getLocation(); //get lcation
-    var gps = $("#locationText").val(); //hopefully has location text
-    console.log(gps);
+    var gps = $("#locationText").val(); //location text
 
 // if any fields are empty then cant upload
-if (!id || !TitleText) {
-    // alert("Some fields are empty and need to be filled out! >:)");
+if (!id || !TitleText || !category) {
+    alert("Some fields are empty and need to be filled out!");
 }
 
 else {
-    uploadFile(file, key); //call so can upload file to S3
+    // var url = "http://intense-harbor-6396.herokuapp.com/upload";
+    // var url = "http://localhost:3000/upload";
+//    uploadFile(file, key); //call so can upload file to S3
 
-    var getURL = function() {
-       return imgURL;
-   };
+// var inJSON = {"id": id, "TitleText": TitleText, "description": desc, "category": category, "gps": gps, "url": imgURL};
 
-   var inJSON = {"id": id, "TitleText": TitleText, "description": desc, "category": category, "url": imgURL};
-   console.log("posting: ", inJSON);
+var cotnent = "" + TitleText + "<br><h1>TEST this</h1>";
+var icon = "https://maps.google.com/mapfiles/kml/pal2/icon4.png";
+// var inJSON = {
+//     "address": gps, 
+//     "content": cotnent,
+//     "icon": icon
+// };
+
+var inJSON = {
+    "address": "-40.962368, 173.033719",
+    "content": "Purple marker",
+    icon: "http://maps.google.com/mapfiles/marker_purple.png"
+};
+console.log("posting: ", inJSON);
+mapStuff(inJSON);
 
     // sending to server
-    $.post(url, inJSON, function (data) {
-    }, "json");
-
-    // testing to show img on page
-    $("#getButton").bind("click", function (event, ui) {
-        var url = "http://intense-harbor-6396.herokuapp.com/url";
-        var src = getURL();
-        $("#yourimage").attr("src", src);
-    });
+    // $.post(url, inJSON, function (data) {
+    // }, "json");
 }
-
 });
 
 // uploading file to s3 bucket
 function uploadFile(file, key) {
     var fd = new FormData();
-    // var file = document.getElementById('file').files[0];
     fd.append('key', key);
     fd.append('acl', 'public-read'); 
     fd.append('Content-Type', file.type);      
@@ -302,7 +276,8 @@ function uploadFile(file, key) {
 function uploadProgress(evt) {
     if (evt.lengthComputable) {
       var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-      document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
+      // document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
+      $("#progressNumber").val(percentComplete.toString() + '%')
   }
   else {
       document.getElementById('progressNumber').innerHTML = 'unable to compute';
@@ -338,7 +313,6 @@ var secret = window.atob(secret64);
 var policy = JSON.stringify(POLICY_JSON);
 var policyBase64 = window.btoa(policy);
 
-
 /* GMAP STUFF */
 $("#mapButton").bind("click", function (event, ui) {
     var url = "http://intense-harbor-6396.herokuapp.com/gps";
@@ -349,16 +323,20 @@ $("#mapButton").bind("click", function (event, ui) {
         data = gps;
         mapStuff(data)
     })
-})
+});
 
-function mapStuff(data) {
+/* Showing map */
+// function createMap() {
     var $map = $("#map");
 
     // Gmap Defaults
     $map.gmap3({
         map: {
             options: {
-                center: [-40.9382511,172.9681819],
+                // center: [-40.9382511,172.9681819],
+                center: [-40.930, 173.0509],
+                // center: [-41.24437,174.7618546],
+
                 zoom: 12,
                 minZoom: 11,
                 disableDefaultUI: true,
@@ -366,8 +344,113 @@ function mapStuff(data) {
             }
         }
     });
+// }
 
-    // Json Loop
+// createMap();
+
+$("#animalButton").click(function () {
+    // var url = "http://intense-harbor-6396.herokuapp.com/animals";
+    // var url = "http://localhost:3000/animals";
+    // var data = [];
+    $map.gmap3("clear");
+
+    var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
+    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
+    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
+    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
+    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
+
+    var data = [{
+        "address": "-40.939611,173.061179",
+        "content": "Abel Tasman Walkway"
+    }, {
+        "address": "-40.939611,173.117179",
+        "content": "Abel Tasman boat"
+    }];
+
+    mapStuff(data);
+
+    // $.get(url, function (gps) {
+    //     data = gps;
+    //     mapStuff(data)
+    // })
+});
+
+$("#plantButton").bind("click", function () {
+    // var url = "http://intense-harbor-6396.herokuapp.com/plants";
+    // var url = "http://localhost:3000/plants";
+    // var data = [];
+    $map.gmap3("clear");
+
+    var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
+    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
+    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
+    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
+    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
+    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
+    var data = [{
+        "address": "-40.9206539,173.0071976",
+        "content": content,
+        icon: diffIcon
+    }, {
+        "address": "-40.921829,173.057123",
+        "content": content1,
+        icon: diffIcon
+    }];
+
+    mapStuff(data);
+
+    // $.get(url, function (gps) {
+    //     data = gps;
+    //     mapStuff(data)
+    // })
+});
+
+$("#otherButton").bind("click", function (event, ui) {
+    // var url = "http://intense-harbor-6396.herokuapp.com/other";
+    // var url = "http://localhost:3000/other";
+    // var data = [];
+    $map.gmap3("clear");
+
+    var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
+    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
+    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
+    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
+    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
+    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
+    var data = [{
+        "address": "-40.922133, 172.973554",
+        "content": content,
+        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+    }, {
+        "address": "-40.921829,173.057123",
+        "content": content1,
+        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+    }, {
+        "address": "-40.939611,173.061179",
+        "content": "Abel Tasman Walkway",
+        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+    }, {
+        "address": "-40.939611,173.117179",
+        "content": "Abel Tasman boat",
+        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+    }, {
+        "address": "-40.962368, 173.033719",
+        "content": "Purple marker",
+        icon: "http://maps.google.com/mapfiles/marker_purple.png"
+    }];
+
+    mapStuff(data);
+
+    // $.get(url, function (gps) {
+    //     data = gps;
+    //     mapStuff(data)
+    // })
+});
+
+/* Plot data onto map */
+function mapStuff(data) {
+    // loop through data
     $.each(data, function (key, val) {
         $map.gmap3({
             marker: {
@@ -377,7 +460,7 @@ function mapStuff(data) {
                         icon: val.icon,
                     },
                     events: {
-                        click: function (marker, event, context) {
+                        click: function () {
                             gmap_clear_markers();
                             $map.gmap3({
                                 map: {
@@ -387,10 +470,11 @@ function mapStuff(data) {
                                 }
                             });
                             var infowindows = $(this).gmap3({
-                                overlay: {
+                                infowindow: {
                                     address: val.address,
                                     options: {
-                                        content: '<div class="infobox">'+val.content+'</div>',
+                                        // content: '<div class="infobox">'+val.content+'</div>',
+                                        content: val.content,
                                         offset: {
                                             y: -32,
                                             x: 12

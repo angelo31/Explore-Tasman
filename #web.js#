@@ -32,7 +32,7 @@ client.connect();
 // var im = require('imagemagick');
 
 app.get('/', function(req, res) {
-	// res.writeHead(200, {'Content-Type': 'text/plain' });
+	// res.writeHead(20≈≈ΩΩΩΩZ0, {'Content-Type': 'text/plain' });
 	// res.end(form);
 	res.sendFile("index.html")
 });
