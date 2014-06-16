@@ -336,6 +336,9 @@ var $map = $("#map");
     var data = [];
     $map.gmap3("clear");
 
+    $('input[type=radio]').prop('checked', function () {
+        return this.getAttribute('checked') == 'checked';
+    });
     $.get(url, function (gps) {
         data = gps;
         mapStuff(data)
