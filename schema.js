@@ -7,10 +7,9 @@ client = new pg.Client(connectionString);
 client.connect();
 // query = client.query('CREATE TABLE tasman_table (userid text, imgName text, imagedescription text, imageurl text)');
 
-client.query('CREATE TABLE tasman_table (userid text, title text, imagedescription text, category text, gps text, imageurl text)');
+query = client.query('CREATE TABLE tasman_table (userid text, title text, imagedescription text, category text, gps text, imageurl text)');
 
-// var newTable = 'CREATE TABLE gps (address text, content text, icon text);';
-query = client.query('CREATE TABLE gps_table (address text, content text, icon text)'); //create table
+// query = client.query('CREATE TABLE gps_table (address text, content text, icon text)'); //create table
 
 /* 
 CREATE TABLE tasman_table (
