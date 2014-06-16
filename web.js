@@ -1,14 +1,10 @@
 var express = require('express')
-// , bodyParser = require('body-parser')
-// ,app = express.createServer(express.logger())
 , app = express()
 , pg = require('pg').native
 , fs = require('fs')
-// , connectionString = process.env.DATABASE_URL || "http://intense-harbor-6396.herokuapp.com"
 , connectionString = process.env.DATABASE_URL
 , port = process.env.PORT || 3000
 , client
-// , knox = require('knox')
 , crypto = require("crypto")
 ;
 
@@ -28,18 +24,11 @@ var S3_BUCKET = process.env.S3_BUCKET;
 client = new pg.Client(connectionString);
 client.connect();
 
-/// Include ImageMagick
-// var im = require('imagemagick');
-
 app.get('/', function(req, res) {
 	// res.writeHead(200, {'Content-Type': 'text/plain' });
 	// res.end(form);
 	res.sendFile("index.html")
 });
-
-
-// client.query('CREATE TABLE tasman_table (userid text, title text, imagedescription text, category text, gps text, imageurl text)');
-
 
 /// Post files
 app.post('/upload', function (req, res) {
@@ -103,29 +92,6 @@ app.post('/upload', function (req, res) {
 		  		});*/
 		// }
 
-var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
-
-POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
-            "conditions": [
-            {"bucket": "exploretasman"},
-            ["starts-with", "$key", ""],
-            {"acl": "public-read"},                           
-            ["starts-with", "$Content-Type", ""],
-            ["content-length-range", 0, 524288000]
-            ]
-          };
-
-    var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
-    var secret = new Buffer(secret64, 'base64').toString('ascii');
-
-    var policy = JSON.stringify(POLICY_JSON);
-
-    var policyBase64 = new Buffer(JSON.stringify(POLICY_JSON), 'utf8').toString('base64');
-
-    // policy = eyJleHBpcmF0aW9uIjoiMjAyMC0xMi0wMVQxMjowMDowMC4wMDBaIiwiY29uZGl0aW9ucyI6W3siYnVja2V0IjoiZXhwbG9yZXRhc21hbiJ9LFsic3RhcnRzLXdpdGgiLCIka2V5IiwiIl0seyJhY2wiOiJwdWJsaWMtcmVhZCJ9LFsic3RhcnRzLXdpdGgiLCIkQ29udGVudC1UeXBlIiwiIl0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMCw1MjQyODgwMDBdXX0= 
-
-	var signature = crypto.createHmac('sha1', secret).update(policyBase64).digest('base64');
-
 var row1 = {
 	id: req.body.id,
 	title: req.body.imageName,
@@ -136,11 +102,11 @@ var row1 = {
 };
 
 var id = req.body.id,
-	title= req.body.imageName,
-	description= req.body.description,
-	category= req.body.category,
+	title = req.body.imageName,
+	description = req.body.description,
+	category = req.body.category,
 	gps = req.body.gps,
-	imageURL= req.body.url
+	imageURL = req.body.url
 
 console.log("Received info: ", row1);
 
@@ -180,7 +146,6 @@ query.on("row", function(result) {
 })*/
 	res.send(inJSON);
 });
-
 
 /* testing gps */
 app.get("/gps", function (req, res) {
@@ -292,11 +257,6 @@ var otherData = [];
 		return res.send(otherData);
 	})
 });
-
-var awsKey = "AKIAJJUYC4EAIF7D2XDQ";
-var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
-var secret = new Buffer(secret64, 'base64').toString('ascii');
-var bucket = "exploretasman";
 
 /*
 /// Show files
