@@ -214,13 +214,13 @@ $("#sendButton").bind("click", function (event, ui) {
     var file = document.getElementById('file').files[0];
 
 
-    $("input[file=photo]").change(function(e) {
+    $("input[name=file]").change(function(e) {
         $.canvasResize(file, {
             width: 300,
             height: 0,
             crop: false,
             quality: 80,
-            callboack: function(data, width, height) {
+            callback: function(data, width, height) {
                 $("#yourimage").attr("src", data);
             }
         })
