@@ -344,7 +344,7 @@ var $map = $("#map");
     });
 });
 
-/* Show only animals */
+    /* Show only animals */
     $("#animalButton").click(function () {
         var url = "http://intense-harbor-6396.herokuapp.com/animals";
     // var url = "http://localhost:3000/animals";
@@ -357,7 +357,7 @@ var $map = $("#map");
     })
 });
 
-/* show only plants */
+    /* show only plants */
     $("#plantButton").bind("click", function () {
         var url = "http://intense-harbor-6396.herokuapp.com/plants";
     // var url = "http://localhost:3000/plants";
@@ -370,7 +370,7 @@ var $map = $("#map");
     })
 });
 
-/* show only other */
+    /* show only other */
     $("#otherButton").bind("click", function (event, ui) {
         var url = "http://intense-harbor-6396.herokuapp.com/other";
     // var url = "http://localhost:3000/other";
@@ -383,8 +383,8 @@ var $map = $("#map");
     })
 });
 
-/* Plot data onto map */
-function mapStuff(data) {
+    /* Plot data onto map */
+    function mapStuff(data) {
     // loop through data
     $.each(data, function (key, val) {
 
@@ -410,18 +410,22 @@ function mapStuff(data) {
                     address: val.gps,
                     options: {
                         icon: icon,
+                        animation: google.maps.Animation.DROP,
                     },
                     events: {
-                        click: function () {
-                            gmap_clear_markers();
-                            $map.gmap3({
-                                map: {
-                                    options: {
-                                        // center:event.latLng
-                                    }
-                                }
-                            });
-                            var infowindows = $(this).gmap3({
+                        click: function (marker, event, context) {
+                            var map = $(this).gmap3("get"),
+                            infowindow = $(this).gmap3({
+                             get: {
+                                name: "infowindow"
+                            }
+                        });
+                            if (infowindow) {
+                              infowindow.open(map, marker);
+                              infowindow.setContent("<h4>" + val.title + "</h4><br><img src ='" + val.imageurl + "'/><br><p>" + val.imagedesc + "</p>");
+                          }
+                          else {
+                            $(this).gmap3({
                                 infowindow: {
                                     address: val.gps,
                                     options: {
@@ -437,17 +441,23 @@ function mapStuff(data) {
                                 }
                             });
                         }
+                    }, 
+                    // close current infowindow 
+                    closeclick: function () {
+                     var infowindow = $(this).gmap3({
+                      get: {
+                       name: "infowindow"
+                   }
+               });
+                     if (infowindow) {
+                        infowindow.close();
                     }
-                }]
-            }
-        });
+                }
+          }
+      }]
+  }
 });
-    // Function Clear Markers
-    function gmap_clear_markers() {
-        $('.infobox').each(function () {
-            $(this).remove();
-        });
-    }
+});
 }
 </script>
 </body>
