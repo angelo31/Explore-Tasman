@@ -33,10 +33,10 @@
 }
 
 .images {
-   width: 90%;
-   display: block;
-   margin-left: auto;
-   margin-right: auto;
+ width: 90%;
+ display: block;
+ margin-left: auto;
+ margin-right: auto;
 }
 
 /*img:hover {
@@ -148,8 +148,8 @@ function previewImage(event) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-       alert("Geolocation is not supported :(");
-   }
+     alert("Geolocation is not supported :(");
+ }
 }
 
 function showPosition(position) {
@@ -419,13 +419,13 @@ var $map = $("#map");
                         click: function (marker, event, context) {
                             var map = $(this).gmap3("get"),
                             infowindow = $(this).gmap3({
-                               get: {
-                                name: "infowindow"
-                            }
-                        });
+                                get: {
+                                    name: "infowindow"
+                                }
+                            });
                             if (infowindow) {
                               infowindow.open(map, marker);
-                              infowindow.setContent("<h4>" + val.title + "</h4><br><img src ='" + val.imageurl + "'/><br><p>" + val.imagedesc + "</p>");
+                              infowindow.setContent("<h4>" + val.title + "</h4><br><img src ='" + val.imageurl + "'class = 'images'/><br><p>" + val.imagedesc + "</p>");
                           }
                           else {
                             $(this).gmap3({
@@ -447,21 +447,21 @@ var $map = $("#map");
                     }, 
                     // close current infowindow 
                     closeclick: function () {
-                       var infowindow = $(this).gmap3({
-                          get: {
-                             name: "infowindow"
-                         }
-                     });
-                       if (infowindow) {
-                        infowindow.close();
+                        var infowindow = $(this).gmap3({
+                            get: {
+                                name: "infowindow"
+                            }
+                        });
+                        if (infowindow) {
+                            infowindow.close();
+                        }
                     }
-                }
-            }
-        }]
-    }
-});
-});
-}
+                } // end of events options 
+            }]
+        } // end of marker
+    });
+}); //end of loop
+} //end of mapStuff function
 </script>
 </body>
 </html>
