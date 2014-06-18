@@ -169,7 +169,7 @@ function showPosition(position) {
 function showError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
-        alert("User denied the request for Geolocation.");
+        alert("User denied the request for Geolocation. Need geolocation so can display upload on map!");
         break;
         case error.POSITION_UNAVAILABLE:
         alert("Location information is unavailable.");
@@ -221,6 +221,8 @@ $("#sendButton").bind("click", function (event, ui) {
     var category = $("#categoryText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
+
+    alert(gps)
 
 // if any fields are empty then cant upload
 if (!id || !title || !category) {
