@@ -193,7 +193,7 @@ $("#form1").validate({
         },
         file: {
             required: true,
-            accept: "image/jpeg, image/png"
+            accept: "image/jpg, image/jpeg, image/png"
         },
         submitHandler: function(form) {
             // need something here
@@ -216,7 +216,7 @@ $("#sendButton").bind("click", function (event, ui) {
 
 
 // if any fields are empty then cant upload
-if (!id || !title || !category) {
+if (!id || !title || !desc || !category) {
     alert("Some fields are empty and need to be filled out!");
 }
 
