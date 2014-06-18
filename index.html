@@ -215,7 +215,8 @@ $("#sendButton").bind("click", function (event, ui) {
 
 
     $("input[name=file]").change(function(e) {
-        $.canvasResize(file, {
+        var testFile = e.target.files[0];
+        $.canvasResize(testFile, {
             width: 300,
             height: 0,
             crop: false,
