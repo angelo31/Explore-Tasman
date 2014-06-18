@@ -28,24 +28,23 @@
     <script src="resize/canvasResize.js"></script>
 
 
-
     <style>
     #yourimage {
-      /*width: 25%;*/
-  }
+        width: 25%;
+    }
 
-  #map {
-    /*height: 100%;*/
-    height: 500px;
-    width: 100%;
-}
+    #map {
+        /*height: 100%;*/
+        height: 500px;
+        width: 100%;
+    }
 
-.images {
-   width: 90%;
-   display: block;
-   margin-left: auto;
-   margin-right: auto;
-}
+    .images {
+     width: 90%;
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+ }
 
 /*img:hover {
     width: 100%;
@@ -135,6 +134,22 @@
 $(document).ready(function () {
     console.log('onReady');
     $("#file").on("change", previewImage);
+/*
+    $('input[name=file]').change(function(e) {
+        var testFile = e.target.files[0];
+        // alert("Im inside" + testFile)
+        canvasResize(testFile, {
+            width: 300,
+            height: 0,
+            crop: false,
+            quality: 80,
+            //rotate: 90,
+            callback: function(data, width, height) {
+                $("#yourimage").attr("src", data);
+            }
+        })
+});*/
+
 });
 
 //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
@@ -142,7 +157,8 @@ function previewImage(event) {
     getLocation(); // get location of where user is uploading photo 
     if (event.target.files.length == 1 && event.target.files[0].type.indexOf("image/") == 0) {
         var blob = event.target.files[0];
-         // $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
+         $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
+
      }
  }
  </script>
@@ -156,8 +172,8 @@ function previewImage(event) {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
-       alert("Geolocation is not supported :(");
-   }
+     alert("Geolocation is not supported :(");
+ }
 }
 
 function showPosition(position) {
@@ -212,20 +228,6 @@ $("#form1").validate({
 /* post form info to server */
 $("#sendButton").bind("click", function (event, ui) {
     var file = document.getElementById('file').files[0];
-
-
-    $("input[name=file]").change(function(e) {
-        var testFile = e.target.files[0];
-        canvasResize(testFile, {
-            width: 300,
-            height: 0,
-            crop: false,
-            quality: 80,
-            callback: function(data, width, height) {
-                $("#yourimage").attr("src", data);
-            }
-        })
-    })
 
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
 
