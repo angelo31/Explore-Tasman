@@ -134,22 +134,6 @@
 $(document).ready(function () {
     console.log('onReady');
     $("#file").on("change", previewImage);
-/*
-    $('input[name=file]').change(function(e) {
-        var testFile = e.target.files[0];
-        // alert("Im inside" + testFile)
-        canvasResize(testFile, {
-            width: 300,
-            height: 0,
-            crop: false,
-            quality: 80,
-            //rotate: 90,
-            callback: function(data, width, height) {
-                $("#yourimage").attr("src", data);
-            }
-        })
-});*/
-
 });
 
 //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
@@ -158,7 +142,6 @@ function previewImage(event) {
     if (event.target.files.length == 1 && event.target.files[0].type.indexOf("image/") == 0) {
         var blob = event.target.files[0];
          $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
-
      }
  }
  </script>
@@ -217,11 +200,11 @@ $("#form1").validate({
         },/*
         file: {
             accept: "image/*"
-        },*/
+        },
         submitHandler: function(form) {
             // need something here
             return false;
-        }
+        }*/
     }
 });
 
@@ -238,7 +221,6 @@ $("#sendButton").bind("click", function (event, ui) {
     var category = $("#categoryText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
-
 
 // if any fields are empty then cant upload
 if (!id || !title || !category) {
