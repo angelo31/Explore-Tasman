@@ -192,7 +192,8 @@ $("#form1").validate({
             required: true
         },
         file: {
-            required: true
+            required: true,
+            accept: "image/jpeg, image/png"
         },
         submitHandler: function(form) {
             // need something here
@@ -336,7 +337,7 @@ var $map = $("#map");
 
     /* show all categories */
     $("#allButton").bind("click", function (event, ui) {
-        var url = "http://intense-harbor-6396.herokuapp.com/all";
+        var url = "http://intense-harbor-6396.herokuapp.com/category/all";
     // var url = "http://localhost:3000/all";
     var data = [];
     $map.gmap3("clear");
@@ -349,7 +350,7 @@ var $map = $("#map");
 
     /* Show only animals */
     $("#animalButton").click(function () {
-        var url = "http://intense-harbor-6396.herokuapp.com/animals";
+        var url = "http://intense-harbor-6396.herokuapp.com/category/animals";
     // var url = "http://localhost:3000/animals";
     var data = [];
     $map.gmap3("clear");
@@ -362,7 +363,7 @@ var $map = $("#map");
 
     /* show only plants */
     $("#plantButton").bind("click", function () {
-        var url = "http://intense-harbor-6396.herokuapp.com/plants";
+        var url = "http://intense-harbor-6396.herokuapp.com/category/plants";
     // var url = "http://localhost:3000/plants";
     var data = [];
     $map.gmap3("clear");
@@ -375,7 +376,7 @@ var $map = $("#map");
 
     /* show only other */
     $("#otherButton").bind("click", function (event, ui) {
-        var url = "http://intense-harbor-6396.herokuapp.com/other";
+        var url = "http://intense-harbor-6396.herokuapp.com/category/other";
     // var url = "http://localhost:3000/other";
     var data = [];
     $map.gmap3("clear");

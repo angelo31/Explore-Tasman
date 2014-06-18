@@ -71,39 +71,7 @@ res.send(row1);
 });
 
 /* testing gps */
-app.get("/all", function (req, res) {
-	/*
-	var imageURL = "https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png";
-    var content = "<h4>Frenchman Bay</h4><br><img src ='" + imageURL + "'/>";
-    var img = "https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg";
-    var content1 = "<h4>Abel Tasman</h4><br><img src ='" + img + "'/>";
-    var diffIcon = "http://maps.google.com/mapfiles/marker_green.png";
-    var icon = "https://maps.google.com/mapfiles/kml/shapes/";
-	var data = [{
-        "address": "-40.9206539,173.0071976",
-        "content": content,
-        icon: diffIcon
-    }, {
-        "address": "-40.921829,173.057123",
-        "content": content1,
-        icon: icon + "schools_maps.png"
-    }, {
-        "address": "-40.939611,173.061179",
-        "content": "Abel Tasman Walkway"
-    }, {
-        "address": "-40.939611,173.117179",
-        "content": "Abel Tasman boat",
-        icon: icon + "info-i_maps.png"
-    }];
-	// res.send(data);
-
-	client.query(INSERT into gps_table (address, content, icon)
-VALUES ('-40.9206539,173.0071976', '<h4>Frenchman Bay</h4><br><img src =''https://exploretasman.s3.amazonaws.com/events/1402248566277-icon.png''/>', 'http://maps.google.com/mapfiles/marker_green.png'), 
-('-40.921829,173.057123', '<h4>Abel Tasman</h4><br><img src =''https://s3-us-west-2.amazonaws.com/exploretasman/events/1402371857544-image.jpg''/>', 'https://maps.google.com/mapfiles/kml/shapes/schools_maps.png'), 
-('-40.939611,173.061179', 'Abel Tasman Walkway', 'https://maps.google.com/mapfiles/ms/micons/camera.png'), 
-('-40.939611,173.117179', 'Abel Tasman boat', 'https://maps.google.com/mapfiles/kml/shapes/info-i_maps.png'));
-*/
-
+app.get("/category/all", function (req, res) {
 /* FAKE DATA FOR DATABASE */
 /*
 INSERT INTO tasman_table (userid, title, imagedesc, category, gps, imageurl) 
@@ -138,7 +106,7 @@ var gpsData = [];
 ****************************************************/
 
 // get all posts filtered by animal 
-app.get("/animals", function (req, res) {
+app.get("/category/animals", function (req, res) {
 	var animalData = [];
 	var query = client.query("SELECT * from tasman_table WHERE category = 'Animals'");
 
@@ -156,7 +124,7 @@ app.get("/animals", function (req, res) {
 });
 
 // get all posts filtered by plants
-app.get("/plants", function (req, res) {
+app.get("/category/plants", function (req, res) {
 	var plantData = [];
 	var query = client.query("SELECT * from tasman_table WHERE category = 'Plants'");
 
@@ -174,7 +142,7 @@ app.get("/plants", function (req, res) {
 });
 
 // get all posts filtered by other
-app.get("/other", function (req, res) {
+app.get("/category/other", function (req, res) {
 	var otherData = [];
 	var query = client.query("SELECT * from tasman_table WHERE category = 'Other'");
 
@@ -190,22 +158,6 @@ app.get("/other", function (req, res) {
 		return res.send(otherData);
 	})
 });
-
-/*
-/// Show files
-app.get('/uploads/fullsize/:file', function (req, res){
-	file = req.params.file;
-	var img = fs.readFile( __dirname + "uploads/fullsize/" + file);
-	res.writeHead(200, {'Content-Type': 'image/jpg' });
-	res.end(img, 'binary');
-});
-
-app.get('/uploads/thumbs/:file', function (req, res){
-	file = req.params.file;
-	var img = fs.readFile( __dirname + "/uploads/thumbs/" + file);
-	res.writeHead(200, {'Content-Type': 'image/jpg' });
-	res.end(img, 'binary');
-});*/
 
 app.listen(port, function () {
 	console.log('Listening on:', port);
