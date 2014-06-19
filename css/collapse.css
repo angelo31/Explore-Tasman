@@ -1,110 +1,47 @@
 /* Main Title Top of the page*/
 h2.pageTitle {
-	 
 	text-transform:uppercase;
-	 
 	background:#373737;
-	 background-size: 5px 5px;
-	
-	/*border-bottom:1px solid #aaa;
-	*/
+	background-size: 5px 5px;
+	/*border-bottom:1px solid #aaa;*/
 	color:#fff;
-	 
 	width:100%;
-	 
 	margin:0;
-	
 	padding:0;
-	
-/*    text-shadow: 0 1px 0 #fff;
-	 */
+	/*text-shadow: 0 1px 0 #fff;*/
 	font-weight:normal;
-	 
-    
 }
-
-
-
 h2.pageTitle span {
-	 
 	display:block;
-	 
 	padding:8px 0 5px 15px
-    
 }
-
-
-
-.collapsibl img{
-	
-    margin-top:5px;
-	
-    width:80px;
-	
-    height:80px;
-	
-    padding:8px;
-	
-    
+.collapsibl img {
+	margin-top:5px;
+	width:80px;
+	height:80px;
+	padding:8px;
 }
-
-
-
-.title2{
-	
-    font-size:10px;
-	
-    color:white;
-	
-    
+.title2 {
+	font-size:10px;
+	color:#ff0;
 }
-
-
-
-.title1{
-	
+.title1 {
 	font-size:15px;
-	
 	line-height:0px;
-	
 	font-weight:700;
-	
-    
 }
-
-    
-        
-.mini_title{
-	
-    font-size:20px;
-	
-    font-weight:700;
-	
+.mini_title {
+	font-size:20px;
+	font-weight:700;
 	margin-top:-1px;
-	
-    
 }
-
-
-
-.txt{
-	
-    padding:10px;
-	
-    margin:5px;
-	
-/*    text-align:center;
-	*/
-    
+.txt {
+	padding:10px;
+	margin:5px;
+	/*text-align:center;*/
 }
-
-
-
-img.news_img{
-	
-    margin-top:-20px;
-	
-    padding:8px;
-	
-    
+.news_img {
+	margin-top:-20px;
+	padding:8px;
+	float: left;
 }
