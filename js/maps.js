@@ -30,9 +30,9 @@ $(document).on('pageshow','#home',function(event){
                 mapTypeId: "style1"
             },//end of options
 
-            events:{  
+            events: {
                 //For center the boundary area    
-                center_changed: function(map){
+                /*center_changed: function(map){
                     if(strictBounds.contains(map.getCenter())){
                             //still with valid bounds, so save the last vaild position
                             lastValidCenter = map.getCenter();
@@ -40,7 +40,7 @@ $(document).on('pageshow','#home',function(event){
                         }
                             //not vaild anymore
                             map.panTo(lastValidCenter);
-                        }
+                        }*/
                 },//end of events
 
         },//end of map
@@ -68,11 +68,10 @@ $(document).on('pageshow','#home',function(event){
             { "color": "#F24C32" },
             { "weight": 1 }
             ]
-        } 
+        }
         ]
-            }//End of styledmaptype
-
-    });//end of gmap3
+        }//End of styledmaptype
+        });//end of gmap3
 
 
 /* show all categories */

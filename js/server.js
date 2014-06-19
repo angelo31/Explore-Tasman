@@ -132,10 +132,10 @@ $(document).on("click", "#sendButton", function() {
     var title = $("#TitleText").val();
     var desc = $("#descText").val();
     var category = $("#categoryText").val();
-    var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
+    // var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
 
-    var image = $(".test img").attr("src"); //base64 of image
+    var imgURL = $(".test img").attr("src"); //base64 of image
 
 
 // if any fields are empty then cant upload
@@ -157,7 +157,7 @@ else {
                 "description": desc,
                 "category": category,
                 "gps": gps,
-                "url": image
+                "url": imgURL
             };
             console.log("posting: ", inJSON);
 
