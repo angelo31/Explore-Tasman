@@ -202,7 +202,7 @@
         <div data-role="content">
             <form id="form1" enctype="multipart/form-data" method="post" class="validate">
                 <fieldset data-role="fieldcontain">
-                    <!-- <label for=" IDText" class="ui-hidden-accessible">User ID:</label> -->
+                    <!-- <label for=" IDText">User ID:</label> -->
                     <input name="IDText" id="IDText" type="text" placeholder="User ID"/>
                 </fieldset>
                 <fieldset data-role="fieldcontain">
@@ -230,8 +230,11 @@
                 </fieldset>
                 <!-- <div data-role="controlgroup"> -->
                 <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
+
                 <!-- <button type="reset" data-icon="delete" data-iconpos="right" id="cancelButton">Cancel</button> -->
-                <img id="yourimage"/>
+                <div class = "test">
+                    <img id="yourimage"/>
+                </div>
                 <div id="progressNumber"></div>
             </form>
             <a href="#home" data-role="button" data-rel="back" data-theme="b">Close</a>

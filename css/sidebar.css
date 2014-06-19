@@ -57,6 +57,27 @@
   color:#fff;
   box-shadow: inset 300px 0px 300px rgba(241, 139, 0, 0.8);
 }
+
+
+#nav ul li a.one {
+  /*color:#fff;*/
+  box-shadow: inset 300px 0px 300px rgba(0, 0, 0, 0.4);
+}
+#nav ul li a.two {
+  /*color:#fff;*/
+  box-shadow: inset 300px 0px 300px rgba(255, 0, 0, 0.4);
+
+}
+#nav ul li a.three {
+  /*color:#fff;*/
+  box-shadow: inset 300px 0px 300px rgba(0, 185, 0, 0.4);
+}
+#nav ul li a.four {
+  /*color:#fff;*/
+  box-shadow: inset 300px 0px 300px rgba(241, 139, 0, 0.4);
+}
+
+
 #showMenu {
   display: block;
   position: fixed;

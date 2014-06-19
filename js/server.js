@@ -1,7 +1,53 @@
 $(document).ready(function () {
     console.log('onReady');
-    $("#file").on("change", previewImage);
+    $("#file").on("change", loadImage);
 });
+
+
+oFReader = new FileReader(), rFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+
+oFReader.onload = function (oFREvent) {
+
+  var img=new Image();
+  img.onload=function(){
+      var canvas=document.createElement("canvas");
+      var ctx=canvas.getContext("2d");
+    
+    var currW = img.width;
+    var currH = img.height
+    var ratio = currH / currW;
+    var maxW = 800;
+    var maxH = 450;
+    
+    if (img.width >= maxW && ratio <= 1) {
+      currW = maxW;
+      currH = currW * ratio;
+    }
+    
+    else 
+      if (currH >= maxH) {
+      currH = maxH;
+      currW = currH / ratio;
+    }
+    
+      canvas.width=currW;
+      canvas.height=currH;
+      ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
+      document.getElementById("yourimage").src = canvas.toDataURL();
+      
+      // var dataurl = canvas.toDataURL();
+      // $("#images").attr("src", dataurl);
+  }
+  img.src=oFREvent.target.result;
+};
+
+function loadImage() {
+  if (document.getElementById("file").files.length === 0) { return; }
+  var oFile = document.getElementById("file").files[0];
+  if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
+  oFReader.readAsDataURL(oFile);
+}
+
 
 //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
 function previewImage(event) {
@@ -64,10 +110,10 @@ $("#form1").validate({
         categoryText: {
             required: true
         },
-        file: {
-            required: true,
-            accept: "image/*"
-        },
+        // file: {
+        //     required: true,
+        //     accept: "image/*"
+        // },
         submitHandler: function(form) {
             // need something here
         }
@@ -88,6 +134,8 @@ $(document).on("click", "#sendButton", function() {
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
 
+    var image = $(".test img").attr("src"); //base64 of image
+
 
 // if any fields are empty then cant upload
 if (!id || !title || !category) {
@@ -101,14 +149,14 @@ else if (!gps) {
 else {
     var url = "http://intense-harbor-6396.herokuapp.com/upload";
             // var url = "http://localhost:3000/upload";
-            uploadFile(file, key); //call so can upload file to S3
+            // uploadFile(file, key); //call so can upload file to S3
             var inJSON = {
                 "id": id,
                 "title": title,
                 "description": desc,
                 "category": category,
                 "gps": gps,
-                "url": imgURL
+                "url": image
             };
             console.log("posting: ", inJSON);
 
