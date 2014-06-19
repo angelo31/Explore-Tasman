@@ -1,52 +1,45 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <meta name="viewport" content="width=320 user-scalable=no" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>Explore Tasman</title>
-    <script type="text/javascript" src="phonegap.js"></script>
+    <!DOCTYPE HTML>
+    <html>
+    <head>
+        <meta name="viewport" content="width=320 user-scalable=no" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>Explore Tasman</title>
+        <script type="text/javascript" src="phonegap.js"></script>
 
-    <!-- Jquery and Jquery mobile -->
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
-    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+        <!-- Jquery and Jquery mobile -->
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
+        <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
-    <!-- gmap3 -->
-    <script src="http://cdn.jsdelivr.net/gmap3/5.1.1/gmap3.min.js"></script>
+        <!-- gmap3 -->
+        <script src="http://cdn.jsdelivr.net/gmap3/5.1.1/gmap3.min.js"></script>
 
-    <!-- jQuery Validation plugin -->
-    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/jquery.validate.min.js"></script>
-    
-    <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/additional-methods.min.js"></script>
+        <!-- jQuery Validation plugin -->
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/jquery.validate.min.js"></script>
 
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/additional-methods.min.js"></script>
 
+        <style>
+        #yourimage {
+            width: 25%;
+        }
 
-    <script src="resize/jquery.exif.js"></script>
-    <script src="resize/jquery.canvasResize.js"></script>
-    <script src="resize/canvasResize.js"></script>
+        #map {
+            /*height: 100%;*/
+            height: 400px;
+            width: 100%;
+        }
 
+        .images {
+         width: 90%;
+         display: block;
+         margin-left: auto;
+         margin-right: auto;
+     }
 
-    <style>
-    #yourimage {
-        width: 25%;
-    }
-
-    #map {
-        /*height: 100%;*/
-        height: 500px;
-        width: 100%;
-    }
-
-    .images {
-     width: 90%;
-     display: block;
-     margin-left: auto;
-     margin-right: auto;
- }
-
-/*img:hover {
+    /*img:hover {
     width: 100%;
     }*/
 
@@ -58,89 +51,103 @@
         padding-left: 5px
     }
 
+
     </style>
 </head>
 
 <body>
-    <!-- <div role="main" class="ui-content"> -->
-    <div data-role="content">
 
-<!--
-        <form method="post" enctype="multipart/form-data" action="/upload">
-            <input type="file" id = "files" capture="camera" accept="image/*" id="takePictureField" name='image'/>
-            <input type="submit" value="submit"/>
-        </form>
-    -->
+    <div data-role="page" id="main-page">
+        <div role="main" class="ui-content">
+            <!-- <div data-role="content"> -->
 
-    <h2>Upload to s3</h2>
-    <form id="form1" enctype="multipart/form-data" method="post" class="validate">
-        <div class="row">
-            <fieldset data-role="fieldcontain">
-                <!-- <label for=" IDText" class="ui-hidden-accessible">User ID:</label> -->
-                <input name="IDText" id="IDText" type="text" placeholder="User ID"/>
-            </fieldset>
-            <fieldset data-role="fieldcontain">
-                <!-- <label for=" TitleText">Title:</label> -->
-                <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true"/>
-            </fieldset>
-            <fieldset data-role="fieldcontain">
-                <!-- <label for=" descText">Description:</label> -->
-                <input name="descText" id="descText" type="text" placeholder="Description" data-clear-btn="true"/>
-            </fieldset>
-            <fieldset data-role="fieldcontain">
-                <select name="category" id="categoryText">
-                    <option selected disabled>Choose category</option>
-                    <option value="Animals">Animals</option>
-                    <option value="Plants">Plants</option>
-                    <option value="Other">Other</option>
-                </select>
-            </fieldset>
-            <fieldset data-role="fieldcontain">
-                <label for="file">Select a File to Upload</label>
-                <input type="file" name="file" id="file" capture="camera" accept="image/*" />
-            </fieldset>
-            <fieldset data-role="fieldcontain" class="ui-screen-hidden">
-                <input name="locationText" id="locationText" type="text"/>
-            </fieldset>
-            <div data-role="controlgroup">
-                <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
-                <!-- <button type="reset" data-icon="delete" data-iconpos="right" id="cancelButton">Cancel</button> -->
-            </div>
-            <img id="yourimage"/>
-            <div id="progressNumber"></div>
-        </form>
+            <h2>Upload to s3</h2>
+            <a href="#map-page">To Map!</a>
 
-        <!-- <input type="button" value="show map" id = "mapButton"/> -->
-        <div id="map"></div> <!-- testing map-->
-        <fieldset data-role="controlgroup">
-            <legend>Filter categories:</legend>
+            <form id="form1" enctype="multipart/form-data" method="post">
+                <fieldset data-role="fieldcontain">
+                    <!-- <label for=" IDText" class="ui-hidden-accessible">User ID:</label> -->
+                    <input name="IDText" id="IDText" type="text" placeholder="User ID"/>
+                </fieldset>
+                <fieldset data-role="fieldcontain">
+                    <!-- <label for=" TitleText">Title:</label> -->
+                    <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true"/>
+                </fieldset>
+                <fieldset data-role="fieldcontain">
+                    <!-- <label for=" descText">Description:</label> -->
+                    <input name="descText" id="descText" type="text" placeholder="Description" data-clear-btn="true"/>
+                </fieldset>
+                <fieldset data-role="fieldcontain">
+                    <select name="category" id="categoryText">
+                        <option selected disabled>Choose category</option>
+                        <option value="Animals">Animals</option>
+                        <option value="Plants">Plants</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </fieldset>
+                <fieldset data-role="fieldcontain">
+                    <label for="file">Select an image to Upload</label>
+                    <input type="file" id="file" capture="camera" accept="image/*" />
+                </fieldset>
+                <fieldset data-role="fieldcontain" class="ui-screen-hidden">
+                    <input name="locationText" id="locationText" type="text"/>
+                </fieldset>
+                <div data-role="controlgroup">
+                    <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
+                    <!-- <button type="reset" data-icon="delete" data-iconpos="right" id="cancelButton">Cancel</button> -->
+                </div>
+                <img id="yourimage"/>
+            </form>
 
-            <input type="radio" name="radio-choice" id="allButton" value="All">
-            <label for="allButton">All</label>
-
-            <input type="radio" name="radio-choice" id="animalButton" value="Animals">
-            <label for="animalButton">Animals</label>
-
-            <input type="radio" name="radio-choice" id="plantButton" value="Plants">
-            <label for="plantButton">Plants</label>
-
-            <input type="radio" name="radio-choice" id="otherButton" value="Other">
-            <label for="otherButton">Other</label>
-        </fieldset>
+            <!-- <input type="button" value="show map" id = "mapButton"/> -->
+        </div>
     </div>
-</div>
 
-<script>
-$(document).ready(function () {
-    console.log('onReady');
-    $("#file").on("change", previewImage);
-});
+    <!-- 2nd page where map lives  -->
+    <div data-role="page" id ="map-page">
+        <div data-role="main" class = "ui-content">
+            <a href="#main-page">Back to main page</a>
 
-//Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
-function previewImage(event) {
-    getLocation(); // get location of where user is uploading photo 
-    if (event.target.files.length == 1 && event.target.files[0].type.indexOf("image/") == 0) {
-        var blob = event.target.files[0];
+            <div id="map"></div> <!-- testing map-->
+            <!-- <fieldset data-role="controlgroup">
+                <legend>Filter categories:</legend>
+
+                <input type="radio" name="radio-choice" id="allButton" value="All">
+                <label for="allButton">All</label>
+
+                <input type="radio" name="radio-choice" id="animalButton" value="Animals">
+                <label for="animalButton">Animals</label>
+
+                <input type="radio" name="radio-choice" id="plantButton" value="Plants">
+                <label for="plantButton">Plants</label>
+
+                <input type="radio" name="radio-choice" id="otherButton" value="Other">
+                <label for="otherButton">Other</label>
+            </fieldset> -->
+
+            <ul>
+                <li><a href="#" id="allButton">All</a></li>
+                <li><a href="#" id="animalButton">Animals</a></li>
+                <li><a href="#" id="plantButton">Plants</a></li>
+                <li><a href="#" id="otherButton">Other</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <script>
+    $(document).ready(function () {
+        console.log('onReady');
+        $("#file").on("change", previewImage);
+    });
+
+    //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
+    function previewImage(event) {
+        document.addEventListener("deviceready", getLocation, false);
+        getLocation(); // get location of where user is uploading photo 
+        if (event.target.files.length == 1 && event.target.files[0].type.indexOf("image/") == 0) {
+            var blob = event.target.files[0];
          $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
      }
  }
@@ -153,7 +160,7 @@ function previewImage(event) {
 
  function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
+        navigator.geolocation.getCurrentPosition(showPosition, onError);
     } else {
      alert("Geolocation is not supported :(");
  }
@@ -164,6 +171,11 @@ function showPosition(position) {
     var lon = position.coords.longitude;
     var data = lat + "," + lon;
     $("#locationText").val(data);
+}
+
+function onError(error) {
+    alert('code: '    + error.code    + '\n' +
+        'message: ' + error.message + '\n');
 }
 
 function showError(error) {
@@ -193,6 +205,7 @@ $("#form1").validate({
             required: true
         },
         descText: {
+            required:true,
             minlength: 5
         },
         categoryText: {
@@ -200,11 +213,11 @@ $("#form1").validate({
         },/*
         file: {
             accept: "image/*"
-        },
+        },*/
         submitHandler: function(form) {
             // need something here
-            return false;
-        }*/
+            // return false;
+        }
     }
 });
 
@@ -222,15 +235,13 @@ $("#sendButton").bind("click", function (event, ui) {
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
 
-    alert(gps)
+    // if any fields are empty then cant upload
+    if (!id || !title || !category) {
+        alert("Some fields are still empty and need to be filled out!");
+    }
 
-// if any fields are empty then cant upload
-if (!id || !title || !category) {
-    alert("Some fields are empty and need to be filled out!");
-}
-
-else {
-    var url = "http://intense-harbor-6396.herokuapp.com/upload";
+    else {
+        var url = "http://intense-harbor-6396.herokuapp.com/upload";
             // var url = "http://localhost:3000/upload";
             uploadFile(file, key); //call so can upload file to S3
             var inJSON = {
@@ -247,35 +258,35 @@ else {
             // $.post(url, inJSON, function (data) {
             // }, "json");
 
-$.ajax({
-    type: "POST",
-    url: url,
-    data: inJSON,
-    dataType: "json",
-    success:function(data) {
-        alert("Upload complete!")
-    },
-    complete:function() {
-        $("#form1").each(function(){
-            this.reset();
-        });
-    }
-});
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: inJSON,
+        dataType: "json",
+        success:function(data) {
+            alert("Upload complete!")
+        },
+        complete:function() {
+            $("#form1").each(function(){
+                this.reset();
+            });
+        }
+    });
 }
 });
 
-// uploading file to s3 bucket
-function uploadFile(file, key) {
-    var fd = new FormData();
-    fd.append('key', key);
-    fd.append('acl', 'public-read'); 
-    fd.append('Content-Type', file.type);      
-    fd.append('AWSAccessKeyId', 'AKIAJJUYC4EAIF7D2XDQ');
-    fd.append('policy', policyBase64)
-    fd.append('signature',"sGRBx76tlCjZ8xTTPZS7wT/q+oQ=");
-    fd.append("file",file);
+    // uploading file to s3 bucket
+    function uploadFile(file, key) {
+        var fd = new FormData();
+        fd.append('key', key);
+        fd.append('acl', 'public-read'); 
+        fd.append('Content-Type', file.type);      
+        fd.append('AWSAccessKeyId', 'AKIAJJUYC4EAIF7D2XDQ');
+        fd.append('policy', policyBase64)
+        fd.append('signature',"sGRBx76tlCjZ8xTTPZS7wT/q+oQ=");
+        fd.append("file",file);
 
-    var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
     // xhr.upload.addEventListener("progress", uploadProgress, false);
     // xhr.addEventListener("load", uploadComplete, false);
     // xhr.addEventListener("error", uploadFailed, false);
@@ -309,23 +320,26 @@ function uploadCanceled(evt) {
     alert("The upload has been canceled by the user or the browser dropped the connection.");
 }
 
-// var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
-POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
-"conditions": [
-{"bucket": "exploretasman"},
-["starts-with", "$key", ""],
-{"acl": "public-read"},                           
-["starts-with", "$Content-Type", ""],
-["content-length-range", 0, 524288000] //max file size is 500MB?
-]};
+    // var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
+    POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
+    "conditions": [
+    {"bucket": "exploretasman"},
+    ["starts-with", "$key", ""],
+    {"acl": "public-read"},                           
+    ["starts-with", "$Content-Type", ""],
+    ["content-length-range", 0, 524288000] //max file size is 500MB?
+    ]};
 
-var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
-var secret = window.atob(secret64);
-var policy = JSON.stringify(POLICY_JSON);
-var policyBase64 = window.btoa(policy);
+    var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
+    var secret = window.atob(secret64);
+    var policy = JSON.stringify(POLICY_JSON);
+    var policyBase64 = window.btoa(policy);
 
-/* Show map on screen */
-var $map = $("#map");
+
+    $(document).on("pagecreate", "#map-page", function() {
+
+        /* Show map on screen */
+        var $map = $("#map");
 
     // Gmap Defaults
     $map.gmap3({
@@ -470,8 +484,9 @@ var $map = $("#map");
             }]
         } // end of marker
     });
-}); //end of loop
-} //end of mapStuff function
-</script>
+    }); //end of loop
+    } //end of mapStuff function
+})
+    </script>
 </body>
 </html>
