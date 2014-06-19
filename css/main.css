@@ -3,7 +3,7 @@ html{
     height:100%
 }
 */
- html {
+html {
     font-family:'Lato', sans-serif;
     height: auto;
     /*            background-size:cover;*/
@@ -15,7 +15,7 @@ body {
     background-color:#CCC;
 }
 /*overlay style on the google map (the login page)*/
- #overlay {
+#overlay {
     /*position:absolute;*/
     top:0;
     left:0;
@@ -46,7 +46,7 @@ body {
     right:-7px;
 }
 /* Old map version */
- #map {
+#map {
     position:absolute;
     height:100%;
     width:100%;
@@ -54,7 +54,7 @@ body {
     overflow:hidden;
 }
 /* New Map Gmap3 */
- #newmap {
+#newmap {
     position:absolute;
     height:100%;
     width:100%;
@@ -65,14 +65,14 @@ body {
     height:56px;
 }
 /* input field transprent */
- .fileUpload input.upload {
+.fileUpload input.upload {
     overflow:hidden;
     opacity:0;
     height:100%;
     width:100%;
 }
 /*Dialogue is for slide down background*/
- .ui-dialog {
+.ui-dialog {
     background-color:#222 !important;
     background-size: 20px 20px !important;
 }
@@ -80,7 +80,7 @@ body {
     margin-top: 0 !important;
 }
 /*Database image and label error setting*/
- #yourimage {
+#yourimage {
     width: 25%;
 }
 .images {
@@ -122,3 +122,11 @@ label.error {
     display:none;
 }           
 */
+
+
+img.class {
+    width: 100px;
+    height: 100px;
+    padding: 5px;
+    /*width: 25%;*/
+}

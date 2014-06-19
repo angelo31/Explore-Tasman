@@ -72,6 +72,11 @@
     <!-- Notice Collapse CSS -->
     <link type ="text/css" href="css/collapse.css" rel="stylesheet">
 
+    <!-- photoswipe shit -->
+    <script src="testing/klass.min.js"></script>
+    <link rel="stylesheet" href="testing/photoswipe.css" />
+    <script src="testing/code.photoswipe.jquery-3.0.4.min.js"></script>
+
     <!-- 
     END of our code -->
 
@@ -189,6 +194,7 @@
                                 <li><a href="#slide" data-rel="dialog" data-transition="slidedown">Call</a></li>
                                 <li><a href="#news">Notice</a></li>
                                 <li><a href="http://encounter.snapithd.com/encounter2/index.php?w=t58f14127cbw40&f=0" height="100%" width="100%">Webcam</a></li>
+                                <li><a href="#gallery" onclick="galleryClick()">Gallery</a></li>
                             </ul>
                         </div>
                     </li>
@@ -196,6 +202,16 @@
             </nav>
         </div> <!-- /Footer   -->
     </div> <!-- /home page -->
+
+    <div data-role="page" id="gallery" data-theme="a">
+        <div data-theme="b" data-role="header">
+             <h1>Gallery</h1>
+         </div>
+         <div data-role = "content">
+            <div class = "items"></div>
+        </div>
+        <a href="#home" data-role="button" data-rel="back" data-theme="b">Back</a>
+    </div>
 
     <!--    Slidedown Page Submit Photo     -->
     <div data-role="page" id="camera" data-theme="a">
