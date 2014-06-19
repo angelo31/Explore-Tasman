@@ -1,8 +1,8 @@
 #nav {
   display:block;
   position:fixed;
-  top: 50px;
-  left:-300px;
+  top: 10%;
+  left:-200px;
   margin: 0;
   padding: 0;
   width: auto;
@@ -14,22 +14,20 @@
   -o-transition: all .25s ease;
   transition: all .25s ease;
 }
-
 #nav ul {
   margin: 0;
   padding: 0;
 }
-
 #nav ul li {
   display: block;
   list-style: none;
 }
-
 #nav ul li a {
+  text-align: center;
   display: block;
-  padding: 50px;
+  padding: 30px 20px;
   color: #1e1e1e;
-  font-family: "Roboto", sans-serif;
+  font-family:"Roboto", sans-serif;
   font-size: 1.1em;
   text-decoration:none;
   -webkit-transition: all .20s ease;
@@ -37,49 +35,35 @@
   -o-transition: all 20s ease;
   transition: all .20s ease;
 }
-
 /*h-shadow v-shadow blur spread color */
 #nav ul li a:hover {
-/*  color: #fff;*/
-/*  box-shadow: inset 300px 0px 300px rgba(0, 0, 0, 0.8); */
+  /*  color: #fff;*/
+  /*  box-shadow: inset 300px 0px 300px rgba(0, 0, 0, 0.8); */
 }
-
-#nav ul li a.one:hover{
+#nav ul li a.one:hover {
   color:#fff;
-  box-shadow: inset 300px 0px 300px rgba(0, 0, 0, 0.8); 
+  box-shadow: inset 300px 0px 300px rgba(0, 0, 0, 0.8);
 }
-
-#nav ul li a.two:hover{
+#nav ul li a.two:hover {
   color:#fff;
-  box-shadow: inset 300px 0px 300px rgba(253, 1, 1, 0.8); 
+  box-shadow: inset 300px 0px 300px rgba(255, 0, 0, 0.8);
+
 }
-
-
-#nav ul li a.three:hover{
+#nav ul li a.three:hover {
   color:#fff;
-  box-shadow: inset 300px 0px 300px rgba(0, 255, 103, 0.8); 
+  box-shadow: inset 300px 0px 300px rgba(0, 185, 0, 0.8);
 }
-
-#nav ul li a.four:hover{
-
-    color:#fff;
-  box-shadow: inset 300px 0px 300px rgba(255, 166, 0, 0.8); 
+#nav ul li a.four:hover {
+  color:#fff;
+  box-shadow: inset 300px 0px 300px rgba(241, 139, 0, 0.8);
 }
-
-
-
-
-
-
-
 #showMenu {
-    
   display: block;
   position: fixed;
-  top:50px;
+  top:10%;
   left: 0;
   margin: 0;
-  width: 50px;
+  width: 30px;
   height:70px;
   z-index:999;
   color: #f2f5f5;
@@ -95,13 +79,11 @@
   -o-transition: all .25s ease;
   transition: all .25s ease;
 }
-
 .show {
   left: 0px !important;
 }
-
 .moveButton {
-  left: -300px !important;
+  left: -200px !important;
   color: #1e1e1e !important;
   background-color: rgba(255, 255, 255, 0.6) !important;
 }
