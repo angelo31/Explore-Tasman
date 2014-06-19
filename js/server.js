@@ -58,13 +58,15 @@ $("#form1").validate({
             required: true
         },
         descText: {
+            required: true,
             minlength: 5
         },
         categoryText: {
             required: true
         },
         file: {
-            required: true
+            required: true,
+            accept: "image/*"
         },
         submitHandler: function(form) {
             // need something here
@@ -73,7 +75,8 @@ $("#form1").validate({
 });
 
 /* post form info to server */
-$("#sendButton").bind("click", function (event, ui) {
+// $("#sendButton").bind("click", function (event, ui) {
+$(document).on("click", "#sendButton", function() {
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
 
@@ -89,6 +92,10 @@ $("#sendButton").bind("click", function (event, ui) {
 // if any fields are empty then cant upload
 if (!id || !title || !category) {
     alert("Some fields are empty and need to be filled out!");
+}
+
+else if (!gps) {
+    alert("Couldn't retrieve GPS coordinates so upload can't be shown on map.");
 }
 
 else {
