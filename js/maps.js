@@ -10,7 +10,7 @@ $(document).on('pageshow','#home',function(event){
    ),
 
    lastValidCenter = strictBounds.getCenter();
-   
+
    var $map = $("#map");
 
    $map.gmap3({
@@ -29,7 +29,7 @@ $(document).on('pageshow','#home',function(event){
                 },
                 mapTypeId: "style1"
             },//end of options
-            
+
             events:{  
                 //For center the boundary area    
                 center_changed: function(map){
@@ -42,7 +42,7 @@ $(document).on('pageshow','#home',function(event){
                             map.panTo(lastValidCenter);
                         }
                 },//end of events
-                
+
         },//end of map
         
         styledmaptype:{
@@ -52,7 +52,7 @@ $(document).on('pageshow','#home',function(event){
             //COZ we do not want to show the style map button but we apply name to style 1
             name: "Style 1"
         },
-        
+
         styles: [
         {
             "featureType": "water",
@@ -71,13 +71,13 @@ $(document).on('pageshow','#home',function(event){
         } 
         ]
             }//End of styledmaptype
-            
+
     });//end of gmap3
 
 
 /* show all categories */
 $("#allButton").bind("click", function (event, ui) {
-    var url = "http://intense-harbor-6396.herokuapp.com/all";
+    var url = "http://intense-harbor-6396.herokuapp.com/category/all";
     // var url = "http://localhost:3000/all";
     var data = [];
     $map.gmap3("clear");
@@ -90,7 +90,7 @@ $("#allButton").bind("click", function (event, ui) {
 
 /* Show only animals */
 $("#animalButton").click(function () {
-    var url = "http://intense-harbor-6396.herokuapp.com/animals";
+    var url = "http://intense-harbor-6396.herokuapp.com/category/animals";
     // var url = "http://localhost:3000/animals";
     var data = [];
     $map.gmap3("clear");
@@ -103,7 +103,7 @@ $("#animalButton").click(function () {
 
 /* show only plants */
 $("#plantButton").bind("click", function () {
-    var url = "http://intense-harbor-6396.herokuapp.com/plants";
+    var url = "http://intense-harbor-6396.herokuapp.com/category/plants";
     // var url = "http://localhost:3000/plants";
     var data = [];
     $map.gmap3("clear");
@@ -116,7 +116,7 @@ $("#plantButton").bind("click", function () {
 
 /* show only other */
 $("#otherButton").bind("click", function (event, ui) {
-    var url = "http://intense-harbor-6396.herokuapp.com/other";
+    var url = "http://intense-harbor-6396.herokuapp.com/category/other";
     // var url = "http://localhost:3000/other";
     var data = [];
     $map.gmap3("clear");
