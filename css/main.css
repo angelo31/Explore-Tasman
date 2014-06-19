@@ -1,24 +1,140 @@
-/* Screen setting for the mobile looking */
+/*
+        html{
+            height:100%
+        }
+*/
+        html {
+            
+            font-family: 'Lato', sans-serif;
+            height: auto;
+/*            background-size:cover;*/
+             }
 
-body{
+        body {
+            height:100%;
+            margin:0;
+            padding:0;
+            background-color:#CCC;            
+        }
+                   
+        /*overlay style on the google map (the login page)*/
+        #overlay {
+            /*position:absolute;*/
+            top:0;
+            left:0;
+            width:100%;
+            background:#000;
+            opacity:0.5;
+        }
+        
+        #modal{
+            /*position:absolute;*/
+            background:url(../image/tint20.png) 0 0 repeat;
+            background:rgba(0,0,0,0.2);
+            border-radius: 14px;
+            padding:8px;
+        }
+            
+        #content{
+            border-radius:8px;
+            background:#fff;
+            padding:20px;
+        }
+            
+        #close{
+            position:absolute;
+            background:url(../image/close.png) 0 0 repeat;
+            width:24px;
+            height:27px;
+            display:block;
+            text-indent:-9999px;
+            top:-7px;
+            right:-7px;
+        }
+            
+        /* Old map version */
+        #map{
+            position:absolute;
+            height:100%;
+            width:100%;
+            margin:auto;
+            overflow:hidden;
+        }
 
-/* At least have a phone screen size */
+        /* New Map Gmap3 */
+        #newmap
+            {
+            position:absolute;
+            height:100%;
+            width:100%;
+            margin:auto;
+/*          overflow:hidden;*/
+        }
+            
+        .fileUpload{ 
+            height:56px;
+        }
+            
+        /* input field transprent */
+        .fileUpload input.upload{
+            overflow:hidden;
+            opacity:0;
+            height:100%;
+            width:100%;
+        }
+ 
+/*Dialogue is for slide down background*/
+        
+        .ui-dialog{
+            background-color:#222 !important;
+            background-size: 20px 20px !important;
+        }
+        
+        .ui-dialog .ui-dialog-contain{
+            margin-top: 0 !important;
+        }
 
-}
+        
+/*Database image and label error setting*/
+        #yourimage {
+        width: 25%;
+        }
 
-.button{
-    overflow: hidden;
-    margin-top:-200px;
-}
+        img {
+        width: 75%;
+        }
 
-#home .ui-controlgroup{
-    width:60%;
-    margin:0 auto;
-    max-width: 500px;
+        label.error {
+        color: red; 
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.4;
+        padding-left: 5px
+        }
 
-}
+/*    
 
-#home {
-    background: url('');
-    background-color:#818181;
-}
+      #panel {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            margin-left: -180px;
+            z-index: 5;
+            background-color: #f00;
+            padding: 5px;
+            border: 1px solid #999;
+          }
+        #photo-panel{
+            background: #fff;
+            padding:5px;
+            overflow-y:auto;
+            overflow-x:hidden;
+            width:200px;
+            max-height:300px;
+            font-size:14px;
+            font-family:Arial;
+            border:1px solid #ccc;
+            box-shadow: -2px 2px 2px rgba(33,33,33,0.4);
+            display:none;
+        }           
+*/

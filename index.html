@@ -1,115 +1,151 @@
-    <!DOCTYPE HTML>
-    <html>
+<!DOCTYPE html>
+<html>
     <head>
-        <meta name="viewport" content="width=320 user-scalable=no" />
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>Explore Tasman</title>
-        <script type="text/javascript" src="phonegap.js"></script>
-
+        <meta name = "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta charset="utf-8">
+        <meta name = "apple-mobile-web-app-capable" content="yes"/>
+        
+        <title>Mobile Webapp</title>
+        
+        <!--PLACE Favicon icon over here-->
+        <link rel = "shortcut icon" href = "">
+           
         <!-- Jquery and Jquery mobile -->
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
         <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css" />
         <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
-
+        
+        <!-- Google API testing -->
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        
+        <!--  Main Javascript   -->
+        <script type = "text/javascript" src="js/main.js"></script>
+        
+        <!--      Main Css      -->
+        <link type ="text/css" href="css/main.css" rel="stylesheet">
+        <link type ="text/css" href="css/login.css" rel="stylesheet">
+        
+        <!--  Weather CSS     -->
+        <link type ="text/css" href="css/weather/weather.css" rel="stylesheet">
+        
+        <!-- Can delete that new weather css  -->
+<!--        <link type ="text/css" href="weather.css" rel="stylesheet">        -->
+        
+        <!-- Notice Collapse CSS -->
+        <link type ="text/css" href="css/collapse.css" rel="stylesheet">
+        
+        <!-- Sidebar CSS/JS-->
+        <link type ="text/css" href="css/sidebar.css" rel="stylesheet">
+        <script type="text/javascript" src="js/sidebar.js"></script>
+        
+        
+        <!--  Google Text Font  -->
+        <link href='http://fonts.googleapis.com/css?family=Homenaje' rel='stylesheet' type='text/css'>
+    
+        <!--  Gmap 3 Javascript -->
+        <script type = "text/javascript" src="js/gmap3.min.js"></script>
+        <script type = "text/javascript" src="js/maps.js"></script>
+        
+        <!--  Gmap 3 Dynamical DB Javascript -->    
+        <script type = "text/javascript" src="js/server.js"></script>
 
-        <!-- gmap3 -->
-        <script src="http://cdn.jsdelivr.net/gmap3/5.1.1/gmap3.min.js"></script>
+        <!--  Simple Weather Js -->
+        <script type="text/javascript" src="js/weather/jquery.simpleWeather.min.js"></script>
+        <script type="text/javascript" src="js/weather/weather.js"></script>
 
         <!-- jQuery Validation plugin -->
-        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="js/additional-methods.min.js"></script>
+        
+        <body>
+              
+         <!--    Jquery Modal Pop Up    -->
+            <div data-role =page id ="login">
+                <div id ='overlay'></div>
+                <div id='modal'>
+                <div id="content"> 
+                    
+                    <div class="modal-header">
+                    <h3>eXploreTasman</h3>
+                    </div>
 
-        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.12.0/additional-methods.min.js"></script>
+                    <div class="modal-body">
+                    <div class="ui-content">
+                    <div class="account-wall">
 
-        <style>
-        #yourimage {
-            width: 25%;
-        }
+                    <img class="profile-img" src="image/tasman.png"alt="">
 
-        #map {
-            /*height: 100%;*/
-            height: 400px;
-            width: 100%;
-        }
-
-        .images {
-         width: 90%;
-         display: block;
-         margin-left: auto;
-         margin-right: auto;
-     }
-
-    /*img:hover {
-    width: 100%;
-    }*/
-
-    label.error {
-        color: red; 
-        font-size: 16px;
-        font-weight: normal;
-        line-height: 1.4;
-        padding-left: 5px
-    }
-
-
-    </style>
-</head>
-
-<body>
-
-    <div data-role="page" id="main-page">
-        <div role="main" class="ui-content">
-            <!-- <div data-role="content"> -->
-
-            <h2>Upload to s3</h2>
-            <a href="#map-page">To Map!</a>
-
-            <form id="form1" enctype="multipart/form-data" method="post">
-                <fieldset data-role="fieldcontain">
-                    <!-- <label for=" IDText" class="ui-hidden-accessible">User ID:</label> -->
-                    <input name="IDText" id="IDText" type="text" placeholder="User ID"/>
-                </fieldset>
-                <fieldset data-role="fieldcontain">
-                    <!-- <label for=" TitleText">Title:</label> -->
-                    <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true"/>
-                </fieldset>
-                <fieldset data-role="fieldcontain">
-                    <!-- <label for=" descText">Description:</label> -->
-                    <input name="descText" id="descText" type="text" placeholder="Description" data-clear-btn="true"/>
-                </fieldset>
-                <fieldset data-role="fieldcontain">
-                    <select name="category" id="categoryText">
-                        <option selected disabled>Choose category</option>
-                        <option value="Animals">Animals</option>
-                        <option value="Plants">Plants</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </fieldset>
-                <fieldset data-role="fieldcontain">
-                    <label for="file">Select an image to Upload</label>
-                    <input type="file" id="file" capture="camera" accept="image/*" />
-                </fieldset>
-                <fieldset data-role="fieldcontain" class="ui-screen-hidden">
-                    <input name="locationText" id="locationText" type="text"/>
-                </fieldset>
-                <div data-role="controlgroup">
-                    <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
-                    <!-- <button type="reset" data-icon="delete" data-iconpos="right" id="cancelButton">Cancel</button> -->
+                    <form class="form-signin">
+                        <input type="text" class="form-control" placeholder="Email" required autofocus>
+                        <input type="password" class="form-control" placeholder="Password" required>
+                        <a href = "#home"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></a>
+                    </form>
+                    </div>
+                    </div>
+                    </div>
+    
+                    <div class="modal-footer">
+                    </div>
+                    
                 </div>
-                <img id="yourimage"/>
-            </form>
+<!--                <a href ="#" id='close'>close</a>-->
+                </div>
+            </div>
+            
 
-            <!-- <input type="button" value="show map" id = "mapButton"/> -->
-        </div>
-    </div>
+            
+            <div data-role="page" id ="home" data-theme="none">
+                
+<!--
+            <div data-role="header" data-theme="b"> 
+                
+                    <a href="#" class="ui-btn-left ui-btn ui-btn-inline
+                                   ui-mini ui-corner-all ui-btn-icon-right 
+                                   ui-icon-gear">Options</a>
+                    <h1></h1>
+            </div>
+-->
 
-    <!-- 2nd page where map lives  -->
-    <div data-role="page" id ="map-page">
-        <div data-role="main" class = "ui-content">
-            <a href="#main-page">Back to main page</a>
-
-            <div id="map"></div> <!-- testing map-->
-            <!-- <fieldset data-role="controlgroup">
+                 
+                
+            <div data-role="main" data-theme="none">
+                
+                <!-- The sidebar -->
+                <div id ="nav">
+                    <ul>
+                        <li><a class="one"   href="#" id="allButton">All</a></li>
+                        <li><a class="two"   href="#" id="animalButton">Animals</a></li>
+                        <li><a class="three" href="#" id="plantButton">Plants</a></li>
+                        <li><a class="four"  href="#" id="otherButton">Other</a></li>
+                    </ul>
+                </div>
+                
+                <a href="#nav" id="showMenu">
+                    <p>=</p>
+                    <p>=</p>
+                    <p>=</p>
+                </a>
+                
+                <!-- The google map api version map -->
+                <!--<div id = "map"></div>-->
+                
+                <div id = "map"></div>
+                
+                <!--New Weather -->            
+<!--
+                <div class = "stage">
+                    <ul class ="boxwrap">
+                    <li class="box weather js_weather">
+                    <div class ="icon icon-sunrise weather-condition js_weather-condition"></div>
+                    <div class="temperature js_temperature">- °C</div>
+                    <div class="city js_weather-city"></div>
+                    </li>
+                    </ul>
+                </div>
+-->
+                <!--   If keep with fieldset it will have a white gap between the map and background  -->
+<!--
+                <fieldset data-role="controlgroup">
                 <legend>Filter categories:</legend>
 
                 <input type="radio" name="radio-choice" id="allButton" value="All">
@@ -123,370 +159,176 @@
 
                 <input type="radio" name="radio-choice" id="otherButton" value="Other">
                 <label for="otherButton">Other</label>
-            </fieldset> -->
+                </fieldset>
+-->
+                
+            </div>
+                    
+            <div data-role="footer" data-theme="b" data-position="fixed">
+                        <nav data-role = "navbar">
+                        
+<!--
+                        <ul>
+                               <li><input type="button" name="Animals" value="Animals" ></li>
+                               <li><input type="button" name="Plants"  value="Plants"  ></li>
+                               <li><input type="button" name="Spots"   value="Spots"   ></li>
+                        </ul>   
+-->
+                    <ul>
+                        <li><a href = "#" class= "ui-btn ui-icon-home ui-btn-icon-top">Home</a></li>                            
+                        <!--Keep this line of code until we need the camera stuff -->
+                        <!--
+                        <div class = "fileUpload ui-btn ui-icon-camera ui-btn-icon-top">
+                        <input type = "file" class = "upload" capture = "camera" accept="image/*" id="takePictureField"   data-role="none">
+                        </div>   
+                        -->
+                            
+                            <li>
+                                <a href = "#camera" class ="ui-btn ui-icon-camera ui-btn-icon-top">
+                                Submit Photo
+                                </a>
+                            </li>
+                            
+                            <li><a href = "#popupmenu" data-rel="popup" data-transition="slideup" class= "ui-btn ui-corner-all  ui-icon-bars ui-btn-icon-top">Options</a>
+                                <div data-role="popup" id="popupmenu" data-theme="b">
 
-            <ul>
-                <li><a href="#" id="allButton">All</a></li>
-                <li><a href="#" id="animalButton">Animals</a></li>
-                <li><a href="#" id="plantButton">Plants</a></li>
-                <li><a href="#" id="otherButton">Other</a></li>
-            </ul>
+                                    <ul data-role="listview" style="">    
+
+                                    <li><a href="#weather_info" data-transition="slidedown">Weather</a></li>                 
+                                    <li><a href="#slide" data-rel="dialog" data-transition="slidedown">Call</a></li>
+                                    <li><a href="#news">Notice</a></li>
+                                    <li><a href="http://encounter.snapithd.com/encounter2/index.php?w=t58f14127cbw40&f=0" height="100%" width="100%">Webcam</a></li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>        
+            </div>
+            
+<!--    Slidedown Page Submit Photo     -->
+    <div data-role="page" id="camera" data-theme="a">
+        <form id="form1" enctype="multipart/form-data" method="post" class="validate">
+        <div class="row">
+            <fieldset data-role="fieldcontain">
+                <!-- <label for=" IDText" class="ui-hidden-accessible">User ID:</label> -->
+                <input name="IDText" id="IDText" type="text" placeholder="User ID"/>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <!-- <label for=" TitleText">Title:</label> -->
+                <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true"/>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <!-- <label for=" descText">Description:</label> -->
+                <input name="descText" id="descText" type="text" placeholder="Description" data-clear-btn="true"/>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <select name="category" id="categoryText">
+                    <option selected disabled>Choose category</option>
+                    <option value="Animals">Animals</option>
+                    <option value="Plants">Plants</option>
+                    <option value="Other">Other</option>
+                </select>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <label for="file">Select a File to Upload</label>
+                <input type="file" name="file" id="file" capture="camera" accept="image/*" />
+            </fieldset>
+            <fieldset data-role="fieldcontain" class="ui-screen-hidden">
+                <input name="locationText" id="locationText" type="text"/>
+            </fieldset>
+            <div data-role="controlgroup">
+                <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
+                <!-- <button type="reset" data-icon="delete" data-iconpos="right" id="cancelButton">Cancel</button> -->
+            </div>
+            <img id="yourimage"/>
+            <div id="progressNumber"></div>
+        </form>            
         </div>
+        <a href="#home" data-role="button" data-rel="back" data-theme="b">Close</a>
 
     </div>
+    
+<!--    Slidedown Page Options  Weather     -->
+	<div data-role="page" id="weather_info" data-theme="b">
+	 <div data-role="content">
+	   <div id="weather">
+	   </div>
+       <a href="#home" data-role="button" data-rel="back" data-theme="b" >Close</a> 	
+    </div>
+	</div>
+            
+            
+<!--    Slidedown Page Options  Call Us     -->
+        <div data-role="page" id="slide" style="margin:0px">
+            <div data-role="content" data-theme="b">
+            <h3 style="text-align:center">About Us</h3>
+            <p>Abel Tasman National Park (established in 1942) is renowned for its golden beaches, sculptured granite cliffs, and world-famous Abel Tasman Coast Track. It also has a mild climate and is a good place to visit at any time of the year.</p>
+            <p>Many people choose to stay in huts or campsites provided by the Department of 
+Conservation (DOC) as they explore the Coast Track. The track hugs the coast, offering spectacular views as you 
+reach the top of a ridge, then it’s back down to a sheltered swimming and picnic spot.</p>    
+            <h3 style="text-align:center">Contact Us</h3>
+            <p style="text-align:center">Department of Conservation 
+            <br>Nelson Regional Visitor Centre
+            <br>79 Trafalgar St
+            <br>P O Box 375</p>    
+            <a href="tel:03 546 9339" data-role="button">Phone:03 546 9339</a>
+            <!--Call number 03 546 9339-->
+            <a href="#home" data-role="button" data-rel="back" data-theme="b">Close</a>
+            </div>    
+        </div>  
+            
+<!--    Slidedown Page Options  Collapse    -->
+        <div data-role="page" id="news" data-theme="b">
+<h2 class="pageTitle"><span>Latest News and Events</span></h2>
+   
+        <div class = "collapsibl">
+		<div data-role="collapsible-set" data-collapsed-icon="false" data-expanded-icon="false" data-theme="b" data-content-theme="a">
+            
+         <div data-role="collapsible" >
+         <h2><p class= "title1">Thank you for your Reviews</p><p class= "title2">Posted by Wilson Team on 30 January 2014</p></h2>
+         <p class="mini_title">Trip Advisor review</p>
+		 <img src="image/album-bb.jpg" align="left">
+		<p class="txt">Thank you to all our Guests who have taken the time to review our facilities and services in Abel Tasman National Park.
+		We appreciate both positive and negative comments. Your feedback helps with our on-going commitment to provide the best possible 
+		experience for our Guests. We value your ideas for improvement and love to hear when we have got it right. As one of our Guides,
+		Pippy says, "So rewarding hearing people enjoy the trips as much as we enjoy giving them!  Thank you." </p>
+		</div><!-- /collapsible -->
+			
+		<div data-role="collapsible" >
+		<h2><p class= "title1">Low Season Timetable Now Operating</p><p class= "title2">Posted by Lucy Hodgson on 5 May 2013 </p></h2>
+		<p class="mini_title">Low Season Cruise & Walk Options</p>
+		<img src="image/album-bb.jpg" align="left">
+		<p class="txt">Our Pitt Head Walk trip has the options of relaxing on the long, golden sands of Anchorage beach or taking a 45 minute walk to include picturesque Te Pukatea Bay or a 3 hour return walk to include Cleopatra’s Pool.Our Swing Bridge, Bush & Beach trip starts your walk at Medlands Beach, across the Falls River Swing Bridge, around the Torrent Bay inlet and along the golden sands of Anchorage Beach. 
+		The Extended Cruise option is not available with the low season schedule.
+        </p>
+		</div><!-- /collapsible -->
+					
+		<div data-role="collapsible" >
+		<h2><p class= "title1">West Coast Bridge Open</p><p class= "title2">Posted by Lucy Hodgson on 2 January 2013 </p></h2>
+		<p class="mini_title">West Coast Bridge at HariHari</p>
+		<img class="news_img"src="image/album-bb.jpg" align="left">
+		<p class="txt">The West Coast Highway is now open for all traffic after the bridge washed out by heavy 
+		rain was repaired ahead of schedule.  It is now possible to drive from Nelson and Motueka down the West
+		Coast to Wanaka, Queenstown and Fiordland so you can include Punakaiki, Hokitika, Greymouth and all the
+		West Coast attractions after you leave the Abel Tasman area.</p>
+		</div><!-- /collapsible -->	
 
-
-    <script>
-    $(document).ready(function () {
-        console.log('onReady');
-        $("#file").on("change", previewImage);
-    });
-
-    //Credit: https://www.youtube.com/watch?v=EPYnGFEcis4&feature=youtube_gdata_player
-    function previewImage(event) {
-        document.addEventListener("deviceready", getLocation, false);
-        getLocation(); // get location of where user is uploading photo 
-        if (event.target.files.length == 1 && event.target.files[0].type.indexOf("image/") == 0) {
-            var blob = event.target.files[0];
-         $("#yourimage").attr("src", URL.createObjectURL(blob)); //makes it able to display blob as an image....
-     }
- }
- </script>
-
- <script>
- $.ajaxSetup ({
-    cache: false
-});
-
- function getLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, onError);
-    } else {
-     alert("Geolocation is not supported :(");
- }
-}
-
-function showPosition(position) {
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
-    var data = lat + "," + lon;
-    $("#locationText").val(data);
-}
-
-function onError(error) {
-    alert('code: '    + error.code    + '\n' +
-        'message: ' + error.message + '\n');
-}
-
-function showError(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-        alert("User denied the request for Geolocation. Need geolocation so can display upload on map!");
-        break;
-        case error.POSITION_UNAVAILABLE:
-        alert("Location information is unavailable.");
-        break;
-        case error.TIMEOUT:
-        alert("The request to get user location timed out.");
-        break;
-        case error.UNKNOWN_ERROR:
-        alert("An unknown error occurred.");
-        break;
-    }
-}
-
-/* Form validation... */
-$("#form1").validate({
-    rules: {
-        IDText: {
-            required: true
-        },
-        TitleText: {
-            required: true
-        },
-        descText: {
-            required:true,
-            minlength: 5
-        },
-        categoryText: {
-            required: true
-        },/*
-        file: {
-            accept: "image/*"
-        },*/
-        submitHandler: function(form) {
-            // need something here
-            // return false;
-        }
-    }
-});
-
-/* post form info to server */
-$("#sendButton").bind("click", function (event, ui) {
-    var file = document.getElementById('file').files[0];
-
-    var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
-
-    // getting values of form fields
-    var id = $("#IDText").val();
-    var title = $("#TitleText").val();
-    var desc = $("#descText").val();
-    var category = $("#categoryText").val();
-    var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
-    var gps = $("#locationText").val(); //location text
-
-    // if any fields are empty then cant upload
-    if (!id || !title || !category) {
-        alert("Some fields are still empty and need to be filled out!");
-    }
-
-    else {
-        var url = "http://intense-harbor-6396.herokuapp.com/upload";
-            // var url = "http://localhost:3000/upload";
-            uploadFile(file, key); //call so can upload file to S3
-            var inJSON = {
-                "id": id,
-                "title": title,
-                "description": desc,
-                "category": category,
-                "gps": gps,
-                "url": imgURL
-            };
-            console.log("posting: ", inJSON);
-
-            // sending to server
-            // $.post(url, inJSON, function (data) {
-            // }, "json");
-
-    $.ajax({
-        type: "POST",
-        url: url,
-        data: inJSON,
-        dataType: "json",
-        success:function(data) {
-            alert("Upload complete!")
-        },
-        complete:function() {
-            $("#form1").each(function(){
-                this.reset();
-            });
-        }
-    });
-}
-});
-
-    // uploading file to s3 bucket
-    function uploadFile(file, key) {
-        var fd = new FormData();
-        fd.append('key', key);
-        fd.append('acl', 'public-read'); 
-        fd.append('Content-Type', file.type);      
-        fd.append('AWSAccessKeyId', 'AKIAJJUYC4EAIF7D2XDQ');
-        fd.append('policy', policyBase64)
-        fd.append('signature',"sGRBx76tlCjZ8xTTPZS7wT/q+oQ=");
-        fd.append("file",file);
-
-        var xhr = new XMLHttpRequest();
-    // xhr.upload.addEventListener("progress", uploadProgress, false);
-    // xhr.addEventListener("load", uploadComplete, false);
-    // xhr.addEventListener("error", uploadFailed, false);
-    // xhr.addEventListener("abort", uploadCanceled, false);
-
-    xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE BEFORE YOU SEND 
-    xhr.send(fd);
-}
-
-function uploadProgress(evt) {
-    if (evt.lengthComputable) {
-      var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-      // document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
-      $("#progressNumber").val(percentComplete.toString() + '%')
-  }
-  else {
-      document.getElementById('progressNumber').innerHTML = 'unable to compute';
-  }
-}
-
-function uploadComplete(evt) {
-    /* This event is raised when the server send back a response */
-    alert("Upload complete!" + evt.target.responseText );
-}
-
-function uploadFailed(evt) {
-    alert("There was an error attempting to upload the file." + evt);
-}
-
-function uploadCanceled(evt) {
-    alert("The upload has been canceled by the user or the browser dropped the connection.");
-}
-
-    // var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
-    POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
-    "conditions": [
-    {"bucket": "exploretasman"},
-    ["starts-with", "$key", ""],
-    {"acl": "public-read"},                           
-    ["starts-with", "$Content-Type", ""],
-    ["content-length-range", 0, 524288000] //max file size is 500MB?
-    ]};
-
-    var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
-    var secret = window.atob(secret64);
-    var policy = JSON.stringify(POLICY_JSON);
-    var policyBase64 = window.btoa(policy);
-
-
-    $(document).on("pagecreate", "#map-page", function() {
-
-        /* Show map on screen */
-        var $map = $("#map");
-
-    // Gmap Defaults
-    $map.gmap3({
-        map: {
-            options: {
-                // center: [-40.9382511,172.9681819],
-                center: [-40.930, 173.0509],
-                // center: [-41.24437,174.7618546],
-
-                zoom: 12,
-                minZoom: 11,
-                disableDefaultUI: true,
-                // bounds: {n:-40.793657, e:173.075851, s:-41.005412, w:172.834839},
-            }
-        }
-    });
-
-
-    /* show all categories */
-    $("#allButton").bind("click", function (event, ui) {
-        var url = "http://intense-harbor-6396.herokuapp.com/category/all";
-    // var url = "http://localhost:3000/all";
-    var data = [];
-    $map.gmap3("clear");
-
-    $.get(url, function (gps) {
-        data = gps;
-        mapStuff(data)
-    });
-});
-
-    /* Show only animals */
-    $("#animalButton").click(function () {
-        var url = "http://intense-harbor-6396.herokuapp.com/category/animals";
-    // var url = "http://localhost:3000/animals";
-    var data = [];
-    $map.gmap3("clear");
-
-    $.get(url, function (gps) {
-        data = gps;
-        mapStuff(data)
-    })
-});
-
-    /* show only plants */
-    $("#plantButton").bind("click", function () {
-        var url = "http://intense-harbor-6396.herokuapp.com/category/plants";
-    // var url = "http://localhost:3000/plants";
-    var data = [];
-    $map.gmap3("clear");
-
-    $.get(url, function (gps) {
-        data = gps;
-        mapStuff(data)
-    })
-});
-
-    /* show only other */
-    $("#otherButton").bind("click", function (event, ui) {
-        var url = "http://intense-harbor-6396.herokuapp.com/category/other";
-    // var url = "http://localhost:3000/other";
-    var data = [];
-    $map.gmap3("clear");
-
-    $.get(url, function (gps) {
-        data = gps;
-        mapStuff(data)
-    })
-});
-
-    /* Plot data onto map */
-    function mapStuff(data) {
-    // loop through data
-    $.each(data, function (key, val) {
-
-        var animalIcon = "img/wildlife.png";
-        var plantIcon = "img/palm-tree-export.png";
-        var otherIcon = "img/panoramicview.png";
-
-        if (val.category == "Plants") {
-            icon = plantIcon;
-        }
-
-        else if (val.category == "Other") {
-            icon = otherIcon;
-        }
-
-        else {
-            icon = animalIcon;
-        }
-
-        $map.gmap3({
-            marker: {
-                values: [{
-                    address: val.gps,
-                    options: {
-                        icon: icon,
-                        animation: google.maps.Animation.DROP,
-                    },
-                    events: {
-                        click: function (marker, event, context) {
-                            var map = $(this).gmap3("get"),
-                            infowindow = $(this).gmap3({
-                                get: {
-                                    name: "infowindow"
-                                }
-                            });
-                            if (infowindow) {
-                              infowindow.open(map, marker);
-                              infowindow.setContent("<h4>" + val.title + "</h4><br><img src ='" + val.imageurl + "'class = 'images'/><br><p>" + val.imagedesc + "</p>");
-                          }
-                          else {
-                            $(this).gmap3({
-                                infowindow: {
-                                    address: val.gps,
-                                    options: {
-                                        maxWidth: 200,
-                                        // content: '<div class="infobox">'+val.content+'</div>',
-                                        // content: val.content,
-                                        content: "<h4>" + val.title + "</h4><br><img src ='" + val.imageurl + "' class = 'images'/><br><p>" + val.imagedesc + "</p>",
-                                        offset: {
-                                            y: -32,
-                                            x: 12
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                    }, 
-                    // close current infowindow 
-                    closeclick: function () {
-                        var infowindow = $(this).gmap3({
-                            get: {
-                                name: "infowindow"
-                            }
-                        });
-                        if (infowindow) {
-                            infowindow.close();
-                        }
-                    }
-                } // end of events options 
-            }]
-        } // end of marker
-    });
-    }); //end of loop
-    } //end of mapStuff function
-})
-    </script>
-</body>
+		<div data-role="collapsible" >
+		<h2><p class= "title1">We're Getting Our Road Back</p><p class= "title2">Posted by Awaroa Ratepayers on 21 February 2012</p></h2>
+		<p class="mini_title"></p>
+		<img src="image/album-bb.jpg" align="left">
+		<p class="txt">Awaroa Ratepayers are delighted to hear from Councillor Trevor Norriss,
+		Chairman Engineering Services Committee, Tasman District Council, that funding is secured 
+		for the repair of the Totaranui Road which includes the Awaroa Road.   Totaranui Rd is 100% 
+		funded by the New Zealand Transport Agency and Awaroa Rd by the Council providing a subsidy for
+		repairs and maintenance.   This work has or is due to start.  It will take some time and the road 
+		will be closed while construction takes place.  At this time we have got no information as to how long this could take.</p>
+		</div><!-- /collapsible -->
+		<a href="#home" data-role="button" data-rel="back" data-theme="b" >Close</a>
+        </div>
+		</div>
+        </div>  
+    </body>
 </html>

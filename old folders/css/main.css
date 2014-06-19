@@ -1,0 +1,24 @@
+/* Screen setting for the mobile looking */
+
+body{
+
+/* At least have a phone screen size */
+
+}
+
+.button{
+    overflow: hidden;
+    margin-top:-200px;
+}
+
+#home .ui-controlgroup{
+    width:60%;
+    margin:0 auto;
+    max-width: 500px;
+
+}
+
+#home {
+    background: url('');
+    background-color:#818181;
+}
