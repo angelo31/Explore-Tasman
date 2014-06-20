@@ -270,9 +270,6 @@ var policyBase64 = window.btoa(policy);
     // myPhotoSwipe.show(0);
   });
 
-    //window.location.href("form.html");
-  })
-
    $(document).on("tap", "#homeLink", function() {
     window.location.href("index.html#home");
   })
