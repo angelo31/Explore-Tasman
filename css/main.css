@@ -81,10 +81,10 @@ body {
 }
 /*Database image and label error setting*/
 #yourimage {
-    width: 25%;
-display:block;
-margin-left:auto;
-margin-right:auto;â‰
+    width: 60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 .images {
     width: 90%;
