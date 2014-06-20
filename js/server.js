@@ -168,7 +168,6 @@ $.ajax({
   async: true,
   dataType: "json",
   success:function(data) {
-    resultObject.formSubmitionResult = data;
     alert("Upload complete!")
   },
   error:function(request, error){
