@@ -266,7 +266,7 @@ function createGallery(json) {
   });
   $('.items').append(output); //append onto page
 }
-
+/*
 $(document).on('pagecreate', '#gallery', function () {
   var myPhotoSwipe = $(".items a").photoSwipe({
     jQueryMobile: true,
@@ -275,4 +275,4 @@ $(document).on('pagecreate', '#gallery', function () {
     enableKeyboard: false
   });
     // myPhotoSwipe.show(0);
-  });
+  });*/
