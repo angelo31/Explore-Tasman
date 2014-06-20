@@ -70,6 +70,24 @@ res.send(row1);
 	// });
 });
 
+// for image gallery
+app.get("/gallery", function (req, res) {
+	var galleryData = [];
+	var query = client.query("SELECT title, imageurl from tasman_table");
+
+	query.on("row", function (result) {
+		galleryData.push(result);
+	});
+
+	query.on("err", function(err) {
+		return res.send("error: ", err);
+	})
+
+	query.on("end", function(row, result) {
+		return res.send(galleryData);
+	})
+});
+
 /* testing gps */
 app.get("/category/all", function (req, res) {
 /* FAKE DATA FOR DATABASE */
@@ -85,7 +103,6 @@ INSERT INTO tasman_table (userid, title, imagedesc, category, gps, imageurl)
 */
 
 var gpsData = [];
-	// var query = client.query("SELECT * from gps_table");
 	var query = client.query("SELECT * from tasman_table");
 
 	query.on("row", function (result) {
