@@ -247,6 +247,7 @@ var policyBase64 = window.btoa(policy);
 var json = 
 [{"title":"Abel Tasman Beach","imageurl":"http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetWidth600-W-WilsonsAbelTasman08-Tonga-Quarrycrop-llr.jpg"},{"title":"Cute bird","imageurl":"http://www.abeltasman.co.nz/assets/image-gallery/wildlife/_resampled/SetWidth600-DSC2.JPG"},{"title":"Scary!!","imageurl":"http://www.abeltasman.co.nz/assets/image-gallery/wildlife/_resampled/SetWidth600-sting2.jpg"},{"title":"Waterfall","imageurl":"http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetWidth600-S-WilsonsAbelTasman06BarkFalls-crop2.jpg"},{"title":"Dat Fauna","imageurl":"http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetHeight600-W-WilsonsAbelTasmanFern-bridge-llr.jpg"},{"title":"Beach with forest","imageurl":"http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetWidth600-Beach-Walk-llr.jpg"},{"title":"Sea Lion","imageurl":"http://www.abeltasman.co.nz/assets/image-gallery/wildlife/_resampled/SetWidth600-K-Wilsons-AbelTasman52KySeal-web-crop2.jpg"},{"title":"Test","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402909244471-1402049918718.jpg"},{"title":"Testing","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402911739896-1402240620639.jpg"},{"title":"tt","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402972044630-1402972019880.jpg"},{"title":"title for thing","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402972105051-Tasman island.jpg"},{"title":"drerfgdfgfdg","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402972130329-Frenchmans bay.jpg"},{"title":"456","imageurl":"https://exploretasman.s3.amazonaws.com/events/1403082920157-icon.png"},{"title":"Happy new year to you","imageurl":"https://exploretasman.s3.amazonaws.com/events/1403092418136-IMAG0465.jpg"},{"title":"Test title","imageurl":"https://exploretasman.s3.amazonaws.com/events/1403093122097-IMAG0465.jpg"},{"title":" test the bus.","imageurl":"https://exploretasman.s3.amazonaws.com/events/1403082920157-icon.png"}];*/ 
 
+
 $(document).on("click", "#galleryButton", function() {
   var url = "http://intense-harbor-6396.herokuapp.com/gallery";
   var json = [];
@@ -264,7 +265,7 @@ function createGallery(json) {
   $('.items').append(output); //append onto page
 }
 
-$(document).on('pagecreate', '#gallery', function () {
+$(document).on('pageload', '#gallery', function () {
   var myPhotoSwipe = $(".items a").photoSwipe({
     jQueryMobile: true,
     loop: true,
