@@ -16,8 +16,8 @@ oFReader.onload = function (oFREvent) {
       var currW = img.width;
       var currH = img.height
       var ratio = currH / currW;
-      var maxW = 800;
-      var maxH = 450;
+      var maxW = 622;
+      var maxH = 350;
 
       if (img.width >= maxW && ratio <= 1) {
           currW = maxW;
@@ -96,7 +96,7 @@ function showError(error) {
 }
 
 /* Form validation... */
-$("#form1").validate({
+/*$("#form1").validate({
     rules: {
         IDText: {
             required: true
@@ -111,15 +111,15 @@ $("#form1").validate({
         categoryText: {
             required: true
         },
-        // file: {
-        //     required: true,
-        //     accept: "image/*"
-        // },
+         file: {
+             required: true,
+             accept: "image"
+         },
         submitHandler: function(form) {
             // need something here
         }
     }
-});
+});*/
 
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
@@ -173,6 +173,9 @@ $.ajax({
     success:function(data) {
         alert("Upload complete!")
     },
+error:function(error){
+alert("Error: " + error);
+},
     complete:function() {
         $("#form1").each(function(){
             this.reset();
