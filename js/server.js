@@ -33,7 +33,7 @@ oFReader.onload = function (oFREvent) {
       canvas.width=currW;
       canvas.height=currH;
       ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
-      document.getElementById("hiddenImage").src = canvas.toDataURL();
+      // document.getElementById("hiddenImage").src = canvas.toDataURL();
 
       // var dataurl = canvas.toDataURL();
     }
@@ -148,22 +148,21 @@ else if (!gps) {
 
 else {
   var url = "http://intense-harbor-6396.herokuapp.com/upload";
-            // var url = "http://localhost:3000/upload";
-            // uploadFile(file, key); //call so can upload file to S3
-            var inJSON = {
-              "id": id,
-              "title": title,
-              "description": desc,
-              "category": category,
-              "gps": gps,
-              "url": imgURL
-            };
 
-            console.log("posting: ", inJSON);
-            
-            // sending to server
-            // $.post(url, inJSON, function (data) {
-            // }, "json");
+  // var url = "http://localhost:3000/upload";
+  uploadFile(file, key); //call so can upload file to S3
+  var inJSON = {
+    "id": id,
+    "title": title,
+    "description": desc,
+    "category": category,
+    "gps": gps,
+    "url": imgURL
+  };
+  console.log("posting: ", inJSON);
+  // sending to server
+  // $.post(url, inJSON, function (data) {
+    // }, "json");
 
 $.ajax({
   type: "POST",
