@@ -269,7 +269,7 @@ function createGallery(json) {
 
 // $(document).on('pagecreate', '#gallery', function () {
 
-$(document).on('pageinit', '#gallery', function () {
+$("#gallery").bind("tap", function () {
 
   var myPhotoSwipe = $(".items a").photoSwipe({
     jQueryMobile: true,
