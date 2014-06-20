@@ -16,8 +16,8 @@ oFReader.onload = function (oFREvent) {
       var currW = img.width;
       var currH = img.height
       var ratio = currH / currW;
-      var maxW = 800;
-      var maxH = 450;
+      var maxW = 622;
+      var maxH = 350;
 
       if (img.width >= maxW && ratio <= 1) {
           currW = maxW;
@@ -29,7 +29,6 @@ oFReader.onload = function (oFREvent) {
               currH = maxH;
               currW = currH / ratio;
           }
-
           canvas.width=currW;
           canvas.height=currH;
           ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
@@ -75,6 +74,7 @@ function showPosition(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
     var data = lat + "," + lon;
+    alert(data);
     $("#locationText").val(data);
 }
 
@@ -96,7 +96,8 @@ function showError(error) {
 }
 
 /* Form validation... */
-$("#form1").validate({
+
+/*$("#form1").validate({
     rules: {
         IDText: {
             required: true
@@ -111,15 +112,15 @@ $("#form1").validate({
         categoryText: {
             required: true
         },
-        // file: {
-        //     required: true,
-        //     accept: "image/*"
-        // },
+         file: {
+             required: true,
+             accept: "image"
+         },
         submitHandler: function(form) {
             // need something here
         }
     }
-});
+});*/
 
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
@@ -137,14 +138,13 @@ $("#form1").validate({
 
     var imgURL = $(".test img").attr("src"); //base64 of image
 
-
-// if any fields are empty then cant upload
-if (!id || !title || !category) {
-    alert("Some fields are empty and need to be filled out!");
-}
-
-else if (!gps) {
+if (!gps) {
     alert("Couldn't retrieve GPS coordinates so upload can't be shown on map.");
+}
+        
+// if any fields are empty then cant upload
+else if (!id || !title || !category) {
+    alert("Some fields are empty and need to be filled out!");
 }
 
 else {
@@ -159,7 +159,7 @@ else {
                 "gps": gps,
                 "url": imgURL
             };
-            console.log("posting: ", inJSON);
+            
 
             // sending to server
             // $.post(url, inJSON, function (data) {
@@ -171,7 +171,11 @@ $.ajax({
     data: inJSON,
     dataType: "json",
     success:function(data) {
+        console.log("posting: ", inJSON);
         alert("Upload complete!")
+    },
+    error:function(error) {
+        alert("Error: " + error);
     },
     complete:function() {
         $("#form1").each(function(){
