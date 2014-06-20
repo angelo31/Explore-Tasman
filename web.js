@@ -84,7 +84,7 @@ app.get("/gallery", function (req, res) {
 	})
 
 	query.on("end", function(row, result) {
-		console.log(galleryData);
+		// console.log(galleryData);
 		return res.send(galleryData);
 	})
 });
