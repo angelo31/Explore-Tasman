@@ -265,7 +265,7 @@ function createGallery(json) {
   $('.items').append(output); //append onto page
 }
 
-$(document).on('pageload', '#gallery', function () {
+$(document).on('pagecreate', '#gallery', function () {
   var myPhotoSwipe = $(".items a").photoSwipe({
     jQueryMobile: true,
     loop: true,
