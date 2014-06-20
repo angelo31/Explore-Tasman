@@ -250,16 +250,15 @@ var json =
 
 // $(document).on("click", "#galleryButton", function() {
   $(document).on("pagecreate", "#gallery", function() {
-
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
-  var json = [];
-  $.get(url, function (data) {
-    console.log("data ", data)
-  createGallery(data);
-    //json = data;
+    var json = [];
+    $.get(url, function (data) {
+      console.log("data ", data)
+      createGallery(data);
+      //json = data;
+    });
+    // console.log("final json ", json)
   });
-  // console.log("final json ", json)
-});
 
 function createGallery(json) {
   var output = ""; // initialize it outside the loop
@@ -270,8 +269,9 @@ function createGallery(json) {
 }
 
 // $(document).on('pagecreate', '#gallery', function () {
+  $(document).on("tap", "#gallery", function() {
 
-$("#gallery").bind("tap", function () {
+// $("#gallery").bind("tap", function () {
 
   var myPhotoSwipe = $(".items a").photoSwipe({
     jQueryMobile: true,
