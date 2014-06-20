@@ -125,18 +125,17 @@ function previewImage(event) {
 // $("#sendButton").bind("click", function (event, ui) {
   $(document).on("click", "#sendButton", function() {
     var file = document.getElementById('file').files[0];
-      var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
+    var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
 
-      // getting values of form fields
-      var id = $("#IDText").val();
-      var title = $("#TitleText").val();
-      var desc = $("#descText").val();
-      var category = $("#categoryText").val();
-    // var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
+    // getting values of form fields
+    var id = $("#IDText").val();
+    var title = $("#TitleText").val();
+    var desc = $("#descText").val();
+    var category = $("#categoryText").val();
+    var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
 
-    var imgURL = $(".test img").attr("src"); //base64 of image
-
+    // var imgURL = $(".test img").attr("src"); //base64 of image
 
 // if any fields are empty then cant upload
 if (!id || !title || !category) {
@@ -159,8 +158,9 @@ else {
               "gps": gps,
               "url": imgURL
             };
-            console.log("posting: ", inJSON);
 
+            console.log("posting: ", inJSON);
+            
             // sending to server
             // $.post(url, inJSON, function (data) {
             // }, "json");

@@ -77,7 +77,6 @@
   box-shadow: inset 300px 0px 300px rgba(241, 139, 0, 0.4);
 }
 
-
 #showMenu {
   display: block;
   position: fixed;
@@ -85,7 +84,7 @@
   left: 0;
   margin: 0;
   width: 30px;
-  height:70px;
+  height:60px;
   z-index:999;
   color: #f2f5f5;
   font-family: sans-serif;
