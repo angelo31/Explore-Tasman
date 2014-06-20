@@ -252,9 +252,9 @@ $(document).on("click", "#galleryButton", function() {
   var url = "http://intense-harbor-6396.herokuapp.com/gallery";
   var json = [];
   $.get(url, function (data) {
-    json = data;
-    createGallery(json);
+    json.push(data);
   });
+  createGallery(json);
 });
 
 function createGallery(json) {
