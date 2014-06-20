@@ -33,10 +33,9 @@ oFReader.onload = function (oFREvent) {
       canvas.width=currW;
       canvas.height=currH;
       ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
-      document.getElementById("yourimage").src = canvas.toDataURL();
+      document.getElementById("hiddenImage").src = canvas.toDataURL();
 
       // var dataurl = canvas.toDataURL();
-      // $("#images").attr("src", dataurl);
     }
     img.src=oFREvent.target.result;
   };
@@ -46,6 +45,7 @@ oFReader.onload = function (oFREvent) {
     if (document.getElementById("file").files.length === 0) { return; }
     var oFile = document.getElementById("file").files[0];
     if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
+    $("#yourimage").attr("src", URL.createObjectURL(oFile));
     oFReader.readAsDataURL(oFile);
   }
 
