@@ -34,8 +34,6 @@ oFReader.onload = function (oFREvent) {
       canvas.height=currH;
       ctx.drawImage(img,0,0,img.width,img.height,0,0,canvas.width,canvas.height);
       // document.getElementById("hiddenImage").src = canvas.toDataURL();
-
-      // var dataurl = canvas.toDataURL();
     }
     img.src=oFREvent.target.result;
   };
@@ -134,7 +132,6 @@ function previewImage(event) {
     var category = $("#categoryText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
-
     // var imgURL = $(".test img").attr("src"); //base64 of image
 
 // if any fields are empty then cant upload
@@ -243,10 +240,6 @@ var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
 var secret = window.atob(secret64);
 var policy = JSON.stringify(POLICY_JSON);
 var policyBase64 = window.btoa(policy);
-/*
-var json = 
-[{"title":"Abel Tasman Beach","imageurl":"http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetWidth600-W-WilsonsAbelTasman08-Tonga-Quarrycrop-llr.jpg"},{"title":"Cute bird","imageurl":"http://www.abeltasman.co.nz/assets/image-gallery/wildlife/_resampled/SetWidth600-DSC2.JPG"},{"title":"Scary!!","imageurl":"http://www.abeltasman.co.nz/assets/image-gallery/wildlife/_resampled/SetWidth600-sting2.jpg"},{"title":"Waterfall","imageurl":"http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetWidth600-S-WilsonsAbelTasman06BarkFalls-crop2.jpg"},{"title":"Dat Fauna","imageurl":"http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetHeight600-W-WilsonsAbelTasmanFern-bridge-llr.jpg"},{"title":"Beach with forest","imageurl":"http://www.abeltasman.co.nz/assets/Uploads/_resampled/SetWidth600-Beach-Walk-llr.jpg"},{"title":"Sea Lion","imageurl":"http://www.abeltasman.co.nz/assets/image-gallery/wildlife/_resampled/SetWidth600-K-Wilsons-AbelTasman52KySeal-web-crop2.jpg"},{"title":"Test","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402909244471-1402049918718.jpg"},{"title":"Testing","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402911739896-1402240620639.jpg"},{"title":"tt","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402972044630-1402972019880.jpg"},{"title":"title for thing","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402972105051-Tasman island.jpg"},{"title":"drerfgdfgfdg","imageurl":"https://exploretasman.s3.amazonaws.com/events/1402972130329-Frenchmans bay.jpg"},{"title":"456","imageurl":"https://exploretasman.s3.amazonaws.com/events/1403082920157-icon.png"},{"title":"Happy new year to you","imageurl":"https://exploretasman.s3.amazonaws.com/events/1403092418136-IMAG0465.jpg"},{"title":"Test title","imageurl":"https://exploretasman.s3.amazonaws.com/events/1403093122097-IMAG0465.jpg"},{"title":" test the bus.","imageurl":"https://exploretasman.s3.amazonaws.com/events/1403082920157-icon.png"}];*/ 
-
 
 // $(document).on("click", "#galleryButton", function() {
   $(document).on("pagecreate", "#gallery", function() {
@@ -255,12 +248,10 @@ var json =
     $.get(url, function (data) {
       console.log("data ", data)
       createGallery(data);
-      //json = data;
     });
-    // console.log("final json ", json)
   });
 
-function createGallery(json) {
+  function createGallery(json) {
   var output = ""; // initialize it outside the loop
   $.each(json, function () {
     output += '<a href = "' + this.imageurl + '" rel="external"> <img src= "' + this.imageurl + '" alt = "' + this.title + '" class = "class"/> </a> ';
@@ -270,14 +261,24 @@ function createGallery(json) {
 
 // $(document).on('pagecreate', '#gallery', function () {
   $(document).on("tap", "#gallery", function() {
-
-// $("#gallery").bind("tap", function () {
-
-  var myPhotoSwipe = $(".items a").photoSwipe({
-    jQueryMobile: true,
-    loop: true,
-    enableMouseWheel: false,
-    enableKeyboard: false
-  });
+    var myPhotoSwipe = $(".items a").photoSwipe({
+      jQueryMobile: true,
+      loop: true,
+      enableMouseWheel: false,
+      enableKeyboard: false
+    });
     // myPhotoSwipe.show(0);
   });
+
+  $(document).on("tap", "#formLink", function() {
+    var url = "http://intense-harbor-6396.herokuapp.com/form";
+    $.get(url, function() {
+
+    })
+
+    //window.location.href("form.html");
+  })
+
+   $(document).on("tap", "#homeLink", function() {
+    window.location.href("index.html#home");
+  })
