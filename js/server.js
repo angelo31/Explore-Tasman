@@ -167,12 +167,14 @@ $.ajax({
   data: inJSON,
   dataType: "json",
   success:function(data) {
+    resultObject.formSubmitionResult = data;
     alert("Upload complete!")
   },
-  error:function(error){
+  error:function(request, error){
     alert("Error: " + error);
   },
   complete:function() {
+    $.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
     $("#form1").each(function(){
       this.reset();
     });
