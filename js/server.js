@@ -253,10 +253,10 @@ $(document).on("click", "#galleryButton", function() {
   var json = [];
   $.get(url, function (data) {
     console.log("data ", data)
-    json = data;
+  createGallery(data);
+    //json = data;
   });
-  console.log("final json ", json)
-  createGallery(json);
+  // console.log("final json ", json)
 });
 
 function createGallery(json) {
