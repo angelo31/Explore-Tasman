@@ -165,13 +165,14 @@ $.ajax({
   type: "POST",
   url: url,
   data: inJSON,
+  async: true,
   dataType: "json",
   success:function(data) {
     resultObject.formSubmitionResult = data;
     alert("Upload complete!")
   },
   error:function(request, error){
-    alert("Error: " + error);
+    alert("There was an error! " + error);
   },
   complete:function() {
     $.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
