@@ -73,7 +73,7 @@ res.send(row1);
 // for image gallery
 app.get("/gallery", function (req, res) {
 	var galleryData = [];
-	var query = client.query("SELECT title, imageurl from tasman_table");
+	var query = client.query("SELECT title, imageurl FROM tasman_table");
 
 	query.on("row", function (result) {
 		galleryData.push(result);
@@ -84,6 +84,7 @@ app.get("/gallery", function (req, res) {
 	})
 
 	query.on("end", function(row, result) {
+		console.log(galleryData);
 		return res.send(galleryData);
 	})
 });
