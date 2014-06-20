@@ -270,12 +270,6 @@ var policyBase64 = window.btoa(policy);
     // myPhotoSwipe.show(0);
   });
 
-  $(document).on("tap", "#formLink", function() {
-    var url = "http://intense-harbor-6396.herokuapp.com/form";
-    $.get(url, function() {
-
-    })
-
     //window.location.href("form.html");
   })
 
