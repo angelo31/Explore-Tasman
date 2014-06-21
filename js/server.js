@@ -136,7 +136,7 @@ function previewImage(event) {
     // var imgURL = $(".test img").attr("src"); //base64 of image
 
 // if any fields are empty then cant upload
-if (!title || !category) {
+if (!title || !desc || !category) {
   alert("Some fields are empty and need to be filled out!");
 }
 
@@ -171,11 +171,11 @@ $.ajax({
       console.log("posting: ", inJSON);
       alert("Upload complete!")
   },
-  error:function(request, error){
+  error:function(error){
     alert("There was an error! " + error);
   },
   complete:function() {
-    $.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
+    //$.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
     $("#form1").each(function(){
       this.reset();
     });
