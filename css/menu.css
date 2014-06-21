@@ -1,0 +1,49 @@
+/*Global Setting */
+
+/*Border-box*/
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/*
+body{
+    font-size:100%;
+    font-family: "Ubuntu", sans-serif;
+}
+*/
+
+a{
+    color:white;
+    text-decoration: none;
+}
+
+/*Main Components*/
+
+#cd-main-content{
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background-color: #3a393f;      
+  /* slightly visible only when we resize this element */
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+  z-index: 1;
+  /* Force Hardware Acceleration in WebKit */
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+.cd-menu-trigger span{
+/* Three lines bar*/
+    position:relative;
+    display: inline-block;
+    
+
+}

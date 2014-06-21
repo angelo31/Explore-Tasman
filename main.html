@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name = "viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+        <meta charset="utf-8">
+        <meta name = "apple-mobile-web-app-capable" content="yes"/>
+        
+        <title>Mobile Webapp</title>
+        
+        <!--PLACE Favicon icon over here-->
+        <link rel = "shortcut icon" href = "">
+        
+        <!-- Start of 3rd party libraries -->
+        
+        <!-- Phonegap -->
+        <script type="text/javascript" src="phonegap.js"></script>
+        
+        <!-- Jquery and Jquery mobile -->
+        <link rel="stylesheet" href="css/jQuery/jquery.mobile-1.4.2.min.css" rel="stylesheet">
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+        
+        <!-- Google API testing -->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>   
+        
+        <!--  Google Text Font  -->
+        <link href='http://fonts.googleapis.com/css?family=Homenaje' rel='stylesheet' type='text/css'>
+    
+        <!--  Gmap 3 Javascript -->
+        <script type = "text/javascript" src="js/gmap3.min.js"></script>
+        
+        <!-- jQuery Validation plugin -->
+        <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="js/additional-methods.min.js"></script>
+        
+        <!--  Simple Weather Js -->
+        <script type="text/javascript" src="js/weather/jquery.simpleWeather.min.js"></script>
+        <script type="text/javascript" src="js/weather/weather.js"></script>
+        
+        <!--  Open Weather Js-->
+        <script type="text/javascript" src="js/weather/openWeather.js"></script>
+    
+        <script>
+	
+		$(function() {
+		
+			$('.weather-temperature').openWeather({
+				city: 'Wellington, New Zealand',
+				descriptionTarget: '.weather-description',
+				windSpeedTarget: '.weather-wind-speed',
+				minTemperatureTarget: '.weather-min-temperature',
+				maxTemperatureTarget: '.weather-max-temperature',
+				humidityTarget: '.weather-humidity',
+				sunriseTarget: '.weather-sunrise',
+				sunsetTarget: '.weather-sunset',
+				placeTarget: '.weather-place',
+				iconTarget: '.weather-icon',
+				customIcons: 'image/weather/',
+				success: function() {
+				
+            //show weather
+            $('.weather-wrapper').show();
+					
+				},
+				error: function(message) {
+					console.log(message);
+				}
+			});
+			
+		});
+	
+	    </script>
+        
+        <!-- 
+        END OF 3rd party libraries -->
+        
+        <!-- 
+        START of our code -->
+        
+        <!--  Main Javascript   -->
+        <script type = "text/javascript" src="js/main.js"></script>
+        
+        <!--      Main Css      -->
+        <link type ="text/css" href="css/main.css" rel="stylesheet">
+        <link type ="text/css" href="css/login.css" rel="stylesheet">
+        
+        <!--  Gmap 3 Dynamical DB Javascript -->    
+        <script type = "text/javascript" src="js/server.js"></script>
+
+        <!-- Sidebar CSS/JS-->
+        <link type ="text/css" href="css/sidebar.css" rel="stylesheet">
+        <script type="text/javascript" src="js/sidebar.js"></script>  
+        
+        <!-- Menubar CSS/JS-->
+<!--    <link type ="text/css" href="css/menu.css" rel="stylesheet">-->
+        <script type="text/javascript" src="js/menu.js"></script>
+    
+        
+        <!--  Weather CSS     -->
+        <link type ="text/css" href="css/weather/weather.css" rel="stylesheet">
+        
+        <!--  Filter categories and show on map -->
+        <script type = "text/javascript" src="js/maps.js"></script>
+        
+        <!-- Can delete that new weather css  -->
+        <!-- <link type ="text/css" href="weather.css" rel="stylesheet"> -->
+        
+        <!-- Notice Collapse CSS -->
+        <link type ="text/css" href="css/collapse.css" rel="stylesheet">
+        
+        <!-- photoswipe -->
+        <script src="testing/klass.min.js"></script>
+        <link rel="stylesheet" href="testing/photoswipe.css" />
+        <script src="testing/code.photoswipe.jquery-3.0.4.min.js"></script>
+
+    <!-- 
+    END of our code -->
+        
+        <body>
+              
+         <!--    Jquery Modal Pop Up    -->
+<!--
+            <div data-role =page id ="login">
+                <div id ='overlay'></div>
+                <div id='modal'>
+                <div id="content"> 
+                    
+                    <div class="modal-header">
+                    <h3>eXploreTasman</h3>
+                    </div>
+
+                    <div class="modal-body">
+                    <div class="ui-content">
+                    <div class="account-wall">
+
+                    <img class="profile-img" src="image/tasman.png"alt="">
+
+                    <form class="form-signin">
+                        <input type="text" class="form-control" placeholder="Email" required autofocus>
+                        <input type="password" class="form-control" placeholder="Password" required>
+                        <a href = "#home"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></a>
+                    </form>
+                    </div>
+                    </div>
+                    </div>
+    
+                    <div class="modal-footer">
+                    </div>
+                    
+                </div>
+                <a href ="#" id='close'>close</a>
+                </div>
+            </div>
+-->
+            
+
+            
+            <div data-role="page" id ="home" data-theme="none">
+                
+<!--
+            <div data-role="header" data-theme="b"> 
+                
+                    <a href="#" class="ui-btn-left ui-btn ui-btn-inline
+                                   ui-mini ui-corner-all ui-btn-icon-right 
+                                   ui-icon-gear">Options</a>
+                    <h1></h1>
+            </div>
+-->
+
+                 
+                
+            <div data-role="main" data-theme="none">
+                
+                <!-- The sidebar -->
+                <div id ="nav">
+                    <ul>
+                        <li><a class="one"   href="#" id="allButton"><img style="height:20%; width:20%;" src="img/icons/all.png"></a></li>
+                        <li><a class="two"   href="#" id="animalButton"><img style="height:20%; width:20%;" src="img/icons/animals.png"></a></li>
+                        <li><a class="three" href="#" id="plantButton"><img style="height:20%; width:20%;" src="img/icons/plants.png"></a></li>
+                        <li><a class="four"  href="#" id="otherButton"><img style="height:20%; width:20%;" src="img/icons/other.png"></a></li>
+                    </ul>
+                </div>
+                
+                <a href="#nav" id="showMenu">
+                 <img style = "height: 40%; width: 40%;"src ="img/icons/arrow-32-512.png">
+                   <span></span>
+                </a>
+                
+            
+                <!-- The menu bar -->
+<!--
+                <main id = "cd-main-content">
+                    
+                    <header class = "cd-header">
+                        <a class ="cd-menu-trigger" href="#main-nav">Menu<span></span></a>
+                    </header>
+                
+                </main>
+                
+            
+                <nav id = "main-nav">
+                    <ul>
+                        <li><a href ="">Submit Photo</a></li>    
+                        <li><a href ="">Weather</a></li>    
+                        <li><a href ="">Call</a></li>    
+                        <li><a href ="">Notice</a></li>
+                        <li><a href ="">Gallery</a></li>
+                    </ul>
+                    <a href = "#0" class="cd-close-menu">Close<span></span></a>
+                </nav>    
+                
+-->
+                
+                <!-- The google map api version map -->
+                <!--<div id = "map"></div>-->
+
+                <div id = "map"></div>                
+                
+            </div>
+                    
+            <div class="my-footer" data-role="footer" data-theme="none" data-position="fixed">
+                <nav data-role = "navbar">   
+                    <ul>
+                        <li><a href ="#weather_info" class ="ui-btn ui-icon-cloud ui-btn-icon-top" data-transition="slidedown">Weather</a></li>
+                        <li><a href ="#slide" class="ui-btn ui-icon-phone ui-btn-icon-top" data-transition="slidedown">Call</a></li>
+                        <!--Keep this line of code until we need the camera stuff -->
+                 <!--
+                        <div class = "fileUpload ui-btn ui-icon-camera ui-btn-icon-top">
+                        <input type = "file" class = "upload" capture = "camera" accept="image/*" id="takePictureField"   data-role="none">
+                        </div>   -->
+                       
+                        <li><a href = "#camera" class ="ui-btn ui-icon-camera ui-btn-icon-top">Photo</a></li>
+                        <li><a href ="#news" class="ui-btn ui-icon-calendar ui-btn-icon-top"  data-transition="slidedown">Notice</a></li>
+                        
+                        <li><a href ="#gallery" class="ui-btn ui-icon-grid ui-btn-icon-top"  data-transition="slidedown">Gallery</a></li>
+                        
+                            
+<!--
+                        <li><a href = "#popupmenu" data-rel="popup" data-transition="slideup" class= "ui-btn ui-corner-all  ui-icon-bars ui-btn-icon-top">Options</a>
+                            
+                                <div data-role="popup" id="popupmenu" data-theme="b">
+                                    <ul data-role="listview" style="">   
+                                        
+                                    <li><a href="#weather_info" data-transition="slidedown">Weather</a></li>              
+                                    <li><a href="#slide" data-rel="dialog" data-transition="slidedown">Call</a></li>
+                                    <li><a href="#news">Notice</a></li>
+                                    <li><a href="http://encounter.snapithd.com/encounter2/index.php?w=t58f14127cbw40&f=0" height="100%" width="100%">Webcam</a></li>
+                                    </ul>
+                                
+                                </div>
+                            </li>
+-->
+                        </ul>
+                    </nav>
+                </div>        
+            </div>
+            
+<!--       Slidedown Page Gallery       -->
+    <div data-role="page" id="gallery" data-theme="b">  
+<!--        <div data-theme="b" data-role="header">-->
+        <h2 class="pageTitle"><span>Weather</span></h2>
+<!--        </div>-->
+            <div data-role = "content">
+            <div class = "items"></div>
+            </div>
+        <a href="#home" data-role="button" data-rel="back" data-theme="b">Back</a>
+    </div>
+            
+<!--    Slidedown Page Submit Photo     -->
+    <div data-role="page" id="camera" data-theme="b">
+        <h2 class="pageTitle"><span>Submit Photo</span></h2>
+        <form id="form1" enctype="multipart/form-data" method="post" class="validate">
+        <div class="row">
+            <fieldset data-role="fieldcontain">
+                <!-- <label for=" IDText" class="ui-hidden-accessible">User ID:</label> -->
+                <input name="IDText" id="IDText" type="text" placeholder="User ID"/>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <!-- <label for=" TitleText">Title:</label> -->
+                <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true"/>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <!-- <label for=" descText">Description:</label> -->
+                <input name="descText" id="descText" type="text" placeholder="Description" data-clear-btn="true"/>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <select name="category" id="categoryText">
+                    <option selected disabled>Choose category</option>
+                    <option value="Animals">Animals</option>
+                    <option value="Plants">Plants</option>
+                    <option value="Other">Other</option>
+                </select>
+            </fieldset>
+            <fieldset data-role="fieldcontain">
+                <label for="file">Select a File to Upload</label>
+                <input type="file" name="file" id="file" capture="camera" accept="image/*" />
+            </fieldset>
+            <fieldset data-role="fieldcontain" class="ui-screen-hidden">
+                <input name="locationText" id="locationText" type="text"/>
+            </fieldset>
+            <div data-role="controlgroup">
+                <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
+                <!-- <button type="reset" data-icon="delete" data-iconpos="right" id="cancelButton">Cancel</button> -->
+            </div>
+            <img id="yourimage"/>
+            <div id="progressNumber"></div>
+        </form>            
+        </div>
+        <a href="#home" data-role="button" data-rel="back" data-theme="b">Back</a>
+
+    </div>
+    
+<!--    Slidedown Page Options  Weather     -->
+	<div data-role="page" id="weather_info" data-theme="b">
+        <h2 class="pageTitle"><span>Weather</span></h2>
+	       <div data-role="content">
+             <!-- Open Weather -->     
+               <div class="weather-wrapper hide">
+                    <img src="" class="weather-icon" alt="Weather Icon" />
+                    <p><strong>Temperature</strong>
+                    <br><span class="weather-temperature"></span> 
+                    </p>
+               </div>     
+    <div id="weather"></div>         
+         
+    <a href="#home" data-role="button" data-rel="back" data-theme="b" >Back</a> 	
+            </div>
+	</div>
+            
+            
+<!--    Slidedown Page Options  Call Us     -->
+        <div data-role="page" id="slide" style="margin:0px" data-theme="b">
+            <h2 class="pageTitle"><span>About Us</span></h2>
+    
+            <div data-role="content" data-theme="b">
+        
+            <p>Abel Tasman National Park (established in 1942) is renowned for its golden beaches, sculptured granite cliffs, and world-famous Abel Tasman Coast Track. It also has a mild climate and is a good place to visit at any time of the year.</p>
+            <p>Many people choose to stay in huts or campsites provided by the Department of 
+Conservation (DOC) as they explore the Coast Track. The track hugs the coast, offering spectacular views as you 
+reach the top of a ridge, then it’s back down to a sheltered swimming and picnic spot.</p>    
+            <h3 style="text-align:center">Contact Us</h3>
+            <p>Department of Conservation 
+            <br>Nelson Regional Visitor Centre
+            <br>Millers Acre/Taha o te Awa
+            <br>nelsonvc@doc.govt.nz    
+            <br>79 Trafalgar Street
+            <br>Nelson 7010
+            <br>P O Box 375
+            <br>Nelson 7040
+            </p>    
+            <a href="tel:03 546 9339" data-role="button">Phone:03 546 9339</a>
+            <!--Call number 03 546 9339-->
+            <a href="#home" data-role="button" data-rel="back" data-theme="b">Back</a>
+            </div>    
+        </div>  
+            
+<!--    Slidedown Page Options  Collapse    -->
+        <div data-role="page" id="news" data-theme="b">
+<h2 class="pageTitle"><span>Latest News and Events</span></h2>
+   
+        <div class = "collapsibl">
+		<div data-role="collapsible-set" data-collapsed-icon="false" data-expanded-icon="false" data-theme="b" data-content-theme="a">
+            
+         <div data-role="collapsible" >
+         <h2><p class= "title1">Thank you for your Reviews</p><p class= "title2">Wilson Team on 30 January 2014</p></h2>
+         <p class="mini_title">Trip Advisor review</p>
+		 <img src="image/news/trip.jpg" align="left">
+		<p class="txt">Thank you to all our Guests who have taken the time to review our facilities and services in Abel Tasman National Park.
+		We appreciate both positive and negative comments. Your feedback helps with our on-going commitment to provide the best possible 
+		experience for our Guests. We value your ideas for improvement and love to hear when we have got it right. As one of our Guides,
+		Pippy says, "So rewarding hearing people enjoy the trips as much as we enjoy giving them!  Thank you." </p>
+		</div><!-- /collapsible -->
+			
+		<div data-role="collapsible" >
+		<h2><p class= "title1">Low Season Timetable Now Operating</p><p class= "title2">Lucy Hodgson on 5 May 2013 </p></h2>
+		<p class="mini_title">Low Season Cruise & Walk Options</p>
+		<img src="image/news/landscape.jpg" align="left">
+		<p class="txt">Our Pitt Head Walk trip has the options of relaxing on the long, golden sands of Anchorage beach or taking a 45 minute walk to include picturesque Te Pukatea Bay or a 3 hour return walk to include Cleopatra’s Pool.Our Swing Bridge, Bush & Beach trip starts your walk at Medlands Beach, across the Falls River Swing Bridge, around the Torrent Bay inlet and along the golden sands of Anchorage Beach. 
+		The Extended Cruise option is not available with the low season schedule.
+        </p>
+		</div><!-- /collapsible -->
+					
+		<div data-role="collapsible" >
+		<h2><p class= "title1">West Coast Bridge Open</p><p class= "title2">Lucy Hodgson on 2 January 2013 </p></h2>
+		<p class="mini_title">West Coast Bridge at HariHari</p>
+		<img class="news_img"src="image/news/aa.png" align="left">
+		<p class="txt">The West Coast Highway is now open for all traffic after the bridge washed out by heavy 
+		rain was repaired ahead of schedule.  It is now possible to drive from Nelson and Motueka down the West
+		Coast to Wanaka, Queenstown and Fiordland so you can include Punakaiki, Hokitika, Greymouth and all the
+		West Coast attractions after you leave the Abel Tasman area.</p>
+		</div><!-- /collapsible -->	
+
+		<div data-role="collapsible" >
+		<h2><p class= "title1">We're Getting Our Road Back</p><p class= "title2">Awaroa Ratepayers on 21 February 2012</p></h2>
+		<p class="mini_title"></p>
+		<img src="image/news/news.jpg" align="left">
+		<p class="txt">Awaroa Ratepayers are delighted to hear from Councillor Trevor Norriss,
+		Chairman Engineering Services Committee, Tasman District Council, that funding is secured 
+		for the repair of the Totaranui Road which includes the Awaroa Road.   Totaranui Rd is 100% 
+		funded by the New Zealand Transport Agency and Awaroa Rd by the Council providing a subsidy for
+		repairs and maintenance.   This work has or is due to start.  It will take some time and the road 
+		will be closed while construction takes place.  At this time we have got no information as to how long this could take.</p>
+		</div><!-- /collapsible -->
+		<a href="#home" data-role="button" data-rel="back" data-theme="b" >Back</a>
+        </div>
+		</div>
+        </div>
+    </body>
+</html>

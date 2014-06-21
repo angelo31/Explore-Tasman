@@ -1,8 +1,8 @@
 #nav {
   display:block;
   position:fixed;
-  top: 10%;
-  left:-200px;
+  top: 15%;
+  left:-100px;
   margin: 0;
   padding: 0;
   width: auto;
@@ -13,21 +13,26 @@
   -moz-transition: all .25s ease;
   -o-transition: all .25s ease;
   transition: all .25s ease;
+    
 }
+
 #nav ul {
   margin: 0;
   padding: 0;
 }
+
 #nav ul li {
   display: block;
   list-style: none;
 }
+
 #nav ul li a {
-  text-align: center;
+  text-align:center;
   display: block;
-  padding: 30px 20px;
+  padding: 0px;
+  width:100px;
   color: #1e1e1e;
-  font-family:"Roboto", sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 1.1em;
   text-decoration:none;
   -webkit-transition: all .20s ease;
@@ -35,56 +40,72 @@
   -o-transition: all 20s ease;
   transition: all .20s ease;
 }
+    
+#nav ul li img{
+ 
+padding:20px;
+    
+
+}
+
 /*h-shadow v-shadow blur spread color */
 #nav ul li a:hover {
-  /*  color: #fff;*/
-  /*  box-shadow: inset 300px 0px 300px rgba(0, 0, 0, 0.8); */
-}
-#nav ul li a.one:hover {
-  color:#fff;
-  box-shadow: inset 300px 0px 300px rgba(0, 0, 0, 0.8);
-}
-#nav ul li a.two:hover {
-  color:#fff;
-  box-shadow: inset 300px 0px 300px rgba(255, 0, 0, 0.8);
-
-}
-#nav ul li a.three:hover {
-  color:#fff;
-  box-shadow: inset 300px 0px 300px rgba(0, 185, 0, 0.8);
-}
-#nav ul li a.four:hover {
-  color:#fff;
-  box-shadow: inset 300px 0px 300px rgba(241, 139, 0, 0.8);
+/*  color: #fff;*/
+/*  box-shadow: inset 300px 0px 300px rgba(0, 0, 0, 0.8); */
 }
 
+#nav ul li a.one:hover{
+  color:#fff;
+  box-shadow: inset 25px 0px 300px rgba(0, 0, 0, 0.8); 
+}
+
+#nav ul li a.two:hover{
+  color:#fff;
+  box-shadow: inset 50px 0px 300px rgba(253, 1, 1, 0.8); 
+}
+
+
+#nav ul li a.three:hover{
+  color:#fff;
+  box-shadow: inset 50px 0px 300px rgb(46, 204, 113); 
+}
+
+#nav ul li a.four:hover{
+  color:#fff;
+  box-shadow: inset 50px 0px 300px rgba(255, 166, 0, 0.8); 
+}
 
 #nav ul li a.one {
+  background-color:rgba(106, 106, 106, 0.48);
   /*color:#fff;*/
-  box-shadow: inset 300px 0px 300px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 20px 0px 0px rgba(0, 0, 0, 0.4);
 }
 #nav ul li a.two {
+  background-color:rgba(106, 106, 106, 0.48);
   /*color:#fff;*/
-  box-shadow: inset 300px 0px 300px rgba(255, 0, 0, 0.4);
+  box-shadow: inset 20px 0px 0px rgba(255, 0, 0, 0.4);
 
 }
 #nav ul li a.three {
+  background-color:rgba(106, 106, 106, 0.48);
   /*color:#fff;*/
-  box-shadow: inset 300px 0px 300px rgba(0, 185, 0, 0.4);
+  box-shadow: inset 20px 0px 0px rgba(46, 204, 113, 0.4);
 }
 #nav ul li a.four {
+  background-color:rgba(106, 106, 106, 0.48);    
   /*color:#fff;*/
-  box-shadow: inset 300px 0px 300px rgba(241, 139, 0, 0.4);
+  box-shadow: inset 20px 0px 0px  rgba(241, 139, 0, 0.4);
 }
 
 #showMenu {
+    
   display: block;
   position: fixed;
-  top:10%;
+  top:20%;
   left: 0;
   margin: 0;
-  width: 30px;
-  height:60px;
+  width: 50px;
+  height:70px;
   z-index:999;
   color: #f2f5f5;
   font-family: sans-serif;
@@ -93,17 +114,19 @@
   line-height: 5px;
   text-align: center;
   text-decoration: none;
-  background-color: rgba(0, 0, 0, 0.8);
+
   -webkit-transition: all .25s ease;
   -moz-transition: all .25s ease;
   -o-transition: all .25s ease;
   transition: all .25s ease;
 }
+
 .show {
   left: 0px !important;
 }
+
 .moveButton {
-  left: -200px !important;
+  left: -300px !important;
   color: #1e1e1e !important;
   background-color: rgba(255, 255, 255, 0.6) !important;
 }
