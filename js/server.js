@@ -178,6 +178,7 @@ $.ajax({
   },
   complete:function() {
     //$.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
+      $("#yourimage").hide();
     $("#form1").each(function(){
       this.reset();
     });
@@ -246,11 +247,12 @@ var secret = window.atob(secret64);
 var policy = JSON.stringify(POLICY_JSON);
 var policyBase64 = window.btoa(policy);
 
+
 /* **************************** 
         Show gallery
 ****************************** */
 
-  $(document).on("pagecreate", "#gallery", function() {
+  $(document).on("pagecreate", "#galleryLink", function() {
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
     var json = [];
     $.get(url, function (data) {
@@ -269,7 +271,7 @@ var policyBase64 = window.btoa(policy);
 }
 
 // $(document).on('pagecreate', '#gallery', function () {
-  $(document).on("tap", "#gallery", function() {
+  $(document).on("tap", "#galleryLink", function() {
     var myPhotoSwipe = $(".items a").photoSwipe({
       jQueryMobile: true,
       loop: true,
