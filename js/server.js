@@ -293,7 +293,7 @@ var policyBase64 = window.btoa(policy);
     output += '<a href = "' + this.imageurl + '" rel="external"> <img src= "' + this.imageurl + '" alt = "' + this.title + '" class = "class"/> </a> ';
   });
       $('.items').append(output); //append onto page*/
-//      $('.items a').hide();
+      $('.items a').hide();
   });
 
 
