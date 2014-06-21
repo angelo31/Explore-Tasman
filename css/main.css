@@ -98,13 +98,28 @@
 
         
 /*Database image and label error setting*/
-        #yourimage {
-        width: 25%;
-        }
+       #yourimage {
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.images {
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+img.class {
+/*
+    width: 100px;
+    height: 100px;
+*/
+    width: 30%;
+    padding: 5px;
+    margin-left: auto;
+}
 
-        img {
-        width: 75%;
-        }
 
         label.error {
         color: red; 
