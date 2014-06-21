@@ -99,7 +99,8 @@ body {
 img.class {
     width: 100px;
     height: 100px;
-    padding: 2px;
+    padding: 5px;
+    display: block;
     margin-left: auto;
     margin-right: auto;
 }
