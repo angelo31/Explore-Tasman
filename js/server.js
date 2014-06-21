@@ -279,3 +279,7 @@ var policyBase64 = window.btoa(policy);
    $(document).on("tap", "#homeLink", function() {
     window.location.href("index.html#home");
   })*/
+
+$(document).on('click', '#check .ui-input-clear', function () {
+    $("yourimage").remove();
+});
