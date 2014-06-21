@@ -127,7 +127,9 @@ function previewImage(event) {
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
 
     // getting values of form fields
-    var id = $("#IDText").val();
+//    var id = $("#IDText").val();    
+    var id = parseInt((Math.random() * 1000000) + 10); // rand 10 - 1000000
+
     var title = $("#TitleText").val();
     var desc = $("#descText").val();
     var category = $("#categoryText").val();
