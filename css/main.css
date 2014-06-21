@@ -127,8 +127,12 @@ label.error {
 */
 
 img.class {
+/*
     width: 100px;
     height: 100px;
+*/
+    width: 30%;
+    height: 30%;
     padding: 5px;
     /*width: 25%;*/
 }
