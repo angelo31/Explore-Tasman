@@ -272,7 +272,7 @@ var policyBase64 = window.btoa(policy);
 }
 
 // $(document).on('pagecreate', '#gallery', function () {
-  $(document).on("tap", "#galleryLink", function() {
+  $(document).on("tap", "#gallery", function() {
     var myPhotoSwipe = $(".items a").photoSwipe({
       jQueryMobile: true,
       loop: true,
