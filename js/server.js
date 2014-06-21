@@ -44,7 +44,8 @@ oFReader.onload = function (oFREvent) {
     var oFile = document.getElementById("file").files[0];
     if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
     $("#yourimage").attr("src", URL.createObjectURL(oFile));
-    oFReader.readAsDataURL(oFile);
+      $("#yourimage").show();
+      oFReader.readAsDataURL(oFile);
   }
 
 
@@ -281,5 +282,5 @@ var policyBase64 = window.btoa(policy);
   })*/
 
 $(document).on('click', '#check .ui-input-clear', function () {
-    $("#yourimage").remove();
+    $("#yourimage").hide();
 });
