@@ -131,20 +131,20 @@ function mapStuff(data) {
     // loop through data
     $.each(data, function (key, val) {
 
-        var animalIcon = "img/zoo.png";
-        var plantIcon = "img/forest.png";
-        var otherIcon = "img/panoramicview.png";
+        var animalIcon = "img/Animals.png";
+        var plantIcon = "img/plants.png";
+        var otherIcon = "img/Other.png";
 
-        if (val.category == "Plants") {
+        if (val.category == "Animals") {
+            icon = animalIcon;
+        }
+
+        else if (val.category == "Plants") {
             icon = plantIcon;
         }
 
-        else if (val.category == "Other") {
-            icon = otherIcon;
-        }
-
         else {
-            icon = animalIcon;
+            icon = otherIcon;
         }
 
         $map.gmap3({
