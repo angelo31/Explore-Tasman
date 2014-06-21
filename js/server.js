@@ -136,7 +136,7 @@ function previewImage(event) {
     // var imgURL = $(".test img").attr("src"); //base64 of image
 
 // if any fields are empty then cant upload
-if (!id || !title || !category) {
+if (!title || !category) {
   alert("Some fields are empty and need to be filled out!");
 }
 
@@ -246,7 +246,7 @@ var policyBase64 = window.btoa(policy);
 
 /* **************************** 
         Show gallery
-----------------------------* */
+****************************** */
 
 
 // $(document).on("click", "#galleryButton", function() {
