@@ -22,63 +22,12 @@
     <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
 
 
-    <!-- Google API testing -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
-    <!--  Gmap 3 Javascript -->
-    <script type = "text/javascript" src="js/gmap3.min.js"></script>
-
-    <!-- Sidebar CSS/JS-->
-    <link type ="text/css" href="css/sidebar.css" rel="stylesheet">
-    <script type="text/javascript" src="js/sidebar.js"></script>
-
-    <!--  Google Text Font  -->
-    <link href='http://fonts.googleapis.com/css?family=Homenaje' rel='stylesheet' type='text/css'>
-
-    <!-- jQuery Validation plugin -->
-    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="js/additional-methods.min.js"></script>
-
-    <!--  Simple Weather Js -->
-    <script type="text/javascript" src="js/weather/jquery.simpleWeather.min.js"></script>
-    <script type="text/javascript" src="js/weather/weather.js"></script>
-
-    <!-- 
-    END OF 3rd party libraries -->
-
-
-    <!-- 
-    START of our code -->
-
-    <!--  Main Javascript   -->
-    <script type = "text/javascript" src="js/main.js"></script>
-
-    <!--      Main Css      -->
-    <link type ="text/css" href="css/main.css" rel="stylesheet">
-    <link type ="text/css" href="css/login.css" rel="stylesheet">
-
-    <!--  Gmap 3 Dynamical DB Javascript... Also uploading to server + DB  -->    
-    <script type = "text/javascript" src="js/server.js"></script>
-
-    <!--  Weather CSS     -->
-    <link type ="text/css" href="css/weather/weather.css" rel="stylesheet">
-
-    <!-- Filter categories and show on map -->
-    <script type = "text/javascript" src="js/maps.js"></script>
-
-    <!-- Can delete that new weather css  -->
-    <!-- <link type ="text/css" href="weather.css" rel="stylesheet">        -->
-
-    <!-- Notice Collapse CSS -->
-    <link type ="text/css" href="css/collapse.css" rel="stylesheet">
-
     <!-- photoswipe shit -->
     <script src="testing/klass.min.js"></script>
     <link rel="stylesheet" href="testing/photoswipe.css" />
     <script src="testing/code.photoswipe.jquery-3.0.4.min.js"></script>
     
-        <script src="gallery.js"></script>
-
+<!--        <script src="gallery.js"></script>-->
 
     <!-- 
     END of our code -->
@@ -87,6 +36,40 @@
 
 
 <body>
+    
+    <script>
+    
+//    $(document).on('pageshow', '#gallery', function(event) {
+$(document).ready(, function() {
+      alert("here")
+    var url = "http://intense-harbor-6396.herokuapp.com/gallery";
+    var json = [];
+    $.get(url, function (data) {
+      console.log("data ", data)
+      createGallery(data);
+    });
+  });
+
+
+  function createGallery(json) {
+  var output = ""; // initialize it outside the loop
+  $.each(json, function () {
+    output += '<a href = "' + this.imageurl + '" rel="external"> <img src= "' + this.imageurl + '" alt = "' + this.title + '" class = "class"/> </a> ';
+  });
+  $('.items').append(output); //append onto page
+}
+
+// $(document).on('pagecreate', '#gallery', function () {
+  $(document).on("tap", "#gallery", function() {
+    var myPhotoSwipe = $(".items a").photoSwipe({
+      jQueryMobile: true,
+      loop: true,
+      enableMouseWheel: false,
+      enableKeyboard: false
+    });
+    // myPhotoSwipe.show(0);
+  });
+    </script>
     <!-- Home Page -->
     <!--    Slidedown Page Submit Photo     -->
     <div data-role="page" id="gallery" data-theme="b">
@@ -94,6 +77,7 @@
         <h2 class="pageTitle"><span>Gallery</span></h2>
             <div data-role = "content">
             <div class = "items"></div>
+                <h1>sdfsdf</h1>
                 <a href="main.html#home" data-role="button" data-rel="back" data-theme="b">Back</a>
             </div>
         </div>

@@ -1,5 +1,5 @@
-  $(document).on("pagecreate", "#gallery", function() {
-//$(document).ready(function() {
+  $(document).on('pageshow', '#gallery', function(event) {
+//$(document).bind("click", function() {
       alert("here")
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
     var json = [];
