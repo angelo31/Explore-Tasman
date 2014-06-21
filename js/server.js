@@ -250,12 +250,6 @@ var policyBase64 = window.btoa(policy);
         Show gallery
 ****************************** */
 
-
- $(document).on("click", "#galleryButton", function() {
-     makeImages();
-});
-
-function makeImages() {
   $(document).on("pagecreate", "#gallery", function() {
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
     var json = [];
@@ -264,7 +258,7 @@ function makeImages() {
       createGallery(data);
     });
   });
-}
+
 
   function createGallery(json) {
   var output = ""; // initialize it outside the loop
