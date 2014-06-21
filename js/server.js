@@ -283,7 +283,7 @@ var policyBase64 = window.btoa(policy);
 
   $(document).on("pagehide", "#gallery", function() {
       var output = ""; // initialize it outside the loop
-      $('.items').hide());
+      $('.items').hide();
   });
 
 
