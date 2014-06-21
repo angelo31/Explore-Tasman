@@ -97,10 +97,9 @@ body {
 }
 /* for previewing images in gallery page */
 img.class {
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: 125px;
     padding: 5px;
-    display: block;
     margin-left: auto;
     margin-right: auto;
 }
