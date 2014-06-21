@@ -165,7 +165,7 @@ function mapStuff(data) {
                             });
                             if (infowindow) {
                               infowindow.open(map, marker);
-                              infowindow.setContent("<h4>" + val.title + "</h4><img src ='" + val.imageurl + "'class = 'images'/><br><p>" + val.imagedesc + "</p>");
+                              infowindow.setContent("<h4>" + val.title + "</h4><img src ='" + val.imageurl + "'class = 'images'/><p>" + val.imagedesc + "</p>");
                           }
                           else {
                             $(this).gmap3({
@@ -175,7 +175,7 @@ function mapStuff(data) {
                                         maxWidth: 200,
                                         // content: '<div class="infobox">'+val.content+'</div>',
                                         // content: val.content,
-                                        content: "<h4>" + val.title + "</h4><img src ='" + val.imageurl + "' class = 'images'/><br><p>" + val.imagedesc + "</p>",
+                                        content: "<h4>" + val.title + "</h4><img src ='" + val.imageurl + "' class = 'images'/><p>" + val.imagedesc + "</p>",
                                         offset: {
                                             y: -32,
                                             x: 12
