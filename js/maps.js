@@ -131,8 +131,8 @@ function mapStuff(data) {
     // loop through data
     $.each(data, function (key, val) {
 
-        var animalIcon = "img/wildlife.png";
-        var plantIcon = "img/palm-tree-export.png";
+        var animalIcon = "img/zoo.png";
+        var plantIcon = "img/forest.png";
         var otherIcon = "img/panoramicview.png";
 
         if (val.category == "Plants") {
