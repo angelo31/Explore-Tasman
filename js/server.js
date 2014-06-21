@@ -251,7 +251,7 @@ var policyBase64 = window.btoa(policy);
 /* **************************** 
         Show gallery
 ****************************** */
-
+/*
   $(document).on("pagebeforeshow", "#galleryLink", function() {
       alert("here")
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
@@ -280,7 +280,10 @@ var policyBase64 = window.btoa(policy);
       enableKeyboard: false
     });
     // myPhotoSwipe.show(0);
-  });
+  });*/
+
+
+
 /*
   $(document).on("tap", "#formLink", function() {
     window.location.href("form.html");
