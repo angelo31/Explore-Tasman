@@ -253,7 +253,8 @@ var policyBase64 = window.btoa(policy);
 ****************************** */
 
   $(document).on("pagebeforeshow", "#gallery", function() {
-    $('.items').show();
+      alert("create")
+    //$('.items').show();
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
     var json = [];
     $.get(url, function (data) {
@@ -282,8 +283,17 @@ var policyBase64 = window.btoa(policy);
   });
 
   $(document).on("pagehide", "#gallery", function() {
-      var output = ""; // initialize it outside the loop
-      $('.items').hide();
+      alert("hide");
+      /*var output = ""; // initialize it outside the loop
+      var json = [{
+          title = "",
+          imageurl: ""
+      }];
+      $.each(json, function () {
+    output += '<a href = "' + this.imageurl + '" rel="external"> <img src= "' + this.imageurl + '" alt = "' + this.title + '" class = "class"/> </a> ';
+  });
+      $('.items').append(output); //append onto page*/
+//      $('.items a').hide();
   });
 
 
