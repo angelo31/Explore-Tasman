@@ -252,9 +252,8 @@ var policyBase64 = window.btoa(policy);
         Show gallery
 ****************************** */
 
+    // GET images from database and createGallery()
   $(document).on("pagebeforeshow", "#gallery", function() {
-      alert("create")
-    //$('.items').show();
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
     var json = [];
     $.get(url, function (data) {
@@ -263,6 +262,7 @@ var policyBase64 = window.btoa(policy);
     });
   });
 
+// appends images onto screen
   function createGallery(json) {
   var output = ""; // initialize it outside the loop
   $.each(json, function () {
@@ -271,7 +271,7 @@ var policyBase64 = window.btoa(policy);
   $('.items').append(output); //append onto page
 }
 
-// $(document).on('pagecreate', '#gallery', function () {
+ // Opens Photoswipe when tapped onto image
   $(document).on("tap", "#gallery", function() {
     var myPhotoSwipe = $(".items a").photoSwipe({
       jQueryMobile: true,
@@ -282,30 +282,12 @@ var policyBase64 = window.btoa(policy);
     // myPhotoSwipe.show(0);
   });
 
+ // removes images so can load new uploaded images
   $(document).on("pagehide", "#gallery", function() {
-      alert("hide");
-      /*var output = ""; // initialize it outside the loop
-      var json = [{
-          title = "",
-          imageurl: ""
-      }];
-      $.each(json, function () {
-    output += '<a href = "' + this.imageurl + '" rel="external"> <img src= "' + this.imageurl + '" alt = "' + this.title + '" class = "class"/> </a> ';
-  });
-      $('.items').append(output); //append onto page*/
-      $('.items a').hide();
+      $('.items a').remove();
   });
 
-
-/*
-  $(document).on("tap", "#formLink", function() {
-    window.location.href("form.html");
-  })
-
-   $(document).on("tap", "#homeLink", function() {
-    window.location.href("index.html#home");
-  })*/
-
+// hide preview of image when clear-btn is pressed
 $(document).on('click', '#check .ui-input-clear', function () {
     $("#yourimage").hide();
 });
