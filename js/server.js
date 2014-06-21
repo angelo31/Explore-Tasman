@@ -256,7 +256,7 @@ var policyBase64 = window.btoa(policy);
     $('.items').show();
 })
 
-  $(document).on("pagecreate", "#gallery", function() {
+  $(document).on("pagebeforeshow", "#gallery", function() {
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
     var json = [];
     $.get(url, function (data) {
