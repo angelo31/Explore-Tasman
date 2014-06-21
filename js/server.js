@@ -157,7 +157,6 @@ else {
     "gps": gps,
     "url": imgURL
   };
-  console.log("posting: ", inJSON);
   // sending to server
   // $.post(url, inJSON, function (data) {
     // }, "json");
@@ -169,7 +168,8 @@ $.ajax({
   async: true,
   dataType: "json",
   success:function(data) {
-    alert("Upload complete!")
+      console.log("posting: ", inJSON);
+      alert("Upload complete!")
   },
   error:function(request, error){
     alert("There was an error! " + error);
