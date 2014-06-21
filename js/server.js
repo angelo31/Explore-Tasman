@@ -281,5 +281,5 @@ var policyBase64 = window.btoa(policy);
   })*/
 
 $(document).on('click', '#check .ui-input-clear', function () {
-    $("yourimage").remove();
+    $("#yourimage").remove();
 });
