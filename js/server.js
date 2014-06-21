@@ -244,6 +244,11 @@ var secret = window.atob(secret64);
 var policy = JSON.stringify(POLICY_JSON);
 var policyBase64 = window.btoa(policy);
 
+/* **************************** 
+        Show gallery
+----------------------------* */
+
+
 // $(document).on("click", "#galleryButton", function() {
   $(document).on("pagecreate", "#gallery", function() {
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
