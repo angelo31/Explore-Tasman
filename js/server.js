@@ -95,7 +95,10 @@ function previewImage(event) {
   }
 
   /* Form validation... */
-/*$("#form1").validate({
+
+
+
+$("#form1").validate({
     rules: {
         IDText: {
             required: true
@@ -109,25 +112,51 @@ function previewImage(event) {
         },
         categoryText: {
             required: true
-        },
+        },/*
          file: {
              required: true,
              accept: "image"
-         },
+         },*/
         submitHandler: function(form) {
+            function submitForm(inJSON) {
+  var url = "http://intense-harbor-6396.herokuapp.com/upload";
+
+$.ajax({
+  type: "POST",
+  url: url,
+  data: inJSON,
+  async: true,
+  dataType: "json",
+  beforeSend: function() {
+    $.mobile.pageLoading();
+  },
+  success:function(data) {
+      console.log("posting: ", inJSON);
+      alert("Upload complete!");
+      //window.location = "main.html#camera"
+  },
+  error:function(error){
+    alert("There was an error! " + error);
+  },
+  complete:function() {
+    //$.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
+    e.preventDefault();
+    $("#yourimage").hide();
+    $("#form1").each(function(){
+      this.reset();
+    });
+  }
+});
             // need something here
         }
     }
-  });*/
+  });
+
 
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
   $(document).on("click", "#sendButton", function() {
-
-$("#form1").submit(function(e) {
-  alert("here")
-    e.preventDefault();
-
+    $("#form1").submit(function(e) {
 
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
@@ -153,7 +182,7 @@ else if (!gps) {
 }
 
 else {
-  var url = "http://intense-harbor-6396.herokuapp.com/upload";
+  //var url = "http://intense-harbor-6396.herokuapp.com/upload";
 
   // var url = "http://localhost:3000/upload";
   uploadFile(file, key); //call so can upload file to S3
@@ -169,28 +198,8 @@ else {
   // $.post(url, inJSON, function (data) {
     // }, "json");
 
-$.ajax({
-  type: "POST",
-  url: url,
-  data: inJSON,
-  async: true,
-  dataType: "json",
-  success:function(data) {
-      console.log("posting: ", inJSON);
-      alert("Upload complete!");
-      //window.location = "main.html#camera"
-  },
-  error:function(error){
-    alert("There was an error! " + error);
-  },
-  complete:function() {
-    //$.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
-      $("#yourimage").hide();
-    $("#form1").each(function(){
-      this.reset();
-    });
-  }
-});
+submitForm(inJSON);
+
 }
 });
 });
