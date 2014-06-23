@@ -180,7 +180,7 @@ $.ajax({
       console.log("posting: ", inJSON);
       alert("Upload complete!");
       //window.location = "main.html#camera"
-    $.mobile.changePage("main.html/#camera");
+    // $.mobile.changePage("main.html/#camera");
   },
   error:function(error){
     alert("There was an error! " + error);
