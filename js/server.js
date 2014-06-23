@@ -43,6 +43,7 @@ oFReader.onload = function (oFREvent) {
     if (document.getElementById("file").files.length === 0) { return; }
     var oFile = document.getElementById("file").files[0];
     if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
+    // display image preview and test if right file type...
     $("#yourimage").attr("src", URL.createObjectURL(oFile));
       $("#yourimage").show();
       oFReader.readAsDataURL(oFile);
@@ -145,18 +146,16 @@ function previewImage(event) {
 if (!title || !desc || !category) {
   alert("Some fields are empty and need to be filled out!");
       // e.preventDefault();
-
 }
 
 else if (!gps) {
   alert("Couldn't retrieve GPS coordinates so upload can't be shown on map.");
       // e.preventDefault();
-
 }
 
 else {
-    $("#form1").submit(function(e) {
-      e.preventDefault();
+  $("#form1").submit(function(e) {
+    e.preventDefault();
   var url = "http://intense-harbor-6396.herokuapp.com/upload";
 
   // var url = "http://localhost:3000/upload";
