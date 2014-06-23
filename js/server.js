@@ -193,7 +193,7 @@ $.ajax({
 });
 }
 });
-)};
+});
 
 // uploading file to s3 bucket
 function uploadFile(file, key) {
