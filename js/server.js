@@ -189,7 +189,6 @@ $.ajax({
   },
   complete:function() {
     // $.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
-    alert("complete form - redirecting");
     $.mobile.changePage("main.html/#camera");
     $("#yourimage").hide();
     $("#form1").each(function(){
