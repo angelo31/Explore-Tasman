@@ -122,7 +122,7 @@ function previewImage(event) {
 
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
-  // $(document).on("click", "#sendButton", function() {
+  $(document).on("click", "#sendButton", function() {
 
 $("#form1").submit(function(e) {
   alert("here")
@@ -193,6 +193,7 @@ $.ajax({
 });
 }
 });
+)};
 
 // uploading file to s3 bucket
 function uploadFile(file, key) {
