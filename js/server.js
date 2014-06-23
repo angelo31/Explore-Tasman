@@ -146,11 +146,13 @@ $.ajax({
       this.reset();
     });
   }
-});
-            // need something here
-        }
-    
   });
+});
+}
+            // need something here
+  
+    
+  }
   });
 
 
