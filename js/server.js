@@ -125,6 +125,7 @@ function previewImage(event) {
   // $(document).on("click", "#sendButton", function() {
 
 $("#form1").submit(function(e) {
+  alert("here")
     e.preventDefault();
 
 
