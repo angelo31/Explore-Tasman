@@ -121,7 +121,7 @@ function previewImage(event) {
         }
     }
   });*/
-
+/*
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value 
 
@@ -248,6 +248,8 @@ function previewImage(event) {
   $(document).on("click", "#cameraButton", function() { 
   });
 
+  */
+
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
   $(document).on("click", "#sendButton", function() {
@@ -294,8 +296,8 @@ else if (!gps) {
 }
 
 else {
-  var url = "http://intense-harbor-6396.herokuapp.com/upload";
     e.preventDefault();
+  var url = "http://intense-harbor-6396.herokuapp.com/upload";
 
   // var url = "http://localhost:3000/upload";
   uploadFile(file, key); //call so can upload file to S3
@@ -328,6 +330,7 @@ $.ajax({
   complete:function() {
     // $.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
     // $.mobile.changePage("main.html/#camera");
+    alert("complete ..." )
     $("#yourimage").hide();
     $("#form1").each(function(){
       this.reset();
