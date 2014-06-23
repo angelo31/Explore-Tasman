@@ -172,9 +172,6 @@ $.ajax({
   data: inJSON,
   async: true,
   dataType: "json",
-  beforeSend: function() {
-    $.mobile.pageLoading();
-  },
   success:function(data) {
       console.log("posting: ", inJSON);
       alert("Upload complete!");
