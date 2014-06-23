@@ -122,11 +122,149 @@ function previewImage(event) {
     }
   });*/
 
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value 
+
+    // Wait for PhoneGap to connect with the device
+    //
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+// PhoneGap is ready to be used!
+    //
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoDataSuccess(imageData) {
+      // Uncomment to view the base64 encoded image data
+      // console.log(imageData);
+
+      // Get image handle
+      //
+      // var smallImage = document.getElementById('yourimage');
+
+      // Unhide image elements
+      //
+      // smallImage.style.display = 'block';
+
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      // smallImage.src = "data:image/jpeg;base64," + imageData;
+
+      $("#yourimage").attr("src", imageData);
+
+      // function getData() {
+      //   return imageData;
+      // }
+
+      var fileName = "" + (new Date()).getTime() + ".jpg";
+
+      var deferred = $.Deferred(),
+            ft = new FileTransfer(),
+            options = new FileUploadOptions();
+ 
+        options.fileKey = "file";
+        options.fileName = fileName;
+        options.mimeType = "image/jpeg";
+        options.chunkedMode = false;
+        options.params = {
+            "key": fileName,
+            "AWSAccessKeyId": awsKey,
+            "acl": acl,
+            "policy": policyBase,
+            "signature": signature,
+            "Content-Type": "image/jpeg"
+        };
+ 
+        ft.upload(imageData, s3URI, win, fail, options);
+
+
+    }
+
+    // A button will call this function
+    //
+
+            var options = {
+                quality: 50,
+                targetWidth: 1000,
+                targetHeight: 1000,
+                destinationType: Camera.DestinationType.FILE_URI,
+                encodingType: Camera.EncodingType.JPEG,
+                sourceType: Camera.PictureSourceType.CAMERA,
+            };
+
+    function capturePhoto() {
+      // Take picture using device camera and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, function(message) {}, options);
+    }
+
+
+    // Called if something bad happens.
+    // 
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+
+      var s3URI = encodeURI("https://exploretasman.s3.amazonaws.com/"),
+      policyBase = policyBase64,
+      signature = "sGRBx76tlCjZ8xTTPZS7wT/q+oQ=",
+      awsKey = 'AKIAJJUYC4EAIF7D2XDQ',
+      acl = "public-read";
+
+    function upload(imageURI, fileName) {
+      var deferred = $.Deferred(),
+            ft = new FileTransfer(),
+            options = new FileUploadOptions();
+ 
+        options.fileKey = "file";
+        options.fileName = fileName;
+        options.mimeType = "image/jpeg";
+        options.chunkedMode = false;
+        options.params = {
+            "key": fileName,
+            "AWSAccessKeyId": awsKey,
+            "acl": acl,
+            "policy": policyBase,
+            "signature": signature,
+            "Content-Type": "image/jpeg"
+        };
+ 
+        ft.upload(imageURI, s3URI, win, fail, options);
+    }
+
+    function win(r) {
+      alert("Code = " + r.responseCode + " " +  r.response + " " +  r.bytesSent);
+    }
+
+    function fail(error) {
+      alert("An error has occurred: Code = "+ error.code + " " + error.source + " " + error.target);
+    }
+
+
+  $(document).on("click", "#cameraButton", function() { 
+  });
+
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
   $(document).on("click", "#sendButton", function() {
    // $("#form1").submit(function(e) {
       // e.preventDefault();
+/*
+      var img = onPhotoDataSuccess.getData();
+var fileName = "" + (new Date()).getTime() + ".jpg";
+
+upload(img, fileName)
+.done(function() {
+  alert("SuccesS");
+})
+.fail(function() {
+  alert("failed :(");
+});
+*/
 
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
@@ -156,8 +294,8 @@ else if (!gps) {
 }
 
 else {
-    e.preventDefault();
   var url = "http://intense-harbor-6396.herokuapp.com/upload";
+    e.preventDefault();
 
   // var url = "http://localhost:3000/upload";
   uploadFile(file, key); //call so can upload file to S3
@@ -181,7 +319,7 @@ $.ajax({
       console.log("posting: ", inJSON);
       alert("Upload complete!");
       //window.location = "main.html#camera"
-    // $.mobile.changePage("main.html/#camera");
+    $.mobile.changePage("main.html/#camera");
   },
   error:function(error){
     alert("There was an error! " + error);
@@ -197,8 +335,8 @@ $.ajax({
   }
 });
 
-});
 }
+});
 
 });
 
@@ -245,7 +383,6 @@ var policyBase64 = window.btoa(policy);
     var url = "http://intense-harbor-6396.herokuapp.com/gallery";
     var json = [];
     $.get(url, function (data) {
-      console.log("data ", data)
       createGallery(data);
     });
   });

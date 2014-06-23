@@ -296,6 +296,12 @@
                     <fieldset data-role="fieldcontain" id = "check">
                         <label for="file">Select a File to Upload</label>
                         <input type="file" id="file" capture="camera" accept="image/*" data-clear-btn="true" required/>
+                    <!-- <input type="button" data-role="button" id="cameraButton" data-icon="check" data-iconpos="right" value = "Take Photo"/> -->
+                    <!-- 
+                    <br>
+                    <button id = "picture" onclick="capturePhoto();">Capture Photo</button>
+                    <br> -->
+
                     </fieldset>
                     <fieldset data-role="fieldcontain" class="ui-screen-hidden">
                         <input name="locationText" id="locationText" type="text"/>
@@ -306,7 +312,6 @@
                     </div>
                     <!-- <div data-role="controlgroup"> -->
                     <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
-                    <!-- <input type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right" value = "Upload"/> -->
 
                     <div id="progressNumber"></div>
                 </form>
