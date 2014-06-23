@@ -42,7 +42,7 @@ oFReader.onload = function (oFREvent) {
     getLocation();
     if (document.getElementById("file").files.length === 0) { return; }
     var oFile = document.getElementById("file").files[0];
-    if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
+    // if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
     // display image preview and test if right file type...
     $("#yourimage").attr("src", URL.createObjectURL(oFile));
       $("#yourimage").show();
