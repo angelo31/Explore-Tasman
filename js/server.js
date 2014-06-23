@@ -124,7 +124,7 @@ function previewImage(event) {
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
   $(document).on("click", "#sendButton", function() {
-   $("#form1").submit(function(e) {
+   // $("#form1").submit(function(e) {
       // e.preventDefault();
 
     var file = document.getElementById('file').files[0];
@@ -144,18 +144,18 @@ function previewImage(event) {
 // if any fields are empty then cant upload
 if (!title || !desc || !category) {
   alert("Some fields are empty and need to be filled out!");
-      e.preventDefault();
+      // e.preventDefault();
 
 }
 
 else if (!gps) {
   alert("Couldn't retrieve GPS coordinates so upload can't be shown on map.");
-      e.preventDefault();
+      // e.preventDefault();
 
 }
 
 else {
-    //$("#form1").submit(function(e) {
+    $("#form1").submit(function(e) {
       e.preventDefault();
   var url = "http://intense-harbor-6396.herokuapp.com/upload";
 
@@ -196,10 +196,12 @@ $.ajax({
     });
   }
 });
+
+});
 }
 
 });
-});
+
 
 // uploading file to s3 bucket
 function uploadFile(file, key) {
