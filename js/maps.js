@@ -17,9 +17,8 @@ $(document).on('pageshow','#home',function(event){
     map: {
         options: {
                 // center: [-40.9382511,172.9681819],
-                center: [-40.930, 173.0509],
-                // center: [-41.24437,174.7618546],
-
+                // center: [-40.930, 173.0509],
+                center: [-41.298300, 174.808032], //wgtn
                 zoom: 12,
                 minZoom: 11,
                 disableDefaultUI: true,

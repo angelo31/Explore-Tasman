@@ -42,7 +42,7 @@ oFReader.onload = function (oFREvent) {
     getLocation();
     if (document.getElementById("file").files.length === 0) { return; }
     var oFile = document.getElementById("file").files[0];
-    if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
+    // if (!rFilter.test(oFile.type)) { alert("You must select a valid image file!"); return; }
     $("#yourimage").attr("src", URL.createObjectURL(oFile));
       $("#yourimage").show();
       oFReader.readAsDataURL(oFile);
@@ -122,20 +122,22 @@ function previewImage(event) {
 
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
-  $(document).on("click", "#sendButton", function() {
+ $(document).on("click", "#sendButton", function() {
+
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
 
     // getting values of form fields
 //    var id = $("#IDText").val();    
-    var id = parseInt((Math.random() * 1000000) + 10); // rand 10 - 1000000
+    var id = parseInt((Math.random() * 1000000) + 10); // random ID range =  10 - 1000000
 
     var title = $("#TitleText").val();
     var desc = $("#descText").val();
     var category = $("#categoryText").val();
     var imgURL = "https://exploretasman.s3.amazonaws.com/" + key;
     var gps = $("#locationText").val(); //location text
-    // var imgURL = $(".test img").attr("src"); //base64 of image
+
+$("#form1").submit(function(e) {
 
 // if any fields are empty then cant upload
 if (!title || !desc || !category) {
@@ -148,10 +150,11 @@ else if (!gps) {
 
 else {
   var url = "http://intense-harbor-6396.herokuapp.com/upload";
-
   // var url = "http://localhost:3000/upload";
+  e.preventDefault();
+    
   uploadFile(file, key); //call so can upload file to S3
-  var inJSON = {
+  var inJSON = { 
     "id": id,
     "title": title,
     "description": desc,
@@ -159,6 +162,7 @@ else {
     "gps": gps,
     "url": imgURL
   };
+    
   // sending to server
   // $.post(url, inJSON, function (data) {
     // }, "json");
@@ -171,14 +175,14 @@ $.ajax({
   dataType: "json",
   success:function(data) {
       console.log("posting: ", inJSON);
-      alert("Upload complete!")
+      alert("Upload complete!");
   },
   error:function(error){
     alert("There was an error! " + error);
   },
   complete:function() {
     //$.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
-      $("#yourimage").hide();
+    $("#yourimage").hide();
     $("#form1").each(function(){
       this.reset();
     });
@@ -186,6 +190,8 @@ $.ajax({
 });
 }
 });
+});
+
 
 // uploading file to s3 bucket
 function uploadFile(file, key) {
@@ -199,37 +205,9 @@ function uploadFile(file, key) {
   fd.append("file",file);
 
   var xhr = new XMLHttpRequest();
-    // xhr.upload.addEventListener("progress", uploadProgress, false);
-    // xhr.addEventListener("load", uploadComplete, false);
-    // xhr.addEventListener("error", uploadFailed, false);
-    // xhr.addEventListener("abort", uploadCanceled, false);
 
     xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE BEFORE YOU SEND 
     xhr.send(fd);
-  }
-
-  function uploadProgress(evt) {
-    if (evt.lengthComputable) {
-      var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-      // document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
-      $("#progressNumber").val(percentComplete.toString() + '%')
-    }
-    else {
-      document.getElementById('progressNumber').innerHTML = 'unable to compute';
-    }
-  }
-
-  function uploadComplete(evt) {
-    /* This event is raised when the server send back a response */
-    alert("Upload complete!" + evt.target.responseText );
-  }
-
-  function uploadFailed(evt) {
-    alert("There was an error attempting to upload the file." + evt);
-  }
-
-  function uploadCanceled(evt) {
-    alert("The upload has been canceled by the user or the browser dropped the connection.");
   }
 
 // var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
