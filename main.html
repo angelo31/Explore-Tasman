@@ -279,14 +279,14 @@
 -->
                     <fieldset data-role="fieldcontain">
                         <!-- <label for=" TitleText">Title:</label> -->
-                        <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true"/>
+                        <input name="TitleText" id="TitleText" type="text" placeholder="Title" data-clear-btn="true" required/>
                     </fieldset>
                     <fieldset data-role="fieldcontain">
                         <!-- <label for=" descText">Description:</label> -->
-                        <input name="descText" id="descText" type="text" placeholder="Description" data-clear-btn="true"/>
+                        <input name="descText" id="descText" type="text" placeholder="Description" data-clear-btn="true" required/>
                     </fieldset>
                     <fieldset data-role="fieldcontain">
-                        <select name="category" id="categoryText">
+                        <select name="category" id="categoryText" required>
                             <option selected disabled>Choose category</option>
                             <option value="Animals">Animals</option>
                             <option value="Plants">Plants</option>
@@ -295,7 +295,7 @@
                     </fieldset>
                     <fieldset data-role="fieldcontain" id = "check">
                         <label for="file">Select a File to Upload</label>
-                        <input type="file" id="file" capture="camera" accept="image/*" data-clear-btn="true"/>
+                        <input type="file" id="file" capture="camera" accept="image/*" data-clear-btn="true" required/>
                     </fieldset>
                     <fieldset data-role="fieldcontain" class="ui-screen-hidden">
                         <input name="locationText" id="locationText" type="text"/>

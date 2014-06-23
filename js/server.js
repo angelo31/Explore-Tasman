@@ -95,7 +95,7 @@ function previewImage(event) {
   }
 
   /* Form validation... */
-$("#form1").validate({
+/*$("#form1").validate({
     rules: {
         IDText: {
             required: true
@@ -110,21 +110,23 @@ $("#form1").validate({
         categoryText: {
             required: true
         },
-         file: {
-             required: true,
-             accept: "image"
-         },
+         // file: {
+         //     required: true,
+         //     accept: "image"
+         // },
         submitHandler: function(form) {
             // need something here
             return false;
         }
     }
-  });
+  });*/
 
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
   $(document).on("click", "#sendButton", function() {
+
     $("#form1").submit(function(e) {
+    //$("#form1").submit(function(e) {
 
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
@@ -170,7 +172,6 @@ $.ajax({
   type: "POST",
   url: url,
   data: inJSON,
-  async: true,
   dataType: "json",
   success:function(data) {
       console.log("posting: ", inJSON);
@@ -182,7 +183,7 @@ $.ajax({
   },
   complete:function() {
     //$.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
-    e.preventDefault();
+    $.mobile.changePage("main.html/#camera");
     $("#yourimage").hide();
     $("#form1").each(function(){
       this.reset();
