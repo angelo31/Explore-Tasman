@@ -184,11 +184,11 @@ $.ajax({
   },
   error:function(error){
     alert("There was an error! " + error);
-    $.mobile.changePage("main.html");
+    // $.mobile.changePage("main.html");
   },
   complete:function() {
     // $.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
-    $.mobile.changePage("main.html/#camera");
+    // $.mobile.changePage("main.html/#camera");
     $("#yourimage").hide();
     $("#form1").each(function(){
       this.reset();
