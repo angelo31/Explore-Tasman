@@ -270,7 +270,7 @@
     <div data-role="page" id="camera" data-theme="b">
         <h2 class="pageTitle"><span>Submit Photo</span></h2>
         <div data-role="content">
-            <form id="form1" enctype="multipart/form-data" method="post" data-ajax="false">
+            <form id="form1" enctype="multipart/form-data" method="post" action="javascript:void(0);">
 <!--
                 <fieldset data-role="fieldcontain">
                          <label for=" IDText">User ID:</label> 
@@ -305,7 +305,9 @@
                         <img id="yourimage"/>
                     </div>
                     <!-- <div data-role="controlgroup"> -->
-                    <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button>
+                    <!-- <button type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right">Upload</button> -->
+                    <input type="submit" data-role="button" id="sendButton" data-icon="check" data-iconpos="right" value = "upload"/>
+
                     <div id="progressNumber"></div>
                 </form>
             <a href="#home" data-role="button" data-rel="back" data-theme="b">Back</a>

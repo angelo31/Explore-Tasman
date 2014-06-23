@@ -124,9 +124,8 @@ function previewImage(event) {
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
   $(document).on("click", "#sendButton", function() {
-
-    $("#form1").submit(function(e) {
-    //$("#form1").submit(function(e) {
+   $("#form1").submit(function(e) {
+      // e.preventDefault();
 
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
@@ -145,13 +144,19 @@ function previewImage(event) {
 // if any fields are empty then cant upload
 if (!title || !desc || !category) {
   alert("Some fields are empty and need to be filled out!");
+      e.preventDefault();
+
 }
 
 else if (!gps) {
   alert("Couldn't retrieve GPS coordinates so upload can't be shown on map.");
+      e.preventDefault();
+
 }
 
 else {
+    //$("#form1").submit(function(e) {
+      e.preventDefault();
   var url = "http://intense-harbor-6396.herokuapp.com/upload";
 
   // var url = "http://localhost:3000/upload";
@@ -164,25 +169,27 @@ else {
     "gps": gps,
     "url": imgURL
   };
-  // sending to server
-  // $.post(url, inJSON, function (data) {
-    // }, "json");
 
+  // sending to server
 $.ajax({
   type: "POST",
   url: url,
   data: inJSON,
   dataType: "json",
+  async: true,
   success:function(data) {
       console.log("posting: ", inJSON);
       alert("Upload complete!");
       //window.location = "main.html#camera"
+    $.mobile.changePage("main.html/#camera");
   },
   error:function(error){
     alert("There was an error! " + error);
+    $.mobile.changePage("main.html");
   },
   complete:function() {
-    //$.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
+    // $.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
+    alert("complete form - redirecting");
     $.mobile.changePage("main.html/#camera");
     $("#yourimage").hide();
     $("#form1").each(function(){
@@ -191,6 +198,7 @@ $.ajax({
   }
 });
 }
+
 });
 });
 
@@ -206,37 +214,8 @@ function uploadFile(file, key) {
   fd.append("file",file);
 
   var xhr = new XMLHttpRequest();
-    // xhr.upload.addEventListener("progress", uploadProgress, false);
-    // xhr.addEventListener("load", uploadComplete, false);
-    // xhr.addEventListener("error", uploadFailed, false);
-    // xhr.addEventListener("abort", uploadCanceled, false);
-
-    xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE BEFORE YOU SEND 
+    xhr.open('POST', 'https://exploretasman.s3.amazonaws.com/', true); //MUST BE LAST LINE SO WE CAN SEND 
     xhr.send(fd);
-  }
-
-  function uploadProgress(evt) {
-    if (evt.lengthComputable) {
-      var percentComplete = Math.round(evt.loaded * 100 / evt.total);
-      // document.getElementById('progressNumber').innerHTML = percentComplete.toString() + '%';
-      $("#progressNumber").val(percentComplete.toString() + '%')
-    }
-    else {
-      document.getElementById('progressNumber').innerHTML = 'unable to compute';
-    }
-  }
-
-  function uploadComplete(evt) {
-    /* This event is raised when the server send back a response */
-    alert("Upload complete!" + evt.target.responseText );
-  }
-
-  function uploadFailed(evt) {
-    alert("There was an error attempting to upload the file." + evt);
-  }
-
-  function uploadCanceled(evt) {
-    alert("The upload has been canceled by the user or the browser dropped the connection.");
   }
 
 // var experiation = new Date(new Date().getTime() + 1000 * 60 * 5).toISOString();
@@ -249,6 +228,7 @@ POLICY_JSON = { "expiration": "2020-12-01T12:00:00.000Z",
 ["content-length-range", 0, 524288000] //max file size is 500MB?
 ]};
 
+ // encryption of secret and policy...
 var secret64 = "dG1MRDNQOEl3ZlVic1hxN3Y4NzFldmJaeWplaDE1dkVudk1ZbEZHZw==";
 var secret = window.atob(secret64);
 var policy = JSON.stringify(POLICY_JSON);
