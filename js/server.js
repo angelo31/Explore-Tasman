@@ -122,7 +122,12 @@ function previewImage(event) {
 
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
-  $(document).on("click", "#sendButton", function() {
+  // $(document).on("click", "#sendButton", function() {
+
+$("#form1").submit(function(e) {
+    e.preventDefault();
+
+
     var file = document.getElementById('file').files[0];
     var key = "events/" + (new Date).getTime() + '-' + file.name; //uploads to this folder and name
 
@@ -171,7 +176,8 @@ $.ajax({
   dataType: "json",
   success:function(data) {
       console.log("posting: ", inJSON);
-      alert("Upload complete!")
+      alert("Upload complete!");
+      //window.location = "main.html#camera"
   },
   error:function(error){
     alert("There was an error! " + error);
