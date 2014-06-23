@@ -142,6 +142,8 @@ function previewImage(event) {
     var gps = $("#locationText").val(); //location text
     // var imgURL = $(".test img").attr("src"); //base64 of image
 
+  $("#form1").submit(function(e) {
+    
 // if any fields are empty then cant upload
 if (!title || !desc || !category) {
   alert("Some fields are empty and need to be filled out!");
@@ -154,7 +156,6 @@ else if (!gps) {
 }
 
 else {
-  $("#form1").submit(function(e) {
     e.preventDefault();
   var url = "http://intense-harbor-6396.herokuapp.com/upload";
 
