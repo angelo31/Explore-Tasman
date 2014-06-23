@@ -95,9 +95,6 @@ function previewImage(event) {
   }
 
   /* Form validation... */
-
-
-
 $("#form1").validate({
     rules: {
         IDText: {
@@ -112,50 +109,17 @@ $("#form1").validate({
         },
         categoryText: {
             required: true
-        },/*
+        },
          file: {
              required: true,
              accept: "image"
-         },*/
+         },
         submitHandler: function(form) {
-            function submitForm(inJSON) {
-  var url = "http://intense-harbor-6396.herokuapp.com/upload";
-
-$.ajax({
-  type: "POST",
-  url: url,
-  data: inJSON,
-  async: true,
-  dataType: "json",
-  beforeSend: function() {
-    $.mobile.pageLoading();
-  },
-  success:function(data) {
-      console.log("posting: ", inJSON);
-      alert("Upload complete!");
-      //window.location = "main.html#camera"
-  },
-  error:function(error){
-    alert("There was an error! " + error);
-  },
-  complete:function() {
-    //$.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
-    e.preventDefault();
-    $("#yourimage").hide();
-    $("#form1").each(function(){
-      this.reset();
-    });
-  }
-  });
-}
-}
             // need something here
-  
-    
-  }
+            return false;
+        }
+    }
   });
-
-
 
 /* post form info to server */
 // $("#sendButton").bind("click", function (event, ui) {
@@ -186,7 +150,7 @@ else if (!gps) {
 }
 
 else {
-  //var url = "http://intense-harbor-6396.herokuapp.com/upload";
+  var url = "http://intense-harbor-6396.herokuapp.com/upload";
 
   // var url = "http://localhost:3000/upload";
   uploadFile(file, key); //call so can upload file to S3
@@ -202,8 +166,32 @@ else {
   // $.post(url, inJSON, function (data) {
     // }, "json");
 
-submitForm(inJSON);
-
+$.ajax({
+  type: "POST",
+  url: url,
+  data: inJSON,
+  async: true,
+  dataType: "json",
+  beforeSend: function() {
+    $.mobile.pageLoading();
+  },
+  success:function(data) {
+      console.log("posting: ", inJSON);
+      alert("Upload complete!");
+      //window.location = "main.html#camera"
+  },
+  error:function(error){
+    alert("There was an error! " + error);
+  },
+  complete:function() {
+    //$.mobile.hidePageLoadingMsg(); // This will hide ajax spinner
+    e.preventDefault();
+    $("#yourimage").hide();
+    $("#form1").each(function(){
+      this.reset();
+    });
+  }
+});
 }
 });
 });
