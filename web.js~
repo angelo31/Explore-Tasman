@@ -30,6 +30,12 @@ app.get('/', function(req, res) {
 	res.sendFile("index.html")
 });
 
+app.get('/form', function(req, res) {
+	// res.writeHead(200, {'Content-Type': 'text/plain' });
+	// res.end(form);
+	res.sendFile("form.html")
+});
+
 /// Post files
 app.post('/upload', function (req, res) {
 	if(!req.body.hasOwnProperty("id") || !req.body.hasOwnProperty("title") || !req.body.hasOwnProperty("description") || !req.body.hasOwnProperty("category") || !req.body.hasOwnProperty("gps") || !req.body.hasOwnProperty("url")) {
